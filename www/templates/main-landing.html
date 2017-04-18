@@ -1,0 +1,134 @@
+<ion-view>
+  <ion-nav-title>
+    <div class='color-yellow text-center myText' ng-click="newTrip()">سفر جدید</div>
+  </ion-nav-title>
+
+  <ion-content id="landingContent" scroll='false' drag-content="false" style="height: 100%;">
+    <div id='main-land-container'>
+      <div id='set-top' class='target-box bg-dark'>
+        <div class='wrap'>
+          <label class=" item-input">
+            <!--<script type="text/javascript">-->
+              <!--var recognition = new SpeechRecognition();-->
+              <!--recognition.lang = "fa";-->
+              <!--recognition.onresult = function (event) {-->
+                <!--if (event.results.length > 0) {-->
+                  <!--autocompletefrom.value = event.results[0][0].transcript;-->
+                <!--}-->
+              <!--}-->
+            <!--</script>-->
+            <!--<button class="icon ion-ios-mic placeholder-icon color-yellow " onclick="recognition.start()"></button>-->
+
+              <!--<input type="button" value="Click to Speak" onclick="">-->
+              <!-- <input class='color-yellow' ng-autocomplete id="autocomplete-to" type="text" ng-model="sel_place"  placeholder="Pickup location" details="autocomplete.details" > -->
+              <input style="direction: rtl;text-align: right" ng-disabled='!enableBox' class='color-yellow myText'
+                     id="autocompletefrom" name="autocompletefrom" ng-model='start_box.location' type="text" onchange="disableTapFrom()" ng-focus='disableTapFrom()'
+                     placeholder="مبدا"/>
+          </label>
+
+        </div>
+        <div class='wrap' style='margin-top: 10px;'>
+          <label class=" item-input">
+            <!--<script type="text/javascript">-->
+              <!--var recognition2 = new SpeechRecognition();-->
+              <!--recognition2.lang = "fa";-->
+              <!--recognition2.onresult = function (event) {-->
+                <!--if (event.results.length > 0) {-->
+                  <!--autocompleteto.value = event.results[0][0].transcript;-->
+                <!--}-->
+              <!--}-->
+            <!--</script>-->
+            <!--<button class="icon ion-ios-mic placeholder-icon color-yellow " onclick="recognition2.start()"></button>-->
+
+            <!-- <input class='color-yellow' ng-autocomplete id="autocomplete-to" type="text" ng-model="sel_place"  placeholder="Pickup location" details="autocomplete.details" > -->
+            <input style="direction: rtl" ng-disabled='!enableBox' class='color-yellow myText' id="autocompleteto"
+                   ng-model='end_box.location' type="text" onchange="disableTapTo()" ng-focus='disableTapTo()' placeholder="مقصد"/>
+
+          </label>
+        </div>
+      </div>
+
+      <!-- <input type="datetime-local"> -->
+
+      <div id="map" data-tap-disabled="true"> <!-- -->
+      </div>
+      <input id='Tripdate' type='datetime-local' ng-model='Trip_Date'/>
+    </div>
+
+    <div id='my-pop' class='animation-styles bg-dark1' style="top: 85.3%;border-top : none">
+      <!--http://codepen.io/anon/pen/avNRwz -->
+      <my-date-time-picker placeholder="Enter Date here" title="Select Date" ng-model="my_model"/>
+      <!---->
+      <div id='tab-hide' class='bg-dark1 visible'>
+        <div>
+          <div class='head-box text-center'>
+            <div class='vertical-middle'>
+              <span class='color-yellow d-block '>{{selected_cab.cost}}</span>
+              <span class='color-gery d-block myText'>هزینه سفر</span>
+            </div>
+          </div>
+          <!---->
+          <div id='fare-breakup-box' class='text-center'>
+            <div class='head'>
+              <span class="myText">توضیحات بیشتر</span>
+            </div>
+            <div class='content-box'>
+              <div id='login-from-box' class='m-top-20'>
+                <div class='main-container'>
+                  <div class="input-box ">
+                    <div class='input-box'>
+                      <input name='moreInfo' id="moreInfo" ng-model='moreInfo' placeholder="آدرس دقیقتر یا ..."
+                             class='color-yellow myText'
+                             type='text' style="text-align: right;direction: rtl"/>
+                      <img class='input-icon icon-20' src='img/icons/user.png'/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ion-scroll delegate-handle="calendarScroll" direction="x" class='bg-dark2'>
+        <div class="row no-padding text-center ">
+          <div class="col col-25" ng-class="{active_cab : active_cab == $index }" ng-click='clicked_item($index)'
+               ng-repeat="cab in cabs">
+            <div class="col color-yellow myText">{{cab.name}}</div>
+            <img ng-src='img/{{cab.vehicleType}}.png' style='width: 50px'/>
+            <!-- <div class="col color-gery">{{day.number}}</div> -->
+          </div>
+        </div>
+      </ion-scroll>
+    </div>
+    <div class='color-white text-center net-error myText'>به اینترنت متصل نیستید</div>
+  </ion-content>
+
+  <ion-footer-bar class="bg-dark" id="footer" style="background-color: transparent !important;background-image: none">
+    <div class="row no-padding" ng-if="showDriverInfo">
+      <div class="col  r-border-light p-10 text-center">
+        <p class='color-white p-head myText'>نام </p>
+        <p class='color-gery myText'>{{driver.name}}</p>
+      </div>
+      <div class="col  r-border-light p-10 text-center" ng-click="CallNumber(driver.mobile)">
+        <p id="phone" class='color-white p-head myText'><i class="ion-android-call" style="padding-right: 10px"></i>
+          تلفن</p>
+        <p class='color-gery myText'>{{driver.mobile}}</p>
+      </div>
+      <div class="col  p-10 text-center">
+        <p class='color-white p-head myText'>پلاک</p>
+        <p class='color-gery myText'>{{driver.number}}</p>
+      </div>
+    </div>
+    <div id="footer-req" class='footer-box bg-dark color-yellow' ng-show='pop_status == 1'>
+      <div class='w-50-p pull-left my-button h-100-p text-center border-r-yellow myText' ng-click='ride("later")'>رزرو
+      </div>
+      <div class='w-50-p pull-left my-button h-100-p text-center myText' ng-click='ride("now")'>درخواست</div>
+    </div>
+
+    <div class='footer-box bg-dark color-yellow' ng-show='pop_status == 3'>
+      <div class='my-button h-100-p text-center myText' ng-click='cancel()'>لغو</div>
+    </div>
+
+  </ion-footer-bar>
+
+</ion-view>
