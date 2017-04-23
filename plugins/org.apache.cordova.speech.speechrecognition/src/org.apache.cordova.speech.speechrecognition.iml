@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="cordova-plugin-compat" />
+    <orderEntry type="module" module-name="cordova-plugin-compat" />
   </component>
 </module>
