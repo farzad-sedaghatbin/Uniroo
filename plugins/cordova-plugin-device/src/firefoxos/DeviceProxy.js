@@ -18,7 +18,7 @@
  * under the License.
  *
  */
-//example UA String for Firefox OS
+//example UA String for Firefox OS 
 //Mozilla/5.0 (Mobile; rv:26.0) Gecko/26.0 Firefox/26.0
 
 //UA parsing not recommended but currently this is the only way to get the Firefox OS version

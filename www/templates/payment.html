@@ -1,0 +1,70 @@
+<ion-view view-title="<img src='img/ulogo.png' class='about-views' />پرداخت">
+  <ion-content class="payment_page padding">
+   <div ng-if="show_msg!=1">
+      <div class="bg-color  animated fadeInUp">
+        <p class="head-tab sec-main-bg-color">اطلاعات</p>
+        <div class="services padding">
+                <div class="service_list">
+                    <h4>سرویس اقتصادی</h4>
+                    <!--<p class="sec-main-text-color"><img src="img/ic4.png"/>روزنامه</p>-->
+                    <!--<p class="sec-main-text-color"><img src="img/ic5.png"/>Flying Blue</p>-->
+                    <!--<p class="sec-main-text-color"><img src="img/ic6.png"/>Entertainment</p>-->
+                    <p class="sec-main-text-color"><img src="img/ic7.png"/>روزنامه</p>
+                </div>
+                <!--<h4>Baggage</h4>-->
+                <!--<p class="sec-main-text-color">2 baggage Item(s) up to 23 Kg per persone.</p>-->
+
+                <div class="price row" style="direction: ltr!important;">
+                    <div class="col col-33">
+                       <p>هزینه سفر<span class="yellow">10000 تومان<i class="ion-plus"></i></span></p>
+                    </div>
+                    <div class="col col-33">
+                       <p> مالیات<span class="yellow">0<span>=</span></span></p>
+                    </div>
+                    <div class="col col-33">
+                       <p>مجموع<span class="yellow">10000 تومان</span></p>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+    <div class="bg-color app_form animated fadeInUp">
+        <p class="head-tab sec-main-bg-color">پرداخت</p>
+        <div class="padding">
+          <div class="list  list-inset">
+            <label class="item item-input item-select sel-item">
+                <select>
+                <option value="Country">نقدی</option>
+                <option value="America">اعتباری</option>
+                </select>
+            </label>
+                <label class="item item-input">
+                    <i class="icon ion-email"></i>
+                    <input type="email" placeholder="E-mail">
+                </label>
+
+                <label class="item item-input">
+                    <i class="icon ion-android-unlock"></i>
+                    <input type="password" placeholder="Password">
+                </label>
+                <p class="for_psw" ng-click="forget_password()">فراموشی رمز عبور</p>
+                <a href="#/app/register" class="register_btn">ثبت نام نکرده اید</a>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="bg-color confirm-msg" ng-if="show_msg==1">
+        <p class="head-tab sec-main-bg-color">تایید پرداخت</p>
+        <div class="padding">
+           <h4 class="sec-main-text-color">تبریک</h4>
+           <p>رزرو شما با موفقیت انجام شد</p>
+           <img src="img/check.png" class="animated pulse infinite" />
+           <p class="confirm-code">کد تایید شما : <span class="sec-main-text-color">QWx4k</span></p>
+           <button class="button button-clear dark-blue">رسید الکترونیکی</button>
+        </div>
+    </div>
+  </ion-content>
+    <ion-footer-bar class="footer dark-blue"  ng-show="show_msg!=1">
+        <p   ng-click="confirmMsg(1);scrollTop()">ادامه <i class="ion-ios-arrow-back"></i></p>
+    </ion-footer-bar>
+</ion-view>

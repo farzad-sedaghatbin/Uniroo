@@ -8,45 +8,23 @@
     },
     "installed_plugins": {
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.myapp960421"
+            "PACKAGE_NAME": "com.ionicframework.uniroo658917"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.ionicframework.myapp960421"
-        },
-        "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.ionicframework.myapp960421"
-        },
-        "cordova-plugin-nativeaudio": {
-            "PACKAGE_NAME": "com.ionicframework.myapp960421"
+            "PACKAGE_NAME": "com.ionicframework.uniroo658917"
         },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ionicframework.myapp960421"
+            "PACKAGE_NAME": "com.ionicframework.uniroo658917"
         },
         "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.ionicframework.myapp960421"
-        },
-        "cordova-plugin-vibration": {
-            "PACKAGE_NAME": "com.ionicframework.myapp960421"
+            "PACKAGE_NAME": "com.ionicframework.uniroo658917"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ionicframework.myapp960421"
+            "PACKAGE_NAME": "com.ionicframework.uniroo658917"
         },
         "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.myapp960421"
-        },
-        "org.apache.cordova.speech.speechrecognition": {
-            "PACKAGE_NAME": "com.ionicframework.myapp960421"
-        },
-        "cordova-plugin-network-information": {
-            "PACKAGE_NAME": "com.ionicframework.myapp960421"
+            "PACKAGE_NAME": "com.ionicframework.uniroo658917"
         }
     },
-    "dependent_plugins": {
-        "call-number": {
-            "PACKAGE_NAME": "com.ionicframework.myapp960421"
-        },
-        "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.ionicframework.myapp960421"
-        }
-    }
+    "dependent_plugins": {}
 }

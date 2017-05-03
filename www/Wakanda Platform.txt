@@ -1,0 +1,7 @@
+To use Wakanda Platform just follow this steps:
+1-Please uncomment line 9 and Comment line  7  in app.js
+
+2-Uncomment line 24 in index.html  
+
+For more details or help send us a message to sales@hybapps.com or via live chat on hybapps.com
+And For more information about Wakanada platform please visit Wakanda www.wakanda.io

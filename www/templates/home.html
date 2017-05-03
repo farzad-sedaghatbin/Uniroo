@@ -1,0 +1,26 @@
+<ion-header-bar class="home-header">
+  <h1 class="home-title title"><img src="img/ulogo.png" /></h1>
+</ion-header-bar>
+  <ion-content class="home_content">
+    <div class="home_head" style="direction: ltr!important;">
+        <ion-slide-box Auto-play="true" does-continue="true">
+            <ion-slide style="background: url(img/01.jpg)no-repeat;
+            background-size: cover"></ion-slide>
+            <ion-slide style="background: url(img/02.jpg)no-repeat;
+            background-size: cover"></ion-slide>
+            <ion-slide style="background: url(img/03.jpg)no-repeat;
+            background-size: cover"></ion-slide>
+        </ion-slide-box>
+    </div>
+    <a href="{{item.link}}" collection-repeat="item in menu"
+    collection-item-width="33.33333333333%"
+    collection-item-height="132" >
+
+        <div class="menu-items text-center animated bounceIn">
+            <img src="{{item.img}}" />
+            <h4 class="main-text-color">{{item.title}}</h4>
+        </div>
+
+    </a>
+
+  </ion-content>

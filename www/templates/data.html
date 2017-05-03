@@ -1,0 +1,62 @@
+<ion-view view-title="<img src='img/ulogo.png' class='about-views' />نتایج جست و جو">
+
+  <ion-content class="det_content my_booking search-result">
+    <ion-list>
+        <ion-item class="main-bg-color"
+                    ng-repeat="item in data">
+            <div class="row plane-time animated fadeInUp">
+                <div class="col col-20 text-center">
+                    <img src="img/car2r.png" ng-if="$index % 2 !=0"/>
+                    <img src="img/car2.png" ng-if="$index % 2 ==0"/>
+                </div>
+                <div class="col col-67 travel-det">
+                    <p>عازم به قزوین<span><i class="ion-calendar"></i>جمعه ۱۸ اردیبهشت ۹۶</span></p>
+                    <div class="row travel-time">
+                        <div class="col col-33">
+                            <p>تهران<span>9.30 </span></p>
+                        </div>
+                        <div class="col col-33 text-center">
+                            <img src="img/arrow2.png" />
+                        </div>
+                        <div class="col col-33">
+                            <p>قزوین<span>11.30 </span></p>
+                        </div>
+                    </div>
+                    <div class="row travel-time time-price text-center">
+                        <div class="col col-33 text-left">
+                            <p>
+                                <i class="ion-ios-clock-outline"></i>
+                                2.00 ساعت
+                            </p>
+                        </div>
+                        <div class="col col-33">
+                            <p>بدون توقف</p>
+                        </div>
+                        <div class="col col-33">
+                            <h4 class="yellow">10000 تومان</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <input type="checkbox" name="check" id="data{{item.id}}">
+                    <label for="data{{item.id}}"> <span></span>
+                    </label>
+                </div>
+            </div>
+
+          </ion-item>
+
+    </ion-list>
+  </ion-content>
+     <ion-footer-bar class="footer dark-blue">
+        <div class="row">
+            <div class="col col-50 total text-left">
+                <h4 class="yellow">مجموع: 10000 <sup>تومان</sup></h4>
+                <span>برای تمامی افراد</span>
+            </div>
+            <div class="col col-50 text-right">
+                <p ng-click="goto('/app/details')">ادامه <i class="ion-ios-arrow-back"></i></p>
+            </div>
+        </div>
+    </ion-footer-bar>
+</ion-view>
