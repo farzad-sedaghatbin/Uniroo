@@ -22,13 +22,7 @@ angular.module('starter.controllers', [])
   };
 
   $scope.sign_up = function () {
-    $ionicModal.fromTemplateUrl('templates/sign-up-modal.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function (modal) {
-      $rootScope.mainModal = modal;
-      $rootScope.mainModal.show();
-    });
+    $state.go("app.register")
   };
 
 
@@ -71,49 +65,6 @@ angular.module('starter.controllers', [])
   };
 
   $scope.signUp = {};
-  $scope.do_signUp = function (form) {
-    WebService.startLoading();
-    //$state.go('view', {movieid: 1});
-    if (
-      form.$valid
-      && $scope.signUp.pwd == $scope.signUp.c_pwd
-    //true
-    ) {
-      var post_data = {
-        'secret_key': secret_key,
-        'Email': $scope.signUp.mail,
-        'Password': $scope.signUp.pwd,
-        'Mobile': $scope.signUp.mobile,
-        'User_name': $scope.signUp.user_name,
-        'Name': $scope.signUp.name,
-      }
-
-      var url = "http://127.0.0.1:8080/api/1/signup";
-      var data = {
-        firstName: $scope.signUp.name,
-        lastName: $scope.signUp.name,
-        username: $scope.signUp.user_name,
-        mobile: $scope.signUp.mobile,
-        password: $scope.signUp.pwd
-      };
-      $http.post(url, data)
-        .success(function (suc) {
-          WebService.stopLoading();
-          $state.go("app.landing");
-        }).error(function (err) {
-        WebService.stopLoading();
-        WebService.myErrorHandler(err,false);
-      });
-    } else {
-      form.pwd.$setDirty();
-      form.number.$setDirty();
-      form.mail.$setDirty();
-      form.name.$setDirty();
-      form.user_name.$setDirty();
-
-    }
-
-  };
   $scope.logout = function () {
       $ionicHistory.nextViewOptions({
         disableAnimate: true,
@@ -154,6 +105,57 @@ angular.module('starter.controllers', [])
       $scope.closeLogin();
     }, 1000);
   };
+})
+.controller('SignupCtrl', function($scope, $ionicModal, $timeout) {
+  $timeout(function() {
+    $(".buttons-right").css("display","none");
+    $(".back-button").css("display","block");
+  }, 0);
+  $scope.do_signUp = function (form) {
+    $state.go("home")
+    // WebService.startLoading();
+    // //$state.go('view', {movieid: 1});
+    // if (
+    //   form.$valid
+    //   && $scope.signUp.pwd == $scope.signUp.c_pwd
+    // //true
+    // ) {
+    //   var post_data = {
+    //     'secret_key': secret_key,
+    //     'Email': $scope.signUp.mail,
+    //     'Password': $scope.signUp.pwd,
+    //     'Mobile': $scope.signUp.mobile,
+    //     'User_name': $scope.signUp.user_name,
+    //     'Name': $scope.signUp.name,
+    //   }
+    //
+    //   var url = "http://127.0.0.1:8080/api/1/signup";
+    //   var data = {
+    //     firstName: $scope.signUp.name,
+    //     lastName: $scope.signUp.name,
+    //     username: $scope.signUp.user_name,
+    //     mobile: $scope.signUp.mobile,
+    //     password: $scope.signUp.pwd
+    //   };
+    //   $http.post(url, data)
+    //     .success(function (suc) {
+    //       WebService.stopLoading();
+    //       $state.go("app.landing");
+    //     }).error(function (err) {
+    //     WebService.stopLoading();
+    //     WebService.myErrorHandler(err,false);
+    //   });
+    // } else {
+    //   form.pwd.$setDirty();
+    //   form.number.$setDirty();
+    //   form.mail.$setDirty();
+    //   form.name.$setDirty();
+    //   form.user_name.$setDirty();
+    //
+    // }
+
+  };
+
 })
 
 .controller('PlaylistsCtrl', function($scope) {

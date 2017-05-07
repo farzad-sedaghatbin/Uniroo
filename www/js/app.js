@@ -275,7 +275,8 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
         url: "/register",
         views: {
           'menuContent': {
-            templateUrl: "templates/register.html"
+            templateUrl: "templates/register.html",
+            controller:"SignupCtrl"
           }
         }
       })
