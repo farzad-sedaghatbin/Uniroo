@@ -106,7 +106,7 @@ angular.module('starter.controllers', [])
     }, 1000);
   };
 })
-.controller('SignupCtrl', function($scope, $ionicModal, $timeout, $ionicPopup, $rootScope) {
+.controller('SignupCtrl', function($scope, $ionicModal, $timeout, $ionicPopup, $rootScope, $state) {
   $timeout(function() {
     $(".buttons-right").css("display","none");
     $(".back-button").css("display","block");
@@ -276,16 +276,8 @@ angular.module('starter.controllers', [])
   };
 
 })
+.controller('SearchCtrl', function($scope, $ionicModal, $timeout, $rootScope, $state) {
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
