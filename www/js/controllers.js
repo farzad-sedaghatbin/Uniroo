@@ -106,13 +106,132 @@ angular.module('starter.controllers', [])
     }, 1000);
   };
 })
-.controller('SignupCtrl', function($scope, $ionicModal, $timeout) {
+.controller('SignupCtrl', function($scope, $ionicModal, $timeout, $ionicPopup, $rootScope) {
   $timeout(function() {
     $(".buttons-right").css("display","none");
     $(".back-button").css("display","block");
   }, 0);
+  $scope.isPassengerParam = true;
+  $scope.isPassenger = function(isPass){
+    $scope.isPassengerParam = isPass;
+    $scope.driverItems = [];
+  };
+  $scope.chose = function (type) {
+    $scope.type = type;
+    $ionicModal.fromTemplateUrl('templates/select.html', {
+      scope: $scope
+    }).then(function (modal) {
+      $rootScope.mainModal = modal;
+      $rootScope.mainModal.show();
+    });
+  };
+  function setVariable(result) {
+    if ($scope.type == 'STUDENT'){
+      $scope.student = result;
+    } else if ($scope.type == 'DRIVER'){
+      $scope.driver = result;
+    } else if ($scope.type == 'LICENSE'){
+      $scope.license = result;
+    } else if ($scope.type == 'CAR'){
+      $scope.car = result;
+    } else {
+      $scope.insurance = result;
+    }
+  }
+  $scope.remove = function (item) {
+    if ($scope.type == 'STUDENT'){
+      $scope.student = null;
+    } else if (item.type == 'DRIVER'){
+      $scope.driver = null;
+    } else if (item.type == 'LICENSE'){
+      $scope.license = null;
+    } else if (item.type == 'CAR'){
+      $scope.car = null;
+    } else {
+      $scope.insurance = null;
+    }
+    $.each($scope.driverItems, function( index, value ) {
+      if (value.thumbnail == item.thumbnail){
+        $scope.driverItems.splice(index,1);
+      }
+    });
+  };
+  $scope.driverItems = [];
+  $scope.gallery = function () {
+    var options = {sourceType: Camera.PictureSourceType.PHOTOLIBRARY};
+    navigator.camera.getPicture(function cameraSuccess(imageUri) {
+      window.resolveLocalFileSystemURL(imageUri, function (fileEntry) {
+        fileEntry.file(function (file) {
+          var reader = new FileReader();
+          reader.onloadend = function(evt) {
+            //todo: farzad breakpoint
+            setVariable(evt.target.result);
+              $scope.driverItems.push({
+                thumbnail: imageUri,
+                type: $scope.type
+              });
+            $scope.$apply();
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+    }, function cameraError(error) {
+      console.debug("Unable to obtain picture: " + error, "app");
+    }, options);
+  };
+  $scope.camera = function () {
+    var options = {sourceType: Camera.PictureSourceType.CAMERA};
+    navigator.camera.getPicture(function cameraSuccess(imageUri) {
+      window.resolveLocalFileSystemURL(imageUri, function (fileEntry) {
+        fileEntry.file(function (file) {
+          var reader = new FileReader();
+          reader.onloadend = function(evt) {
+            setVariable(evt.target.result);
+            $scope.driverItems.push({
+              thumbnail : imageUri,
+              type : $scope.type
+            });
+            $scope.$apply();
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+    }, function cameraError(error) {
+      console.debug("Unable to obtain picture: " + error, "app");
+    }, options);
+  };
   $scope.do_signUp = function (form) {
     $state.go("home")
+    // if (!$scope.isPassengerParam) {
+    //   if (!$scope.driver) {
+    //     $ionicPopup.alert({
+    //       title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+    //       template: '<p class="text-center color-gery">' + "عکس راننده انتخاب نشده است" + '</p>'
+    //     });
+    //   } else if (!$scope.license) {
+    //     $ionicPopup.alert({
+    //       title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+    //       template: '<p class="text-center color-gery">' + "عکس گواهینامه انتخاب نشده است" + '</p>'
+    //     });
+    //   } else if (!$scope.car) {
+    //     $ionicPopup.alert({
+    //       title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+    //       template: '<p class="text-center color-gery">' + "عکس کارت ماشین انتخاب نشده است" + '</p>'
+    //     });
+    //   } else if (!$scope.insurance) {
+    //     $ionicPopup.alert({
+    //       title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+    //       template: '<p class="text-center color-gery">' + "عکس بیمه نامه انتخاب نشده است" + '</p>'
+    //     });
+    //   }
+    // } else {
+    //   if (!$scope.student) {
+    //     $ionicPopup.alert({
+    //       title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+    //       template: '<p class="text-center color-gery">' + "عکس کارت دانشجویی انتخاب نشده است" + '</p>'
+    //     });
+    //   }
+    // }
     // WebService.startLoading();
     // //$state.go('view', {movieid: 1});
     // if (
