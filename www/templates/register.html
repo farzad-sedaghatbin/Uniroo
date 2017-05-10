@@ -1,73 +1,81 @@
 <ion-view view-title="<img src='img/ulogo.png' class='about-views' />ثبت نام">
   <ion-content class="register_content padding">
     <div class="bg-color app_form  animated fadeInUp">
-        <p class="head-tab sec-main-bg-color">اطلاعات شخصی</p>
-        <div class="gander row">
-            <div class="col col-50" ng-click="isPassenger(true)">
-                <input type="radio" name="check" id="passenger" checked>
-                <label for="passenger"> <span></span>مسافر
-                </label>
-            </div>
-
-            <div class="col col-50" ng-click="isPassenger(false)">
-                <input type="radio" name="check" id="driver">
-                <label for="driver"> <span></span>راننده
-                </label>
-            </div>
+      <p class="head-tab sec-main-bg-color">اطلاعات شخصی</p>
+      <div class="gander row">
+        <div class="col col-50" ng-click="isPassenger(true)">
+          <input type="radio" name="check" id="passenger" checked>
+          <label for="passenger"> <span></span>مسافر
+          </label>
         </div>
 
-          <div class="row">
-              <div class="col col-50">
-                  <span>نام</span>
-                <label class="item item-input">
-                    <input type="text">
-                </label>
-              </div>
-              <div class="col col-50">
-                  <span>نام خانوادگی</span>
-                 <label class="item item-input">
-                    <input type="text">
-                </label>
-              </div>
-
+        <div class="col col-50" ng-click="isPassenger(false)">
+          <input type="radio" name="check" id="driver">
+          <label for="driver"> <span></span>راننده
+          </label>
         </div>
-        <div class="row">
-              <div class="col col-50">
-                  <span>شماره موبایل</span>
-                <label class="item item-input">
-                    <input type="tel">
-                </label>
-              </div>
-              <div class="col col-50" ng-show="!isPassengerParam">
-                  <span>پلاک ماشین</span>
-                <label class="item item-input">
-                    <input type="text">
-                </label>
-              </div>
-            </div>
+      </div>
+      <div class="tab-details bg-color">
+        <h4>جنسیت</h4>
+        <label class="item item-input item-select sel-item">
+          <select id="from" style="direction: rtl">
+            <option value="Country">مرد</option>
+            <option value="China">زن</option>
+          </select>
+        </label>
+      </div>
+      <div class="row">
+        <div class="col col-50">
+          <span>نام</span>
+          <label class="item item-input">
+            <input type="text">
+          </label>
+        </div>
+        <div class="col col-50">
+          <span>نام خانوادگی</span>
+          <label class="item item-input">
+            <input type="text">
+          </label>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col col-50">
+          <span>شماره موبایل</span>
+          <label class="item item-input">
+            <input type="tel">
+          </label>
+        </div>
+        <div class="col col-50" ng-show="!isPassengerParam">
+          <span>پلاک ماشین</span>
+          <label class="item item-input">
+            <input type="text">
+          </label>
+        </div>
+      </div>
     </div>
 
     <div class="bg-color app_form info animated fadeInUp">
-        <p class="head-tab sec-main-bg-color">اطلاعات حساب</p>
-        <div class="padding">
-            <div class="list  list-inset">
-                 <div class="row">
-                     <div class="col col-50 padding">
-                        <span>نام کاربری</span>
-                        <label class="item item-input">
-                            <input type="text">
-                        </label>
-                     </div>
-                     <div class="col col-50">
-                        <span>رمز عبور</span>
-                        <label class="item item-input">
-                            <input type="password">
-                        </label>
-                     </div>
-                 </div>
-
+      <p class="head-tab sec-main-bg-color">اطلاعات حساب</p>
+      <div class="padding">
+        <div class="list  list-inset">
+          <div class="row">
+            <div class="col col-50 padding">
+              <span>نام کاربری</span>
+              <label class="item item-input">
+                <input type="text">
+              </label>
             </div>
+            <div class="col col-50">
+              <span>رمز عبور</span>
+              <label class="item item-input">
+                <input type="password">
+              </label>
+            </div>
+          </div>
+
         </div>
+      </div>
     </div>
     <div class="m-top-20">
       <div ng-show="!isPassengerParam">
