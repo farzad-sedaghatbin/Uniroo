@@ -36,7 +36,7 @@ angular.module('starter.controllers', [])
           delete $http.defaults.headers.common.Authorization;
         } catch (e) {
         }
-        var url = "http://192.168.161.111:8080/api/1/user_authenticate";
+        var url = "http://uniroo.cfapps.io/api/1/user_authenticate";
         var data = {
           username: $scope.login.mail,
           password: $scope.login.pwd,
@@ -277,18 +277,47 @@ angular.module('starter.controllers', [])
     };
 
   })
-  .controller('SearchCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $state) {
-
+  .controller('SearchCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $state,WebService,$http) {
+    $scope.search = function(){
+      var url = "http://uniroo.cfapps.io/api/1/searchForDriver";
+      var data = {
+        source: $("#from").val(),
+        destination: $("#to").val(),
+        day: $("#year").val() + "/" + $("month").val() + "/" + $("#day").val()
+      };
+      $http.post(url, data).success(function (data, status, headers, config) {
+        $rootScope.data = data;
+        $state.go("app.data");
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err, true);
+      });
+    }
   })
 
   .controller('DataCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $state) {
-    var selectedId;
+    $rootScope.selectedId;
     $scope.doSelect = function (item) {
-      if (selectedId) {
-        $('#'+selectedId).prop('checked', false);
+      if ($rootScope.selectedId) {
+        $('#'+$rootScope.selectedId).prop('checked', false);
       }
-      selectedId = item.id;
-    }
+      $rootScope.selectedId = item.uid;
+    };
+  })
+
+  .controller('DetailsCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService,$http) {
+    $timeout(function(){
+      WebService.startLoading();
+      var url = "http://uniroo.cfapps.io/api/1/detail";
+      $http.post(url, $rootScope.selectedId).success(function (data, status, headers, config) {
+        $scope.detail = data;
+        $scope.showDetail = true;
+        WebService.stopLoading();
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err, true);
+      });
+    },700);
   })
 
   .controller('PlaylistCtrl', function ($scope, $stateParams) {
