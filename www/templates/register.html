@@ -1,107 +1,144 @@
 <ion-view view-title="<img src='img/ulogo.png' class='about-views' />ثبت نام">
   <ion-content class="register_content padding">
     <div class="bg-color app_form  animated fadeInUp">
-        <p class="head-tab sec-main-bg-color">اطلاعات شخصی</p>
-        <div class="gander row">
-            <div class="col col-50">
-                <input type="radio" name="check" id="male" checked>
-                <label for="male"> <span></span>آقا
-                </label>
-            </div>
-
-            <div class="col col-50">
-                <input type="radio" name="check" id="female">
-                <label for="female"> <span></span>خانم
-                </label>
-            </div>
+      <p class="head-tab sec-main-bg-color">اطلاعات شخصی</p>
+      <div class="gander row">
+        <div class="col col-50" ng-click="isPassenger(true)">
+          <input type="radio" name="check" id="passenger" checked>
+          <label for="passenger"> <span></span>مسافر
+          </label>
         </div>
 
-          <div class="row">
-              <div class="col col-50">
-                  <span>نام</span>
-                <label class="item item-input">
-                    <input type="text">
-                </label>
-              </div>
-              <div class="col col-50">
-                  <span>نام خانوادگی</span>
-                 <label class="item item-input">
-                    <input type="text">
-                </label>
-              </div>
-
+        <div class="col col-50" ng-click="isPassenger(false)">
+          <input type="radio" name="check" id="driver">
+          <label for="driver"> <span></span>راننده
+          </label>
         </div>
-        <div class="row">
-              <div class="col col-50">
-                  <span>تاریخ تولد</span>
-                <label class="item item-input">
-                    <input type="date">
-                </label>
-              </div>
-              <!--<div class="col col-50">-->
-                   <!--<span>Frequently Fly Card</span>-->
-                    <!--<label class="item item-input item-select sel-item">-->
-                        <!--<select>-->
-                            <!--<option value="a1">AirLine</option>-->
-                            <!--<option value="a2">AirLine</option>-->
-                        <!--</select>-->
-                    <!--</label>-->
-              <!--</div>-->
+      </div>
+      <div class="tab-details bg-color">
+        <h4>جنسیت</h4>
+        <label class="item item-input item-select sel-item">
+          <select id="from" style="direction: rtl">
+            <option value="Country">مرد</option>
+            <option value="China">زن</option>
+          </select>
+        </label>
+      </div>
+      <div class="row">
+        <div class="col col-50">
+          <span>نام</span>
+          <label class="item item-input">
+            <input type="text">
+          </label>
+        </div>
+        <div class="col col-50">
+          <span>نام خانوادگی</span>
+          <label class="item item-input">
+            <input type="text">
+          </label>
+        </div>
 
-            </div>
+      </div>
+      <div class="row">
+        <div class="col col-50">
+          <span>شماره موبایل</span>
+          <label class="item item-input">
+            <input type="tel">
+          </label>
+        </div>
+        <div class="col col-50" ng-show="!isPassengerParam">
+          <span>پلاک ماشین</span>
+          <label class="item item-input">
+            <input type="text">
+          </label>
+        </div>
+      </div>
     </div>
 
     <div class="bg-color app_form info animated fadeInUp">
-        <p class="head-tab sec-main-bg-color">اطلاعات تماس</p>
-        <div class="padding">
-            <div class="list  list-inset">
-                <!--<span>Country Code</span>-->
-                <!--<label class="item item-input item-select sel-item">-->
-                    <!--<select>-->
-                    <!--<option value="Country">-->
-                        <!--<i class="ion-ios-telephone-outline"></i>-->
-                        <!--United Kingdom (+ 44)-->
-                    <!--</option>-->
-                    <!--<option value="United Kingdom">-->
-                        <!--<i class="ion-ios-telephone-outline"></i>-->
-                        <!--United Kingdom (+ 44)-->
-                    <!--</option>-->
-                    <!--</select>-->
-                <!--</label>-->
-                <span>موبایل :</span>
-                 <div class="row" style="direction: ltr">
-                     <div class="col col-20">
-                        <label class="item item-input num-country">
-                            <input type="number" value="+98" placeholder="+98">
-                        </label>
-                     </div>
-                     <div class="col col-80">
-                        <label class="item item-input">
-                            <input type="number">
-                        </label>
-                     </div>
-                 </div>
-                <span>آدرس</span>
-                    <label class="item item-input">
-                        <input type="text">
-                    </label>
-                 <div class="row">
-                     <div class="col col-50 padding">
-                        <span>ایمیل</span>
-                        <label class="item item-input">
-                            <input type="email">
-                        </label>
-                     </div>
-                     <div class="col col-50">
-                        <span>تکرار ایمیل</span>
-                        <label class="item item-input">
-                            <input type="email">
-                        </label>
-                     </div>
-                 </div>
-
+      <p class="head-tab sec-main-bg-color">اطلاعات حساب</p>
+      <div class="padding">
+        <div class="list  list-inset">
+          <div class="row">
+            <div class="col col-50 padding">
+              <span>نام کاربری</span>
+              <label class="item item-input">
+                <input type="text">
+              </label>
             </div>
+            <div class="col col-50">
+              <span>رمز عبور</span>
+              <label class="item item-input">
+                <input type="password">
+              </label>
+            </div>
+          </div>
+
         </div>
+      </div>
     </div>
+    <div class="m-top-20">
+      <div ng-show="!isPassengerParam">
+        <button ng-click="chose('DRIVER')" style="margin: 0 auto;width: 80%;font-size: large"
+                class="btn bg-yellow color-white big-font">عکس راننده
+        </button>
+      </div>
+      <div class="m-top-10" ng-show="!isPassengerParam">
+        <button ng-click="chose('LICENSE')" style="margin: 0 auto;width: 80%;font-size: large"
+                class="btn bg-yellow color-white big-font">عکس گواهینامه
+        </button>
+      </div>
+      <div class="m-top-10" ng-show="!isPassengerParam">
+        <button ng-click="chose('CAR')" style="margin: 0 auto;width: 80%;font-size: large"
+                class="btn bg-yellow color-white big-font">عکس کارت ماشین
+        </button>
+      </div>
+      <div class="m-top-10" ng-show="!isPassengerParam">
+        <button ng-click="chose('INSURANCE')" style="margin: 0 auto;width: 80%;font-size: large"
+                class="btn bg-yellow color-white big-font">عکس بیمه نامه
+        </button>
+      </div>
+      <div class="m-top-10" ng-show="isPassengerParam">
+        <button ng-click="chose('STUDENT')" style="margin: 0 auto;width: 80%;font-size: large"
+                class="btn bg-yellow color-white big-font">عکس کارت دانشجویی
+        </button>
+      </div>
+      <ion-list show-delete="true"
+                show-reorder="false"
+                can-swipe="true">
+        <ion-item ng-repeat="item in items"
+                  class="item-thumbnail-left">
+          <img ng-src="{{item.thumbnail}}"/>
+          <ion-option-button class="button-info"
+                             ng-click="preview(item)">
+            مشاهده
+          </ion-option-button>
+          <ion-delete-button class="ion-minus-circled"
+                             ng-click="remove(item)">
+          </ion-delete-button>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <input ng-click='do_signUp(sign_up_form)' class='btn bg-yellow color-white big-font m-top-20' type='button'
+           value="ثبت نام"/>
   </ion-content>
 </ion-view>
+
+<script id="templates/select.html" type="text/ng-template">
+  <ion-modal-view style="min-height: 150px;top: 80%">
+    <ion-header-bar class="bar bar-header bar-positive" style="background-color: #F84E0E">
+      <button class="button button-clear button-primary myText" ng-click="mainModal.hide()">بستن</button>
+    </ion-header-bar>
+    <ion-content class="padding">
+      <div class="modal" style="z-index:100;min-height:130px">
+        <div ng-click="gallery()"
+             style="text-align: center;direction:rtl;padding-right:1%;width: 50%;float: right;font-size: xx-large"
+             class="ion-ios-photos"></div>
+        <div ng-click="camera()"
+             style="text-align: center;direction:rtl;padding-right:1%;font-size: xx-large"
+             class="ion-camera"></div>
+      </div>
+    </ion-content>
+  </ion-modal-view>
+</script>

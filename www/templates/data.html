@@ -38,8 +38,8 @@
                     </div>
                 </div>
                 <div class="col">
-                    <input type="checkbox" name="check" id="data{{item.id}}">
-                    <label for="data{{item.id}}"> <span></span>
+                    <input type="checkbox" ng-click="doSelect(item)" name="check" id="{{item.id}}">
+                    <label for="{{item.id}}"> <span></span>
                     </label>
                 </div>
             </div>

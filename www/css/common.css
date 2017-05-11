@@ -1,6 +1,6 @@
 
 .vertical-middle{
-	position: relative; 
+	position: relative;
 	top: 50%;
 	-webkit-transform: translateY(-50%);
 	-ms-transform: translateY(-50%);
@@ -14,7 +14,7 @@
  .ui-content{
 	padding: 0 !important;
  }
- 
+
 @font-face {
     font-family: 'OpenSans';
     src: url('../fonts/OpenSans-Regular.ttf');
@@ -22,11 +22,11 @@
          url('../fonts/calibri-webfont.svg#calibriregular') format('svg'),
          url('../fonts/calibri-webfont.woff') format('woff'),
          url('../fonts/calibri-webfont.ttf') format('truetype'); */
-   
+
    font-weight: normal;
    font-style: normal;
 
-} 
+}
 
 .pull-left{float: left;}
 .pull-right{float: right;}
@@ -40,7 +40,7 @@ input.ng-pristine {
 	/* border: 1px solid #008000; */
 }
 input.ng-dirty {
-	
+
 }
 
 input.ng-valid {
@@ -48,7 +48,7 @@ input.ng-valid {
 }
 
 .error{
-color: #fe8d8e;
+color: black;
 }
 .error-container{
 
@@ -58,7 +58,7 @@ color: #fe8d8e;
 }
 
 [required] {
-   
+
     box-shadow: none;
 }
 
@@ -80,28 +80,28 @@ color: #fe8d8e;
     background-position: 0px 0px ; }
 
   to {
-    background-position: 100% 0px ; } 
+    background-position: 100% 0px ; }
 }
 @-moz-keyframes loading {
  from {
     background-position: 0px 0px ; }
 
   to {
-    background-position: 100% 0px ; } 
+    background-position: 100% 0px ; }
 }
 @-o-keyframes loading {
  from {
     background-position: 0px 0px ; }
 
   to {
-    background-position: 100% 0px ; } 
+    background-position: 100% 0px ; }
 }
 @keyframes loading {
  from {
     background-position: 0px 0px ; }
 
   to {
-    background-position: 100% 0px ; } 
+    background-position: 100% 0px ; }
 }
 
 /* LOADING SPINNER
@@ -125,7 +125,7 @@ color: #fe8d8e;
 	background: none;
 }
 .ui-icon-loading {
-	
+
 }
 
 .net-error{
@@ -147,7 +147,7 @@ color: #fe8d8e;
 }
 .loading-box.loading{ display: block !important; }
 input{
-	/* -webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
+	/* -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 	-webkit-tap-highlight-color: transparent;  */
 	outline: none
 }
@@ -166,7 +166,7 @@ a,a:hover{ text-decoration: none;}
 
 .green-gradient{
 	background-image: url('../img/gradient_bg.jpg');
-	background-size: 100% 100%;	
+	background-size: 100% 100%;
 }
 #viewport {
 	position: relative;

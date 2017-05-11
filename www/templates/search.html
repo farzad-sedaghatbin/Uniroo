@@ -29,11 +29,6 @@
                             <label for="r2"> <span></span> دانشگاه
                             </label>
                         </div>
-                        <!--<div class="col col-33">-->
-                            <!--<input type="radio" name="check" id="r3">-->
-                            <!--<label for="r3"> <span></span>Multi Cities-->
-                            <!--</label>-->
-                        <!--</div>-->
                     </div>
                 </div>
                 <div class="from-to">
@@ -42,14 +37,7 @@
                        <div class="col col-50">
                            <h4>از</h4>
                            <label class="item item-input item-select sel-item">
-                                <select>
-                                <option value="Country">تهران</option>
-                                <option value="China">کرج</option>
-                                <option value="America">قزوین</option>
-                                </select>
-                            </label>
-                            <label class="item item-input item-select sel-item">
-                                <select>
+                                <select id="from">
                                 <option value="Country">تهران</option>
                                 <option value="China">کرج</option>
                                 <option value="America">قزوین</option>
@@ -59,14 +47,7 @@
                        <div class="col col-50">
                             <h4>به</h4>
                             <label class="item item-input item-select sel-item">
-                              <select>
-                                <option value="Country">تهران</option>
-                                <option value="China">کرج</option>
-                                <option value="America">قزوین</option>
-                                </select>
-                            </label>
-                            <label class="item item-input item-select sel-item">
-                              <select>
+                              <select id="to">
                                 <option value="Country">تهران</option>
                                 <option value="China">کرج</option>
                                 <option value="America">قزوین</option>
@@ -80,16 +61,10 @@
                 <div class="date-trip bg-color" >
 
                     <div class="row">
-                        <div class="col col-50" style="direction: ltr" >
-                            <h4><img src="img/rp11.png"/>حرکت</h4>
-                            <span><i class="ion-calendar sec-main-text-color"></i>13</span>
-                            <p class="date">جمعه اردیبهشت ۱۳۹۶</p>
-                        </div>
-                        <!--<div class="col col-50">-->
-                            <!--<h4><img src="img/p2.png"/>بازگشت</h4>-->
-                            <!--<span><i class="ion-calendar sec-main-text-color"></i>18</span>-->
-                            <!--<p class="date">Sept. 2016 Wednesday</p>-->
-                        <!--</div>-->
+                            <span><i class="ion-calendar sec-main-text-color"></i>تاریخ حرکت</span>
+                      </div>
+                      <div class="row">
+                      <input type="number" placeholder="YYYY" id="year" onkeydown="limitSize(event,'year',4)" style="width: 50px">&nbsp;&nbsp;&nbsp;<input type="number" placeholder="MM" id="month" onkeydown="limitSize(event,'month',2)" style="width: 25px">&nbsp;&nbsp;&nbsp;<input type="number" placeholder="DD" id="day" onkeydown="limitSize(event,'day',2)" style="width: 25px">
                     </div>
 
                 </div>
@@ -97,7 +72,7 @@
                 <div class="traveller" style="text-align: center">
                   <div class="row">
                      <div class="col col-33">
-                        <h4><img src="img/ic1.png">بزرگسال</h4>
+                        <h4><img src="img/ic1.png">تعداد</h4>
 
                         <div class="row num-traveller bg-color">
                             <div class="col col-33 sec-main-text-color">
