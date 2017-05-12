@@ -320,6 +320,13 @@ angular.module('starter.controllers', [])
         WebService.myErrorHandler(err, true);
       });
     },700);
+    $scope.request = function(){
+      var url = "http://uniroo.cfapps.io/api/1/request";
+      $http.post(url, $rootScope.selectedId).success(function (data, status, headers, config) {
+      }).catch(function (err) {
+        WebService.myErrorHandler(err, true);
+      });
+    }
   })
 
   .controller('AcceptedTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService,$http) {
