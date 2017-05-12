@@ -38,21 +38,23 @@ angular.module('starter.controllers', [])
         }
         var url = "http://uniroo.cfapps.io/api/1/user_authenticate";
         var data = {
-          username: $scope.login.mail,
-          password: $scope.login.pwd,
+          username: $("#mail").val(),
+          password: $("#pwd").val(),
           rememberMe: false
         };
         $http.post(url, data).success(function (data, status, headers, config) {
           WebService.stopLoading();
-          $rootScope.username = $scope.login.mail;
+          $rootScope.userid = data.userid;
+          $rootScope.isDriver = data.driver;
           $http.defaults.headers.common.Authorization = "Bearer " + data.token;
           var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
           db.transaction(function (tx) {
-            tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["username", $scope.login.mail]);
+            tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["userid", data.userid]);
+            tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["driver", data.driver]);
             tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["myToken", "Bearer " + data.token]);
           });
-          $scope.modal.sign_in.hide();
-          $state.go('app.landing', {}, {reload: true});
+          $rootScope.prepareSocketsAndMenu();
+          $state.go('app.search', {}, {reload: true});
         }).catch(function (err) {
           WebService.stopLoading();
           WebService.myErrorHandler(err, true);
@@ -318,6 +320,10 @@ angular.module('starter.controllers', [])
         WebService.myErrorHandler(err, true);
       });
     },700);
+  })
+
+  .controller('AcceptedTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService,$http) {
+
   })
 
   .controller('PlaylistCtrl', function ($scope, $stateParams) {

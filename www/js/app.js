@@ -4,10 +4,10 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
-/* //if use wakanda platform
- angular.module('starter', ['ionic', 'starter.controllers','wakanda'])
- */
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+  /* //if use wakanda platform
+   angular.module('starter', ['ionic', 'starter.controllers','wakanda'])
+   */
   .run(function ($ionicPlatform, $rootScope, $location, $ionicScrollDelegate, $ionicPopup, $http) {
 
     /*************** forget password ****************/
@@ -98,38 +98,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
       $rootScope.activeIcon = index
     }
     /*************** repeat array ****************/
-    $rootScope.menu = [{id: "1", img: "img/1.png", title: "جست و جو", link: "#/app/search"},
-      {id: "2", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
-      {id: "3", img: "img/3.png", title: "پیشنهاد ها", link: "#/app/offer"},
-      {id: "4", img: "img/4.png", title: "ثبت نام", link: "#/app/register"},
-      {id: "5", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
-      {id: "6", img: "img/6.png", title: "درباره ما", link: "#/login"}]
-
-    $rootScope.det = [{id: "1"},
-      {id: "2"}]
-
-    $rootScope.data = [{id: "1"},
-      {id: "2"}, {id: "3"}, {id: "4"}, {id: "5"}]
-
     $ionicPlatform.ready(function () {
-      var client = new WebSocket("ws://192.168.161.111:8080/myHandler");
-      client.onopen = function () {
-        client.send("join,1");
-      };
-      client.onmessage = function (msg) {
-        var data = JSON.parse(msg.data);
-        switch (data.command) {
-          case "aroundme":
-
-            break;
-          case "driverinfo":
-
-            break;
-          case "delivery":
-
-            break;
-        }
-      };
       $rootScope.$on('$cordovaNetwork:online', function (event, networkState) {
         set_net('online');
       });
@@ -148,18 +117,32 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
     });
     var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
     db.transaction(function (tx) {
-      tx.executeSql('SELECT d.log FROM ANIJUU d WHERE d.name="username"', [], function (tx, results) {
+      tx.executeSql('SELECT d.log FROM ANIJUU d WHERE d.name="userid"', [], function (tx, results) {
         var len = results.rows.length, i, result = '';
         if (!results.rows || results.rows.length == 0) {
           result = null;
         } else {
           result = results.rows.item(0).log;
         }
-        setUsername(result)
+        setUserId(result)
       }, null);
     });
-    var setUsername = function (result) {
-      $rootScope.username = result;
+    var setUserId = function (result) {
+      $rootScope.userid = result;
+    };
+    db.transaction(function (tx) {
+      tx.executeSql('SELECT d.log FROM ANIJUU d WHERE d.name="driver"', [], function (tx, results) {
+        var len = results.rows.length, i, result = '';
+        if (!results.rows || results.rows.length == 0) {
+          result = null;
+        } else {
+          result = results.rows.item(0).log;
+        }
+        setIsDriver(result)
+      }, null);
+    });
+    var setIsDriver = function (result) {
+      $rootScope.isDriver = result;
     };
     db.transaction(function (tx) {
       tx.executeSql('SELECT d.log FROM ANIJUU d WHERE d.name="myToken"', [], function (tx, results) {
@@ -180,6 +163,61 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
           delete $http.defaults.headers.common.Authorization;
         } catch (e) {
         }
+      }
+      if ($rootScope.userid)
+        $rootScope.prepareSocketsAndMenu();
+    };
+    $rootScope.prepareSocketsAndMenu = function () {
+      if ($rootScope.isDriver) {
+        var client = new WebSocket("wss://uniroo.cfapps.io:4443/driverHandler");
+        client.onopen = function () {
+          client.send("start,1");
+        };
+        client.onmessage = function (msg) {
+          var data = JSON.parse(msg.data);
+          switch (data.command) {
+            case "request":
+              $rootScope.tripInfo = data.tripInfo;
+              break;
+            case "acceptedbyother":
+
+              break;
+            case "delivery":
+
+              break;
+          }
+        };
+      } else {
+        var client = new WebSocket("wss://uniroo.cfapps.io:4443/userHandler");
+        client.onopen = function () {
+          client.send("join,2");
+        };
+        client.onmessage = function (msg) {
+          var data = JSON.parse(msg.data);
+          switch (data.command) {
+            case "driverinfo":
+              $rootScope.driverInfo = data.driverInfoDTO;
+              break;
+            case "delivery":
+
+              break;
+          }
+        };
+      }
+      if ($rootScope.isDriver) {
+        $rootScope.menu = [{id: "1", img: "img/1.png", title: "جست و جو", link: "#/app/search"},
+          {id: "2", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
+          {id: "3", img: "img/3.png", title: "پیشنهاد ها", link: "#/app/offer"},
+          {id: "4", img: "img/4.png", title: "ثبت نام", link: "#/app/register"},
+          {id: "5", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
+          {id: "6", img: "img/6.png", title: "درباره ما", link: "#/login"}]
+      } else {
+        $rootScope.menu = [{id: "1", img: "img/1.png", title: "جست و جو", link: "#/app/search"},
+          {id: "2", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
+          {id: "3", img: "img/3.png", title: "سفر جاری", link: "#/app/acceptedTrip"},
+          {id: "4", img: "img/4.png", title: "ثبت نام", link: "#/app/register"},
+          {id: "5", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
+          {id: "6", img: "img/6.png", title: "درباره ما", link: "#/login"}]
       }
     }
   })
@@ -213,7 +251,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
         views: {
           'menuContent': {
             templateUrl: "templates/search.html",
-            controller : "SearchCtrl"
+            controller: "SearchCtrl"
           }
         }
       })
@@ -250,7 +288,17 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
         views: {
           'menuContent': {
             templateUrl: "templates/details.html",
-            controller : "DetailsCtrl"
+            controller: "DetailsCtrl"
+          }
+        }
+      })
+
+      .state('app.acceptedTrip', {
+        url: "/acceptedTrip",
+        views: {
+          'menuContent': {
+            templateUrl: "templates/acceptedTrip.html",
+            controller: "AcceptedTripCtrl"
           }
         }
       })
@@ -260,7 +308,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
         views: {
           'menuContent': {
             templateUrl: "templates/data.html",
-            controller : "DataCtrl"
+            controller: "DataCtrl"
           }
         }
       })
@@ -279,7 +327,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
         views: {
           'menuContent': {
             templateUrl: "templates/register.html",
-            controller:"SignupCtrl"
+            controller: "SignupCtrl"
           }
         }
       })
@@ -297,7 +345,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
       var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
       db.transaction(function (tx) {
         tx.executeSql('CREATE TABLE IF NOT EXISTS ANIJUU (name , log)');
-        tx.executeSql('SELECT d.log FROM ANIJUU d WHERE d.name="username"', [], function (tx, results) {
+        tx.executeSql('SELECT d.log FROM ANIJUU d WHERE d.name="userid"', [], function (tx, results) {
           var len = results.rows.length, i, result = '';
           if (!results.rows || results.rows.length == 0) {
             $location.path('/login');
