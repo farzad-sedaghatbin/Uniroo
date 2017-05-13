@@ -278,7 +278,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         url: "/reservations",
         views: {
           'menuContent': {
-            templateUrl: "templates/reservations.html"
+            templateUrl: "templates/reservations.html",
+            controller : "ReservationsCtrl"
           }
         }
       })

@@ -18,9 +18,9 @@
       <div class="tab-details bg-color">
         <h4>جنسیت</h4>
         <label class="item item-input item-select sel-item">
-          <select id="from" style="direction: rtl">
-            <option value="Country">مرد</option>
-            <option value="China">زن</option>
+          <select id="gender" style="direction: rtl">
+            <option value="1">مرد</option>
+            <option value="2">زن</option>
           </select>
         </label>
       </div>
@@ -28,13 +28,13 @@
         <div class="col col-50">
           <span>نام</span>
           <label class="item item-input">
-            <input type="text">
+            <input id="name" type="text">
           </label>
         </div>
         <div class="col col-50">
           <span>نام خانوادگی</span>
           <label class="item item-input">
-            <input type="text">
+            <input id="family" type="text">
           </label>
         </div>
 
@@ -43,13 +43,13 @@
         <div class="col col-50">
           <span>شماره موبایل</span>
           <label class="item item-input">
-            <input type="tel">
+            <input id="tel" type="tel">
           </label>
         </div>
         <div class="col col-50" ng-show="!isPassengerParam">
           <span>پلاک ماشین</span>
           <label class="item item-input">
-            <input type="text">
+            <input id="number" type="text">
           </label>
         </div>
       </div>
@@ -63,13 +63,13 @@
             <div class="col col-50 padding">
               <span>نام کاربری</span>
               <label class="item item-input">
-                <input type="text">
+                <input id="username" type="text">
               </label>
             </div>
             <div class="col col-50">
               <span>رمز عبور</span>
               <label class="item item-input">
-                <input type="password">
+                <input id="pass" type="password">
               </label>
             </div>
           </div>

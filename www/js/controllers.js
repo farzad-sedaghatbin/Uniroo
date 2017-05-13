@@ -108,7 +108,7 @@ angular.module('starter.controllers', [])
       }, 1000);
     };
   })
-  .controller('SignupCtrl', function ($scope, $ionicModal, $timeout, $ionicPopup, $rootScope, $state) {
+  .controller('SignupCtrl', function ($scope, $ionicModal, $timeout, $ionicPopup, $rootScope, $state,$http) {
     $timeout(function () {
       $(".buttons-right").css("display", "none");
       $(".back-button").css("display", "block");
@@ -204,78 +204,75 @@ angular.module('starter.controllers', [])
       }, options);
     };
     $scope.do_signUp = function (form) {
-      $state.go("home")
-      // if (!$scope.isPassengerParam) {
-      //   if (!$scope.driver) {
-      //     $ionicPopup.alert({
-      //       title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-      //       template: '<p class="text-center color-gery">' + "عکس راننده انتخاب نشده است" + '</p>'
-      //     });
-      //   } else if (!$scope.license) {
-      //     $ionicPopup.alert({
-      //       title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-      //       template: '<p class="text-center color-gery">' + "عکس گواهینامه انتخاب نشده است" + '</p>'
-      //     });
-      //   } else if (!$scope.car) {
-      //     $ionicPopup.alert({
-      //       title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-      //       template: '<p class="text-center color-gery">' + "عکس کارت ماشین انتخاب نشده است" + '</p>'
-      //     });
-      //   } else if (!$scope.insurance) {
-      //     $ionicPopup.alert({
-      //       title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-      //       template: '<p class="text-center color-gery">' + "عکس بیمه نامه انتخاب نشده است" + '</p>'
-      //     });
-      //   }
-      // } else {
-      //   if (!$scope.student) {
-      //     $ionicPopup.alert({
-      //       title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-      //       template: '<p class="text-center color-gery">' + "عکس کارت دانشجویی انتخاب نشده است" + '</p>'
-      //     });
-      //   }
-      // }
-      // WebService.startLoading();
-      // //$state.go('view', {movieid: 1});
-      // if (
-      //   form.$valid
-      //   && $scope.signUp.pwd == $scope.signUp.c_pwd
-      // //true
-      // ) {
-      //   var post_data = {
-      //     'secret_key': secret_key,
-      //     'Email': $scope.signUp.mail,
-      //     'Password': $scope.signUp.pwd,
-      //     'Mobile': $scope.signUp.mobile,
-      //     'User_name': $scope.signUp.user_name,
-      //     'Name': $scope.signUp.name,
-      //   }
-      //
-      //   var url = "http://127.0.0.1:8080/api/1/signup";
-      //   var data = {
-      //     firstName: $scope.signUp.name,
-      //     lastName: $scope.signUp.name,
-      //     username: $scope.signUp.user_name,
-      //     mobile: $scope.signUp.mobile,
-      //     password: $scope.signUp.pwd
-      //   };
-      //   $http.post(url, data)
-      //     .success(function (suc) {
-      //       WebService.stopLoading();
-      //       $state.go("app.landing");
-      //     }).error(function (err) {
-      //     WebService.stopLoading();
-      //     WebService.myErrorHandler(err,false);
-      //   });
-      // } else {
-      //   form.pwd.$setDirty();
-      //   form.number.$setDirty();
-      //   form.mail.$setDirty();
-      //   form.name.$setDirty();
-      //   form.user_name.$setDirty();
-      //
-      // }
-
+      var data;
+      if (!$scope.isPassengerParam) {
+        if (!$scope.driver) {
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "عکس راننده انتخاب نشده است" + '</p>'
+          });
+        } else if (!$scope.license) {
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "عکس گواهینامه انتخاب نشده است" + '</p>'
+          });
+        } else if (!$scope.car) {
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "عکس کارت ماشین انتخاب نشده است" + '</p>'
+          });
+        } else if (!$scope.insurance) {
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "عکس بیمه نامه انتخاب نشده است" + '</p>'
+          });
+        }
+        data = {
+          firstName: $("#name").val(),
+          lastName: $("#family").val(),
+          username: $("#username").val(),
+          mobile: $("#tel").val(),
+          password: $("#pass").val(),
+          isDriver : !$scope.isPassengerParam,
+          gender : $("#gender").val(),
+          driver : $scope.driver,
+          license : $scope.license,
+          car : $scope.car,
+          insurance : $scope.insurance
+        };
+      } else {
+        if (!$scope.student) {
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "عکس کارت دانشجویی انتخاب نشده است" + '</p>'
+          });
+        }
+        data = {
+          firstName: $("#name").val(),
+          lastName: $("#family").val(),
+          username: $("#username").val(),
+          mobile: $("#tel").val(),
+          password: $("#pass").val(),
+          isDriver : !$scope.isPassengerParam,
+          gender : $("#gender").val(),
+          license : $scope.student
+        };
+      }
+      WebService.startLoading();
+      //$state.go('view', {movieid: 1});
+      if (
+        form.$valid
+      ) {
+        var url = "http://uniroo.cfapps.io/api/1/signup";
+        $http.post(url, data)
+          .success(function (suc) {
+            WebService.stopLoading();
+            $state.go("app.search");
+          }).error(function (err) {
+          WebService.stopLoading();
+          WebService.myErrorHandler(err,false);
+        });
+      }
     };
 
   })
@@ -331,6 +328,12 @@ angular.module('starter.controllers', [])
 
   .controller('AcceptedTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService,$http) {
 
+  })
+
+  .controller('ReservationsCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService,$http) {
+     $timeout(function () {
+       alert("SDfsf")
+     },100)
   })
 
   .controller('PlaylistCtrl', function ($scope, $stateParams) {
