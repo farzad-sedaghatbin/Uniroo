@@ -10,36 +10,30 @@
                     <img src="img/car2.png" ng-if="$index % 2 ==0"/>
                 </div>
                 <div class="col col-67 travel-det">
-                    <p>عازم به قزوین<span><i class="ion-calendar"></i>جمعه ۱۸ اردیبهشت ۹۶</span></p>
+                    <p>عازم به {{item.destination}}<span><i class="ion-calendar"></i>{{item.year}} {{item.month}} {{item.day}}</span></p>
                     <div class="row travel-time">
                         <div class="col col-33">
-                            <p>تهران<span>9.30 </span></p>
+                            <p>{{item.destination}}</p>
                         </div>
                         <div class="col col-33 text-center">
                             <img src="img/arrow2.png" />
                         </div>
                         <div class="col col-33">
-                            <p>قزوین<span>11.30 </span></p>
+                            <p>{{item.source}}<span>{{item.time}}</span></p>
                         </div>
                     </div>
                     <div class="row travel-time time-price text-center">
-                        <div class="col col-33 text-left">
-                            <p>
-                                <i class="ion-ios-clock-outline"></i>
-                                2.00 ساعت
-                            </p>
-                        </div>
                         <div class="col col-33">
                             <p>بدون توقف</p>
                         </div>
                         <div class="col col-33">
-                            <h4 class="yellow">10000 تومان</h4>
+                            <h4 class="yellow">{{item.cost}} تومان</h4>
                         </div>
                     </div>
                 </div>
                 <div class="col">
-                    <input type="checkbox" ng-click="doSelect(item)" name="check" id="{{item.id}}">
-                    <label for="{{item.id}}"> <span></span>
+                    <input type="checkbox" ng-click="doSelect(item)" name="check" id="{{item.uid}}">
+                    <label for="{{item.uid}}"> <span></span>
                     </label>
                 </div>
             </div>
