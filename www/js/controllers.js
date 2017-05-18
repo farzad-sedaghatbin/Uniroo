@@ -336,6 +336,7 @@ angular.module('starter.controllers', [])
         selectedIds.splice(index,1);
         $scope.totalAmount -= item.cost;
       }
+      $scope.$apply();
     };
     $scope.accept = function(){
 
