@@ -339,7 +339,11 @@ angular.module('starter.controllers', [])
       $scope.$apply();
     };
     $scope.accept = function(){
-
+      var url = "http://192.168.1.12:8080/api/1/approvedDriver";
+      $http.post(url, $rootScope.selectedId).success(function (data, status, headers, config) {
+      }).catch(function (err) {
+        WebService.myErrorHandler(err, true);
+      });
     }
   })
 
