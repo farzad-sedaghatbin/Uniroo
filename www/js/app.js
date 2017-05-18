@@ -172,54 +172,42 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     };
     $rootScope.prepareSocketsAndMenu = function () {
       if ($rootScope.isDriver) {
-        // var client = new WebSocket("ws://192.168.160.172/driverHandler");
-        // client.onopen = function () {
-        //   client.send("start,1");
-        // };
-        // client.onmessage = function (msg) {
-        //   var data = JSON.parse(msg.data);
-        //   switch (data.command) {
-        //     case "request":
-        //       $rootScope.tripInfo = data.tripInfo;
-        //       break;
-        //     case "acceptedbyother":
-        //
-        //       break;
-        //     case "delivery":
-        //
-        //       break;
-        //   }
-        // };
-        var url = "http://uniroo.cfapps.io/api/1/requestInfo";
-        $http.post(url, $rootScope.selectedId).success(function (data, status, headers, config) {
-          if (!$rootScope.trips)
-            $rootScope.trips = [];
-          $rootScope.trips.push(data);
-        }).catch(function (err) {
-          WebService.myErrorHandler(err, true);
-        });
+        var client = new WebSocket("ws://192.168.1.12:8080/driverHandler");
+        client.onopen = function () {
+           client.send("start,1");
+        };
+        client.onmessage = function (msg) {
+           var data = JSON.parse(msg.data);
+           switch (data.command) {
+             case "request":
+               if (!$rootScope.trips)
+                 $rootScope.trips = [];
+               $rootScope.trips.push(data.tripInfo);
+               break;
+             case "acceptedbyother":
+
+               break;
+             case "delivery":
+
+               break;
+           }
+        };
       } else {
-        // var client = new WebSocket("ws://192.168.160.172/userHandler");
-        // client.onopen = function () {
-        //   client.send("join,2");
-        // };
-        // client.onmessage = function (msg) {
-        //   var data = JSON.parse(msg.data);
-        //   switch (data.command) {
-        //     case "driverinfo":
-        //       $rootScope.driverInfo = data.driverInfoDTO;
-        //       break;
-        //     case "delivery":
-        //
-        //       break;
-        //   }
-        // };
-        var url = "http://uniroo.cfapps.io/api/1/approvedInfo";
-        $http.post(url, $rootScope.selectedId).success(function (data, status, headers, config) {
-          $rootScope.driverInfo = data.driverInfoDTO;
-        }).catch(function (err) {
-          WebService.myErrorHandler(err, true);
-        });
+        var client = new WebSocket("ws://192.168.1.12:8080/userHandler");
+        client.onopen = function () {
+           client.send("join,2");
+        };
+        client.onmessage = function (msg) {
+           var data = JSON.parse(msg.data);
+           switch (data.command) {
+             case "driverinfo":
+               $rootScope.driverInfo = data.driverInfoDTO;
+               break;
+             case "delivery":
+
+               break;
+           }
+        };
       }
       if ($rootScope.isDriver) {
         $rootScope.menu = [{id: "1", img: "img/1.png", title: "ثبت سفر", link: "#/app/newTrip"},

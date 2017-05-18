@@ -35,7 +35,7 @@ angular.module('starter.controllers', [])
           delete $http.defaults.headers.common.Authorization;
         } catch (e) {
         }
-        var url = "http://uniroo.cfapps.io/api/1/user_authenticate";
+        var url = "http://192.168.1.12:8080/api/1/user_authenticate";
         var data = {
           username: $("#mail").val(),
           password: $("#pwd").val(),
@@ -251,7 +251,7 @@ angular.module('starter.controllers', [])
         };
       }
       WebService.startLoading();
-      var url = "http://uniroo.cfapps.io/api/1/signup";
+      var url = "http://192.168.1.12:8080/api/1/signup";
       $http.post(url, data)
         .success(function (suc) {
           WebService.stopLoading();
@@ -266,7 +266,7 @@ angular.module('starter.controllers', [])
   .controller('SearchCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $state, WebService, $http) {
     $scope.search = function () {
       WebService.startLoading();
-      var url = "http://uniroo.cfapps.io/api/1/searchForDriver";
+      var url = "http://192.168.1.12:8080/api/1/searchForDriver";
       var data = {
         source: $("#from").val(),
         destination: $("#to").val(),
@@ -298,7 +298,7 @@ angular.module('starter.controllers', [])
     $scope.showFooter = true;
     $timeout(function () {
       WebService.startLoading();
-      var url = "http://uniroo.cfapps.io/api/1/detail";
+      var url = "http://192.168.1.12:8080/api/1/detail";
       $http.post(url, $rootScope.selectedId).success(function (data, status, headers, config) {
         $scope.detail = data;
         $scope.showDetail = true;
@@ -309,7 +309,7 @@ angular.module('starter.controllers', [])
       });
     }, 700);
     $scope.request = function () {
-      var url = "http://uniroo.cfapps.io/api/1/Request";
+      var url = "http://192.168.1.12:8080/api/1/Request";
       $http.post(url, $rootScope.selectedId).success(function (data, status, headers, config) {
         $scope.showFooter = false;
       }).catch(function (err) {
