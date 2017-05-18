@@ -329,7 +329,7 @@ angular.module('starter.controllers', [])
     });
     $scope.doSelect = function (item) {
       var index = $.inArray(selectedIds, item.uid);
-      if (index != -1) {
+      if (index == -1) {
         selectedIds.push(item.uid);
         $scope.totalAmount += item.cost;
       } else {
