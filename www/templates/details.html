@@ -45,13 +45,13 @@
     </ion-list>
   </ion-content>
     <ion-footer-bar class="footer dark-blue" ng-show="showDetail">
-        <div class="row">
+        <div class="row" ng-show="showFooter">
           <div class="col col-50 total text-left">
             <h4 class="yellow">مجموع: {{detail.cost}} <sup>تومان</sup></h4>
             <span>برای تمامی افراد</span>
           </div>
             <div class="col col-50 text-right">
-                <p ng-click="request()">درخواست <i class="ion-ios-arrow-back"></i></p>
+                <p ng-click="request()">درخواست </p>
             </div>
         </div>
     </ion-footer-bar>

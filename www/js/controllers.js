@@ -265,6 +265,7 @@ angular.module('starter.controllers', [])
   })
   .controller('SearchCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $state, WebService, $http) {
     $scope.search = function () {
+      WebService.startLoading();
       var url = "http://uniroo.cfapps.io/api/1/searchForDriver";
       var data = {
         source: $("#from").val(),
@@ -283,15 +284,18 @@ angular.module('starter.controllers', [])
 
   .controller('DataCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $state) {
     $rootScope.selectedId;
+    $scope.totalCost = 0;
     $scope.doSelect = function (item) {
       if ($rootScope.selectedId) {
         $('#' + $rootScope.selectedId).prop('checked', false);
       }
       $rootScope.selectedId = item.uid;
+      $scope.totalCost = item.cost;
     };
   })
 
   .controller('DetailsCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http) {
+    $scope.showFooter = true;
     $timeout(function () {
       WebService.startLoading();
       var url = "http://uniroo.cfapps.io/api/1/detail";
@@ -307,6 +311,7 @@ angular.module('starter.controllers', [])
     $scope.request = function () {
       var url = "http://uniroo.cfapps.io/api/1/Request";
       $http.post(url, $rootScope.selectedId).success(function (data, status, headers, config) {
+        $scope.showFooter = false;
       }).catch(function (err) {
         WebService.myErrorHandler(err, true);
       });
@@ -338,6 +343,10 @@ angular.module('starter.controllers', [])
   })
 
   .controller('AcceptedTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http) {
+
+  })
+
+  .controller('NewTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http) {
 
   })
 

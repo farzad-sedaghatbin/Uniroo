@@ -222,7 +222,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         });
       }
       if ($rootScope.isDriver) {
-        $rootScope.menu = [{id: "1", img: "img/1.png", title: "جست و جو", link: "#/app/search"},
+        $rootScope.menu = [{id: "1", img: "img/1.png", title: "ثبت سفر", link: "#/app/newTrip"},
           {id: "2", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
           {id: "3", img: "img/3.png", title: "پیشنهاد ها", link: "#/app/offers"},
           {id: "4", img: "img/4.png", title: "ثبت نام", link: "#/app/register"},
@@ -270,6 +270,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           'menuContent': {
             templateUrl: "templates/search.html",
             controller: "SearchCtrl"
+          }
+        }
+      })
+
+      .state('app.newTrip', {
+        url: "/newTrip",
+        views: {
+          'menuContent': {
+            templateUrl: "templates/newTrip.html",
+            controller: "NewTripCtrl"
           }
         }
       })
