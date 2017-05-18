@@ -198,7 +198,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
               $rootScope.$apply();
               break;
             case "requests":
-              $rootScope.trips = data.tripInfo;
+              $rootScope.trips = data.tripInfos;
               $rootScope.$apply();
               break;
           }
