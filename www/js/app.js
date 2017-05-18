@@ -170,49 +170,62 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       if ($rootScope.userid)
         $rootScope.prepareSocketsAndMenu();
     };
+    var client;
     $rootScope.prepareSocketsAndMenu = function () {
       if ($rootScope.isDriver) {
-        var client = new WebSocket("ws://192.168.1.12:8080/driverHandler");
-        client.onopen = function () {
-           client.send("start,1");
-        };
-        client.onmessage = function (msg) {
-           var data = JSON.parse(msg.data);
-           switch (data.command) {
-             case "request":
-               if (!$rootScope.trips)
-                 $rootScope.trips = [];
-               $rootScope.trips.push(data.tripInfo);
-               $rootScope.$apply();
-               break;
-             case "requests":
-               if (!$rootScope.trips)
-                 $rootScope.trips = [];
-               $rootScope.trips.push(data.tripInfo);
-               break;
-             case "acceptedbyother":
-
-               break;
-             case "delivery":
-
-               break;
-           }
+        createDriver();
+        client.onerror = function (event) {
+          createDriver()
         };
       } else {
-        var client = new WebSocket("ws://192.168.1.12:8080/userHandler");
+        createPassenger();
+        client.onerror = function (event) {
+          createPassenger();
+        };
+      }
+      function createDriver(){
+        client = new WebSocket("ws://192.168.1.12:8080/driverHandler");
         client.onopen = function () {
-           client.send("join,2");
+          client.send("start,1");
         };
         client.onmessage = function (msg) {
-           var data = JSON.parse(msg.data);
-           switch (data.command) {
-             case "driverinfo":
-               $rootScope.driverInfo = data.driverInfoDTO;
-               break;
-             case "delivery":
+          var data = JSON.parse(msg.data);
+          switch (data.command) {
+            case "request":
+              if (!$rootScope.trips)
+                $rootScope.trips = [];
+              $rootScope.trips.push(data.tripInfo);
+              $rootScope.$apply();
+              break;
+            case "requests":
+              if (!$rootScope.trips)
+                $rootScope.trips = [];
+              $rootScope.trips.push(data.tripInfo);
+              break;
+            case "acceptedbyother":
 
-               break;
-           }
+              break;
+            case "delivery":
+
+              break;
+          }
+        };
+      }
+      function createPassenger(){
+        client = new WebSocket("ws://192.168.1.12:8080/userHandler");
+        client.onopen = function () {
+          client.send("join,2");
+        };
+        client.onmessage = function (msg) {
+          var data = JSON.parse(msg.data);
+          switch (data.command) {
+            case "driverinfo":
+              $rootScope.driverInfo = data.driverInfoDTO;
+              break;
+            case "delivery":
+
+              break;
+          }
         };
       }
       if ($rootScope.isDriver) {

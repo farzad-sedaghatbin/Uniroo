@@ -318,7 +318,7 @@ angular.module('starter.controllers', [])
     }
   })
 
-  .controller('OffersCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $state) {
+  .controller('OffersCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $http) {
     var selectedIds = [];
     $scope.totalAmount = 0;
     $scope.$on('$stateChangeStart', function () {
