@@ -198,9 +198,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
               $rootScope.$apply();
               break;
             case "requests":
-              if (!$rootScope.trips)
-                $rootScope.trips = [];
-              $rootScope.trips.push(data.tripInfo);
+              $rootScope.trips = data.tripInfo;
+              $rootScope.$apply();
               break;
           }
         };
@@ -215,9 +214,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           switch (data.command) {
             case "driverinfo":
               $rootScope.driverInfo = data.driverInfoDTO;
+              $rootScope.$apply();
               break;
             case "activeTrip":
               $rootScope.driverInfo = data.driverInfoDTO;
+              $rootScope.$apply();
               break;
           }
         };
