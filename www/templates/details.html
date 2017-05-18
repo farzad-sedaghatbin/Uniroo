@@ -1,14 +1,14 @@
 <ion-view view-title="<img src='img/ulogo.png' class='about-views' />جزییات سفر">
   <ion-content class="det_content my_booking" ng-show="showDetail">
     <ion-list>
-        <ion-item class="main-bg-color animated fadeInUp">
+        <ion-item class="main-bg-color animated fadeInUp" style="text-align: right">
               <div class="items-detail">
                   <div class="Passenger dark-blue padding">
-                      <p>{{detail.date}}</p>
+                      <p class="margin-10">{{detail.date}}</p>
                   </div>
               </div>
-              <p>عازم {{detail.destination}}</p>
-              <p><span class="yellow">{{detail.car}}</span>{{detail.number}}</p>
+              <p class="margin-10">عازم {{detail.destination}}</p>
+              <p class="margin-10"><span class="yellow">{{detail.car}}</span>{{detail.number}}</p>
 
 
               <div class="row plane-time">
@@ -17,23 +17,23 @@
                       <img src="img/car2.png" ng-if="$index % 2 ==0"/>
                   </div>
                   <div class="col col-40 start-trip text-center">
-                      <p><span>{{detail.source}} </span></p>
+                      <p class="margin-10"><span>{{detail.source}} </span></p>
                   </div>
                 <i class="ion-arrow-right-a"></i>
                 <div class="col col-40 text-center">
-                      <p class="arrive">{{detail.time}}<span>{{detail.destination}}</span></p>
+                      <p class="arrive margin-10">{{detail.time}}<span>{{detail.destination}}</span></p>
                   </div>
 
               </div>
           </ion-item>
 
-        <ion-item class="main-bg-color animated fadeInUp">
+        <ion-item class="main-bg-color animated fadeInUp" style="text-align: right">
               <div class="items-detail">
                   <div class="Passenger dark-blue padding">
-                      <p>{{detail.driver}}</p>
+                      <p class="margin-10">{{detail.driver}}</p>
                   </div>
               </div>
-              <p><span class="yellow">شماره تماس</span>{{detail.tel}}</p>
+              <p class="margin-10"><span class="yellow">شماره تماس</span><span style="color: black">{{detail.tel}}</span></p>
               <div class="row plane-time">
                   <div class="col col-20">
                       <img src="img/car2r.png" ng-if="$index % 2 !=0"/>

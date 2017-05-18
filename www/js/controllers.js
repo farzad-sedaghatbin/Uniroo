@@ -4,7 +4,6 @@ angular.module('starter.controllers', [])
     $scope.closeLogin = function () {
       $scope.mainModal.hide();
     };
-
     $scope.closeSignUp = function () {
       $scope.mainModal.hide();
     };
@@ -67,13 +66,6 @@ angular.module('starter.controllers', [])
     };
 
     $scope.signUp = {};
-    $scope.logout = function () {
-      $ionicHistory.nextViewOptions({
-        disableAnimate: true,
-        disableBack: true
-      });
-      $state.go('login', {}, {reload: true});
-    };
   })
 
   .controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
@@ -108,7 +100,7 @@ angular.module('starter.controllers', [])
       }, 1000);
     };
   })
-  .controller('SignupCtrl', function ($scope, $ionicModal, $timeout, $ionicPopup, $rootScope, $state) {
+  .controller('SignupCtrl', function ($scope, $ionicModal, $timeout, $ionicPopup, $rootScope, $state, $http, WebService) {
     $timeout(function () {
       $(".buttons-right").css("display", "none");
       $(".back-button").css("display", "block");
@@ -204,83 +196,75 @@ angular.module('starter.controllers', [])
       }, options);
     };
     $scope.do_signUp = function (form) {
-      $state.go("home")
-      // if (!$scope.isPassengerParam) {
-      //   if (!$scope.driver) {
-      //     $ionicPopup.alert({
-      //       title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-      //       template: '<p class="text-center color-gery">' + "عکس راننده انتخاب نشده است" + '</p>'
-      //     });
-      //   } else if (!$scope.license) {
-      //     $ionicPopup.alert({
-      //       title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-      //       template: '<p class="text-center color-gery">' + "عکس گواهینامه انتخاب نشده است" + '</p>'
-      //     });
-      //   } else if (!$scope.car) {
-      //     $ionicPopup.alert({
-      //       title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-      //       template: '<p class="text-center color-gery">' + "عکس کارت ماشین انتخاب نشده است" + '</p>'
-      //     });
-      //   } else if (!$scope.insurance) {
-      //     $ionicPopup.alert({
-      //       title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-      //       template: '<p class="text-center color-gery">' + "عکس بیمه نامه انتخاب نشده است" + '</p>'
-      //     });
-      //   }
-      // } else {
-      //   if (!$scope.student) {
-      //     $ionicPopup.alert({
-      //       title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-      //       template: '<p class="text-center color-gery">' + "عکس کارت دانشجویی انتخاب نشده است" + '</p>'
-      //     });
-      //   }
-      // }
-      // WebService.startLoading();
-      // //$state.go('view', {movieid: 1});
-      // if (
-      //   form.$valid
-      //   && $scope.signUp.pwd == $scope.signUp.c_pwd
-      // //true
-      // ) {
-      //   var post_data = {
-      //     'secret_key': secret_key,
-      //     'Email': $scope.signUp.mail,
-      //     'Password': $scope.signUp.pwd,
-      //     'Mobile': $scope.signUp.mobile,
-      //     'User_name': $scope.signUp.user_name,
-      //     'Name': $scope.signUp.name,
-      //   }
-      //
-      //   var url = "http://127.0.0.1:8080/api/1/signup";
-      //   var data = {
-      //     firstName: $scope.signUp.name,
-      //     lastName: $scope.signUp.name,
-      //     username: $scope.signUp.user_name,
-      //     mobile: $scope.signUp.mobile,
-      //     password: $scope.signUp.pwd
-      //   };
-      //   $http.post(url, data)
-      //     .success(function (suc) {
-      //       WebService.stopLoading();
-      //       $state.go("app.landing");
-      //     }).error(function (err) {
-      //     WebService.stopLoading();
-      //     WebService.myErrorHandler(err,false);
-      //   });
-      // } else {
-      //   form.pwd.$setDirty();
-      //   form.number.$setDirty();
-      //   form.mail.$setDirty();
-      //   form.name.$setDirty();
-      //   form.user_name.$setDirty();
-      //
-      // }
-
+      var data;
+      if (!$scope.isPassengerParam) {
+        // if (!$scope.driver) {
+        //   $ionicPopup.alert({
+        //     title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+        //     template: '<p class="text-center color-gery">' + "عکس راننده انتخاب نشده است" + '</p>'
+        //   });
+        // } else if (!$scope.license) {
+        //   $ionicPopup.alert({
+        //     title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+        //     template: '<p class="text-center color-gery">' + "عکس گواهینامه انتخاب نشده است" + '</p>'
+        //   });
+        // } else if (!$scope.car) {
+        //   $ionicPopup.alert({
+        //     title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+        //     template: '<p class="text-center color-gery">' + "عکس کارت ماشین انتخاب نشده است" + '</p>'
+        //   });
+        // } else if (!$scope.insurance) {
+        //   $ionicPopup.alert({
+        //     title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+        //     template: '<p class="text-center color-gery">' + "عکس بیمه نامه انتخاب نشده است" + '</p>'
+        //   });
+        // }
+        data = {
+          firstName: $("#name").val(),
+          lastName: $("#family").val(),
+          username: $("#username").val(),
+          mobile: $("#tel").val(),
+          password: $("#pass").val(),
+          isDriver: !$scope.isPassengerParam,
+          gender: $("#gender").val() == "1",
+          driver: $scope.driver,
+          license: $scope.license,
+          car: $scope.car,
+          insurance: $scope.insurance
+        };
+      } else {
+        if (!$scope.student) {
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "عکس کارت دانشجویی انتخاب نشده است" + '</p>'
+          });
+        }
+        data = {
+          firstName: $("#name").val(),
+          lastName: $("#family").val(),
+          username: $("#username").val(),
+          mobile: $("#tel").val(),
+          password: $("#pass").val(),
+          isDriver: !$scope.isPassengerParam,
+          gender: $("#gender").val() == "1",
+          license: $scope.student
+        };
+      }
+      WebService.startLoading();
+      var url = "http://uniroo.cfapps.io/api/1/signup";
+      $http.post(url, data)
+        .success(function (suc) {
+          WebService.stopLoading();
+          $state.go("app.search");
+        }).error(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err, false);
+      });
     };
 
   })
-  .controller('SearchCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $state,WebService,$http) {
-    $scope.search = function(){
+  .controller('SearchCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $state, WebService, $http) {
+    $scope.search = function () {
       var url = "http://uniroo.cfapps.io/api/1/searchForDriver";
       var data = {
         source: $("#from").val(),
@@ -301,14 +285,14 @@ angular.module('starter.controllers', [])
     $rootScope.selectedId;
     $scope.doSelect = function (item) {
       if ($rootScope.selectedId) {
-        $('#'+$rootScope.selectedId).prop('checked', false);
+        $('#' + $rootScope.selectedId).prop('checked', false);
       }
       $rootScope.selectedId = item.uid;
     };
   })
 
-  .controller('DetailsCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService,$http) {
-    $timeout(function(){
+  .controller('DetailsCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http) {
+    $timeout(function () {
       WebService.startLoading();
       var url = "http://uniroo.cfapps.io/api/1/detail";
       $http.post(url, $rootScope.selectedId).success(function (data, status, headers, config) {
@@ -319,9 +303,9 @@ angular.module('starter.controllers', [])
         WebService.stopLoading();
         WebService.myErrorHandler(err, true);
       });
-    },700);
-    $scope.request = function(){
-      var url = "http://uniroo.cfapps.io/api/1/request";
+    }, 700);
+    $scope.request = function () {
+      var url = "http://uniroo.cfapps.io/api/1/Request";
       $http.post(url, $rootScope.selectedId).success(function (data, status, headers, config) {
       }).catch(function (err) {
         WebService.myErrorHandler(err, true);
@@ -329,8 +313,57 @@ angular.module('starter.controllers', [])
     }
   })
 
-  .controller('AcceptedTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService,$http) {
+  .controller('OffersCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $state) {
+    var selectedIds = [];
+    $scope.totalAmount = 0;
+    $scope.$on('$stateChangeStart', function () {
+      $('input[type=checkbox]').each(function () {
+        $(this).prop('checked', false);
+      });
+      selectedIds = [];
+    });
+    $scope.doSelect = function (item) {
+      var index = $.inArray(selectedIds, item.uid);
+      if (index != -1) {
+        selectedIds.push(item.uid);
+        $scope.totalAmount += item.cost;
+      } else {
+        selectedIds.splice(index,1);
+        $scope.totalAmount -= item.cost;
+      }
+    };
+    $scope.accept = function(){
 
+    }
+  })
+
+  .controller('AcceptedTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http) {
+
+  })
+
+  .controller('ReservationsCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http) {
+    $timeout(function () {
+      alert("SDfsf")
+    }, 100)
+  })
+
+  .controller('HomeCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $state,$http) {
+    $timeout(function () {
+      document.getElementById('fab-rate').classList.toggle('on');
+    }, 600);
+    $scope.logout = function(){
+      var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
+      db.transaction(function (tx) {
+        tx.executeSql('DELETE FROM ANIJUU');
+      });
+      $rootScope.userid = null;
+      $rootScope.isDriver = null;
+      try {
+        delete $http.defaults.headers.common.Authorization;
+      } catch (e) {
+      }
+      $state.go("login")
+    }
   })
 
   .controller('PlaylistCtrl', function ($scope, $stateParams) {

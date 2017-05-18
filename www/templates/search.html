@@ -1,4 +1,4 @@
-<ion-view view-title="<img src='img/ulogo.png' />">
+<ion-view view-title="<img src='img/ulogo.png' class='about-views' />">
   <ion-content class="search_content main-bg-color" scroll="false">
       <div class="tab-content animated fadeInUp">
         <ion-scroll direction="y" style="height: 100%">
@@ -34,7 +34,7 @@
                             <span><i class="ion-calendar sec-main-text-color"></i>تاریخ حرکت</span>
                       </div>
                       <div class="row">
-                      <input type="number" placeholder="YYYY" id="year" onkeydown="limitSize(event,'year',4)" style="width: 50px">&nbsp;&nbsp;&nbsp;<input type="number" placeholder="MM" id="month" onkeydown="limitSize(event,'month',2)" style="width: 25px">&nbsp;&nbsp;&nbsp;<input type="number" placeholder="DD" id="day" onkeydown="limitSize(event,'day',2)" style="width: 25px">
+                      <input type="number" placeholder="YYYY" id="year" onkeydown="limitSize(event,'year',4)" style="width: 100px;text-align: center;border-radius: 5px">&nbsp;&nbsp;&nbsp;<input type="number" placeholder="MM" id="month" onkeydown="limitSize(event,'month',2)" style="width: 50px;text-align: center;border-radius: 5px">&nbsp;&nbsp;&nbsp;<input type="number" placeholder="DD" id="day" onkeydown="limitSize(event,'day',2)" style="width: 50px;text-align: center;border-radius: 5px">
                     </div>
 
                 </div>
@@ -43,7 +43,7 @@
       </div>
   </ion-content>
     <ion-footer-bar class="footer sec-main-bg-color">
-        <a ng-click="search()" class="button button-block">
+        <a ng-click="search()" class="button button-block" style="min-width: 100%">
         جست و جو
         </a>
     </ion-footer-bar>
