@@ -202,12 +202,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                 $rootScope.trips = [];
               $rootScope.trips.push(data.tripInfo);
               break;
-            case "acceptedbyother":
-
-              break;
-            case "delivery":
-
-              break;
           }
         };
       }
@@ -222,8 +216,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             case "driverinfo":
               $rootScope.driverInfo = data.driverInfoDTO;
               break;
-            case "delivery":
-
+            case "activeTrip":
+              $rootScope.driverInfo = data.driverInfoDTO;
               break;
           }
         };
