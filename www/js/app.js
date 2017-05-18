@@ -183,6 +183,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                if (!$rootScope.trips)
                  $rootScope.trips = [];
                $rootScope.trips.push(data.tripInfo);
+               $rootScope.$apply();
+               break;
+             case "requests":
+               if (!$rootScope.trips)
+                 $rootScope.trips = [];
+               $rootScope.trips.push(data.tripInfo);
                break;
              case "acceptedbyother":
 
