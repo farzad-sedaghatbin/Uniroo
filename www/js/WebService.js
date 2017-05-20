@@ -194,7 +194,7 @@ app.service('WebService', function( $http, $q, $ionicLoading){
    this.startLoading = function () {
      $ionicLoading.show({
        showBackdrop: true,
-       hideOnStateChange: false
+       hideOnStateChange: true
      });
    };
    this.stopLoading = function () {

@@ -32,6 +32,9 @@ a{
 .dark-blue{
     background: #0e1948 !important
 }
+.margin-10{
+  margin: 10px;
+}
 /***************** header ***************/
 .bar .home-title.title{
     height: 70px
@@ -671,7 +674,7 @@ a{
     min-height: 90px
 }
 .travel-time{
-    line-height: 12px
+
 }
 .travel-time .col{
     padding: 0

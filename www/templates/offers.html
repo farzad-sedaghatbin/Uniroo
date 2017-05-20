@@ -3,7 +3,7 @@
   <ion-content class="det_content my_booking search-result">
     <ion-list>
         <ion-item class="main-bg-color"
-                    ng-repeat="item in data">
+                    ng-repeat="item in trips">
             <div class="row plane-time animated fadeInUp">
                 <div class="col col-20 text-center">
                     <img src="img/car2r.png" ng-if="$index % 2 !=0"/>
@@ -26,20 +26,20 @@
                         <div class="col col-33 text-left">
                             <p>
                                 <i class="ion-ios-clock-outline"></i>
-{{tripInfo.name}} {{tripInfo.family}}
+{{item.name}} {{item.family}}
                             </p>
                         </div>
                         <div class="col col-33">
-                            <p>{{tripInfo.mobile}}</p>
+                            <p>{{item.mobile}}</p>
                         </div>
                         <div class="col col-33">
-                            <h4 class="yellow">10000 تومان</h4>
+                            <h4 class="yellow">{{item.cost}} تومان</h4>
                         </div>
                     </div>
                 </div>
                 <div class="col">
-                    <input type="checkbox" name="check" id="offer{{item.id}}">
-                    <label for="offer{{item.id}}"> <span></span>
+                    <input type="checkbox" ng-click="doSelect(item)" name="check" id="{{item.uid}}">
+                    <label for="{{item.uid}}"> <span></span>
                     </label>
                 </div>
             </div>
@@ -49,13 +49,13 @@
     </ion-list>
   </ion-content>
      <ion-footer-bar class="footer dark-blue">
-        <div class="row">
+        <div class="row" ng-show="totalAmount > 0">
             <div class="col col-50 total text-left">
-                <h4 class="yellow">مجموع 10000 <sup>تومان</sup></h4>
+                <h4 class="yellow">مجموع {{totalAmount}} <sup>تومان</sup></h4>
                 <span>برای همه ی همراهان</span>
             </div>
             <div class="col col-50 text-right">
-                <p ng-click="goto('/app/details')">ادامه <i class="ion-ios-arrow-back"></i></p>
+                <p ng-click="accept()">ادامه <i class="ion-ios-arrow-back"></i></p>
             </div>
         </div>
     </ion-footer-bar>

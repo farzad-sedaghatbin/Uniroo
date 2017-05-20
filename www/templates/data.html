@@ -43,9 +43,9 @@
     </ion-list>
   </ion-content>
      <ion-footer-bar class="footer dark-blue">
-        <div class="row">
+        <div class="row" ng-show="totalCost>0">
             <div class="col col-50 total text-left">
-                <h4 class="yellow">مجموع: 10000 <sup>تومان</sup></h4>
+                <h4 class="yellow">مجموع: {{totalCost}} <sup>تومان</sup></h4>
                 <span>برای تمامی افراد</span>
             </div>
             <div class="col col-50 text-right">

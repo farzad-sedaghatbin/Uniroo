@@ -8,8 +8,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   /* //if use wakanda platform
    angular.module('starter', ['ionic', 'starter.controllers','wakanda'])
    */
-  .run(function ($ionicPlatform, $rootScope, $location, $ionicScrollDelegate, $ionicPopup, $http) {
-
+  .run(function ($ionicPlatform, $rootScope, $location, $ionicScrollDelegate, $ionicPopup, $http,$state) {
     /*************** forget password ****************/
 
     $rootScope.forget_password = function () {
@@ -128,7 +127,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }, null);
     });
     var setUserId = function (result) {
-      $rootScope.userid = result;
+      if (!result){
+        $state.go("login")
+      } else {
+        $rootScope.userid = result;
+      }
     };
     db.transaction(function (tx) {
       tx.executeSql('SELECT d.log FROM ANIJUU d WHERE d.name="driver"', [], function (tx, results) {
@@ -167,9 +170,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       if ($rootScope.userid)
         $rootScope.prepareSocketsAndMenu();
     };
+    var client;
     $rootScope.prepareSocketsAndMenu = function () {
       if ($rootScope.isDriver) {
-        var client = new WebSocket("wss://uniroo.cfapps.io:4443/driverHandler");
+        createDriver();
+        client.onerror = function (event) {
+          createDriver()
+        };
+      } else {
+        createPassenger();
+        client.onerror = function (event) {
+          createPassenger();
+        };
+      }
+      function createDriver(){
+        client = new WebSocket("ws://192.168.1.12:8080/driverHandler");
         client.onopen = function () {
           client.send("start,1");
         };
@@ -177,18 +192,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           var data = JSON.parse(msg.data);
           switch (data.command) {
             case "request":
-              $rootScope.tripInfo = data.tripInfo;
+              if (!$rootScope.trips)
+                $rootScope.trips = [];
+              $rootScope.trips.push(data.tripInfo);
+              $rootScope.$apply();
               break;
-            case "acceptedbyother":
-
-              break;
-            case "delivery":
-
+            case "requests":
+              $rootScope.trips = data.tripInfos;
+              $rootScope.$apply();
               break;
           }
         };
-      } else {
-        var client = new WebSocket("wss://uniroo.cfapps.io:4443/userHandler");
+      }
+      function createPassenger(){
+        client = new WebSocket("ws://192.168.1.12:8080/userHandler");
         client.onopen = function () {
           client.send("join,2");
         };
@@ -197,17 +214,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           switch (data.command) {
             case "driverinfo":
               $rootScope.driverInfo = data.driverInfoDTO;
+              $rootScope.$apply();
               break;
-            case "delivery":
-
+            case "activeTrip":
+              $rootScope.driverInfo = data.driverInfoDTO;
+              $rootScope.$apply();
               break;
           }
         };
       }
       if ($rootScope.isDriver) {
-        $rootScope.menu = [{id: "1", img: "img/1.png", title: "جست و جو", link: "#/app/search"},
+        $rootScope.menu = [{id: "1", img: "img/1.png", title: "ثبت سفر", link: "#/app/newTrip"},
           {id: "2", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
-          {id: "3", img: "img/3.png", title: "پیشنهاد ها", link: "#/app/offer"},
+          {id: "3", img: "img/3.png", title: "پیشنهاد ها", link: "#/app/offers"},
           {id: "4", img: "img/4.png", title: "ثبت نام", link: "#/app/register"},
           {id: "5", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
           {id: "6", img: "img/6.png", title: "درباره ما", link: "#/login"}]
@@ -232,7 +251,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
       .state('home', {
         url: "/home",
-        templateUrl: "templates/home.html"
+        templateUrl: "templates/home.html",
+        controller : "HomeCtrl"
       })
       .state('login', {
         url: '/login',
@@ -252,6 +272,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           'menuContent': {
             templateUrl: "templates/search.html",
             controller: "SearchCtrl"
+          }
+        }
+      })
+
+      .state('app.newTrip', {
+        url: "/newTrip",
+        views: {
+          'menuContent': {
+            templateUrl: "templates/newTrip.html",
+            controller: "NewTripCtrl"
           }
         }
       })
@@ -314,11 +344,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       })
 
-      .state('app.offer', {
-        url: "/offer",
+      .state('app.offers', {
+        url: "/offers",
         views: {
           'menuContent': {
-            templateUrl: "templates/offer.html"
+            templateUrl: "templates/offers.html",
+            controller : "OffersCtrl"
           }
         }
       })
