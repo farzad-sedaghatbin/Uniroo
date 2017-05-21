@@ -35,7 +35,7 @@ angular.module('starter.controllers', [])
           delete $http.defaults.headers.common.Authorization;
         } catch (e) {
         }
-        var url = "http://192.168.1.12:8080/api/1/user_authenticate";
+        var url = "http://192.168.160.172:8080/api/1/user_authenticate";
         var data = {
           username: $("#mail").val(),
           password: $("#pwd").val(),
@@ -78,23 +78,13 @@ angular.module('starter.controllers', [])
     }).then(function (modal) {
       $scope.modal = modal;
     });
-
-    // Triggered in the login modal to close it
     $scope.closeLogin = function () {
       $scope.modal.hide();
     };
-
-    // Open the login modal
     $scope.login = function () {
       $scope.modal.show();
     };
-
-    // Perform the login action when the user submits the login form
     $scope.doLogin = function () {
-      console.log('Doing login', $scope.loginData);
-
-      // Simulate a login delay. Remove this and replace with your login
-      // code if using a login system
       $timeout(function () {
         $scope.closeLogin();
       }, 1000);
@@ -198,33 +188,13 @@ angular.module('starter.controllers', [])
     $scope.do_signUp = function (form) {
       var data;
       if (!$scope.isPassengerParam) {
-        // if (!$scope.driver) {
-        //   $ionicPopup.alert({
-        //     title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-        //     template: '<p class="text-center color-gery">' + "عکس راننده انتخاب نشده است" + '</p>'
-        //   });
-        // } else if (!$scope.license) {
-        //   $ionicPopup.alert({
-        //     title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-        //     template: '<p class="text-center color-gery">' + "عکس گواهینامه انتخاب نشده است" + '</p>'
-        //   });
-        // } else if (!$scope.car) {
-        //   $ionicPopup.alert({
-        //     title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-        //     template: '<p class="text-center color-gery">' + "عکس کارت ماشین انتخاب نشده است" + '</p>'
-        //   });
-        // } else if (!$scope.insurance) {
-        //   $ionicPopup.alert({
-        //     title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-        //     template: '<p class="text-center color-gery">' + "عکس بیمه نامه انتخاب نشده است" + '</p>'
-        //   });
-        // }
         data = {
           firstName: $("#name").val(),
           lastName: $("#family").val(),
           username: $("#username").val(),
           mobile: $("#tel").val(),
           password: $("#pass").val(),
+          number: $("#number").val(),
           isDriver: !$scope.isPassengerParam,
           gender: $("#gender").val() == "1",
           driver: $scope.driver,
@@ -232,13 +202,74 @@ angular.module('starter.controllers', [])
           car: $scope.car,
           insurance: $scope.insurance
         };
-      } else {
-        if (!$scope.student) {
+        if (!data.firstName){
           $ionicPopup.alert({
             title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-            template: '<p class="text-center color-gery">' + "عکس کارت دانشجویی انتخاب نشده است" + '</p>'
+            template: '<p class="text-center color-gery">' + "نام اجباریست" + '</p>'
           });
+          return;
         }
+        if (!data.lastName){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "نام خانوادگی اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!data.username){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "نام کاربری اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!data.mobile){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "شماره موبایل اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!data.password){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "رمز عبور اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!data.number){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "پلاک ماشین اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!$scope.driver) {
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "عکس راننده انتخاب نشده است" + '</p>'
+          });
+          return;
+        } else if (!$scope.license) {
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "عکس گواهینامه انتخاب نشده است" + '</p>'
+          });
+          return;
+        } else if (!$scope.car) {
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "عکس کارت ماشین انتخاب نشده است" + '</p>'
+          });
+          return;
+        } else if (!$scope.insurance) {
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "عکس بیمه نامه انتخاب نشده است" + '</p>'
+          });
+          return;
+        }
+      } else {
         data = {
           firstName: $("#name").val(),
           lastName: $("#family").val(),
@@ -249,9 +280,51 @@ angular.module('starter.controllers', [])
           gender: $("#gender").val() == "1",
           license: $scope.student
         };
+        if (!data.firstName){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "نام اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!data.lastName){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "نام خانوادگی اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!data.username){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "نام کاربری اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!data.mobile){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "شماره موبایل اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!data.password){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "رمز عبور اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!$scope.student) {
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "عکس کارت دانشجویی انتخاب نشده است" + '</p>'
+          });
+          return;
+        }
       }
       WebService.startLoading();
-      var url = "http://192.168.1.12:8080/api/1/signup";
+      var url = "http://192.168.160.172:8080/api/1/signup";
       $http.post(url, data)
         .success(function (suc) {
           WebService.stopLoading();
@@ -266,11 +339,11 @@ angular.module('starter.controllers', [])
   .controller('SearchCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $state, WebService, $http) {
     $scope.search = function () {
       WebService.startLoading();
-      var url = "http://192.168.1.12:8080/api/1/searchForDriver";
+      var url = "http://192.168.160.172:8080/api/1/searchForDriver";
       var data = {
         source: $("#from").val(),
         destination: $("#to").val(),
-        day: $("#year").val() + "/" + $("month").val() + "/" + $("#day").val()
+        day: $("#year").val() + "/" + $("#month").val() + "/" + $("#day").val()
       };
       $http.post(url, data).success(function (data, status, headers, config) {
         $rootScope.data = data;
@@ -294,11 +367,11 @@ angular.module('starter.controllers', [])
     };
   })
 
-  .controller('DetailsCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http) {
+  .controller('DetailsCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http,$state) {
     $scope.showFooter = true;
     $timeout(function () {
       WebService.startLoading();
-      var url = "http://192.168.1.12:8080/api/1/detail";
+      var url = "http://192.168.160.172:8080/api/1/detail";
       $http.post(url, $rootScope.selectedId).success(function (data, status, headers, config) {
         $scope.detail = data;
         $scope.showDetail = true;
@@ -309,10 +382,17 @@ angular.module('starter.controllers', [])
       });
     }, 700);
     $scope.request = function () {
-      var url = "http://192.168.1.12:8080/api/1/Request";
+      WebService.startLoading();
+      var url = "http://192.168.160.172:8080/api/1/Request";
       $http.post(url, $rootScope.selectedId).success(function (data, status, headers, config) {
-        $scope.showFooter = false;
+        $.each($rootScope.data, function (index, value) {
+          if (value.uid == $rootScope.selectedId) {
+            $rootScope.data.splice(index, 1);
+          }
+        });
+        $state.go("app.data");
       }).catch(function (err) {
+        WebService.stopLoading();
         WebService.myErrorHandler(err, true);
       });
     }
@@ -339,7 +419,7 @@ angular.module('starter.controllers', [])
       $scope.$apply();
     };
     $scope.accept = function(){
-      var url = "http://192.168.1.12:8080/api/1/approvedDriver";
+      var url = "http://192.168.160.172:8080/api/1/approvedDriver";
       $http.post(url, selectedIds.toString()).success(function (data, status, headers, config) {
       }).catch(function (err) {
         WebService.myErrorHandler(err, true);
@@ -351,14 +431,189 @@ angular.module('starter.controllers', [])
 
   })
 
-  .controller('NewTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http) {
-
+  .controller('NewTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http,$ionicPopup,$cordovaToast) {
+    $scope.submit = function(){
+      var url = "http://192.168.160.172:8080/api/1/submitTrip";
+      var hour = $("#hour").val();
+      var minute = $("#minute").val();
+      var year = $("#year").val();
+      var month = $("#month").val();
+      var day = $("#day").val();
+      var data = {
+        source : $("#from").val(),
+        destination : $("#to").val(),
+        date : year + "/" + month + "/" + day,
+        time : hour + ":" + minute,
+        price : $("#cost").val(),
+        capacity : $("#num").val(),
+        type : $("#gender").val()
+      };
+      if (!data.source){
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+          template: '<p class="text-center color-gery">' + "مبدا سفر اجباریست" + '</p>'
+        });
+        return;
+      }
+      if (!data.destination){
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+          template: '<p class="text-center color-gery">' + "مقصد سفر اجباریست" + '</p>'
+        });
+        return;
+      }
+      if (!year || !month || !day){
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+          template: '<p class="text-center color-gery">' + "تاریخ سفر اجباریست" + '</p>'
+        });
+        return;
+      }
+      if (!hour || !minute){
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+          template: '<p class="text-center color-gery">' + "ساعت سفر اجباریست" + '</p>'
+        });
+        return;
+      }
+      if (!data.price){
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+          template: '<p class="text-center color-gery">' + "هزینه سفر اجباریست" + '</p>'
+        });
+        return;
+      }
+      if (!data.capacity){
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+          template: '<p class="text-center color-gery">' + "ظرفیت اجباریست" + '</p>'
+        });
+        return;
+      }
+      if (!data.type){
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+          template: '<p class="text-center color-gery">' + "جنسیت مسافر اجباریست" + '</p>'
+        });
+        return;
+      }
+      WebService.startLoading();
+      $http.post(url, data).success(function (data, status, headers, config) {
+        $cordovaToast.showShortBottom('سفر شما با موفقیت ثبت شد');
+        WebService.stopLoading();
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err, true);
+      });
+    }
   })
 
   .controller('ReservationsCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http) {
     $timeout(function () {
-      alert("SDfsf")
-    }, 100)
+      WebService.startLoading();
+      var url;
+      if ($rootScope.isDriver) {
+        url = "http://192.168.160.172:8080/api/1/driverTrips";
+      } else {
+        url = "http://192.168.160.172:8080/api/1/clientTrips";
+      }
+      $http.post(url).success(function (data, status, headers, config) {
+        $scope.trips = data;
+        WebService.stopLoading();
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err, true);
+      });
+    }, 700);
+    $scope.toggleGroup = function (group) {
+      if ($scope.isGroupShown(group)) {
+        $scope.shownGroup = null;
+      } else {
+        $scope.shownGroup = group;
+      }
+    };
+    $scope.isGroupShown = function (group) {
+      return $scope.shownGroup === group;
+    };
+  })
+
+  .controller('ForgetPassCtrl', function ($scope, $ionicPopup, $http, $rootScope, $state,WebService) {
+    delete $http.defaults.headers.common.Authorization;
+    $scope.$on('$ionicView.beforeEnter', function (e, viewData) {
+      $scope.$root.showMenuIcon = false;
+      viewData.enableBack = true;
+    });
+    $scope.username = "";
+    $scope.password = "";
+    $scope.confirmPass = "";
+    $scope.submit = function (username) {
+      WebService.startLoading();
+      var signUpUrl = "http://app.anijuu.ir/api/1/forget";
+      $http.post(signUpUrl, username)
+        .success(function (suc) {
+          if (suc == "201") {
+            $ionicPopup.alert({
+              title: '<span class="myText">خطا</span>',
+              template: '<div class="myText" style="text-align: right">نام کاربری اشتباه می باشد</div>'
+            });
+          } else {
+            $ionicPopup.alert({
+              title: '<span class="myText">پیام</span>',
+              template: '<div class="myText" style="text-align: right;direction: rtl">کد مورد نیاز برای تغییر کلمه عبور پیامک شد</div>'
+            });
+            $(".popup").css("width", "90%");
+            $scope.forgetPassCodeForm = true;
+          }
+          WebService.stopLoading();
+        })
+        .error(function (err) {
+          WebService.myHandleError(err);
+          WebService.stopLoading();
+        });
+    };
+    $scope.confirm = function (code, password) {
+      var signUpUrl = "http://app.anijuu.ir/api/1/confirmReset";
+      $http.post(signUpUrl, JSON.stringify({code: code, password: password}))
+        .success(function (suc) {
+          WebService.stopLoading();
+          if (suc == "200") {
+            $ionicPopup.alert({
+              title: '<span class="myText">پیام</span>',
+              template: '<div class="myText" style="text-align: right;direction: rtl">کلمه عبور با موفقیت تغییر کرد</div>'
+            });
+            $ionicNativeTransitions.stateGo('menuless.login', {}, {
+              "type": "slide",
+              "direction": "right",
+              "duration": 500
+            });
+          } else if (suc == "301") {
+            $ionicPopup.alert({
+              title: '<span class="myText">پیام</span>',
+              template: '<div class="myText" style="text-align: right;direction: rtl">خطا در عملیات. لطفا مجددا تلاش کنید</div>'
+            });
+            $ionicNativeTransitions.stateGo('menuless.login', {}, {
+              "type": "slide",
+              "direction": "right",
+              "duration": 500
+            });
+          } else {
+            $ionicPopup.alert({
+              title: '<span class="myText">پیام</span>',
+              template: '<div class="myText" style="text-align: right;direction: rtl">کد اشتباه می باشد</div>'
+            });
+          }
+          $(".popup").css("width", "90%");
+        })
+        .error(function (err) {
+          WebService.myHandleError(err);
+          WebService.stopLoading();
+        });
+    };
+    $scope.checkPassword = function (form, password, confirmPass) {
+      var result = password !== confirmPass;
+      $scope.result = result;
+      form.confirmPass.$setValidity("validity", !result);
+    };
   })
 
   .controller('HomeCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $state,$http) {

@@ -1,4 +1,4 @@
-<ion-view view-title="<img src='img/ulogo.png' class='about-views' />نتایج جست و جو">
+<ion-view view-title="<img src='img/ulogo.png' class='about-views myText' />نتایج جست و جو">
 
   <ion-content class="det_content my_booking search-result">
     <ion-list>
@@ -10,24 +10,24 @@
                     <img src="img/car2.png" ng-if="$index % 2 ==0"/>
                 </div>
                 <div class="col col-67 travel-det">
-                    <p>عازم به {{item.destination}}<span><i class="ion-calendar"></i>{{item.year}} {{item.month}} {{item.day}}</span></p>
+                    <p class="myText">عازم به {{item.destination}}<span class="myText"><i class="ion-calendar"></i>{{item.year}} {{item.month}} {{item.day}}</span></p>
                     <div class="row travel-time">
                         <div class="col col-33">
-                            <p>{{item.destination}}</p>
+                            <p class="myText">{{item.destination}}</p>
                         </div>
                         <div class="col col-33 text-center">
                             <img src="img/arrow2.png" />
                         </div>
                         <div class="col col-33">
-                            <p>{{item.source}}<span>{{item.time}}</span></p>
+                            <p class="myText">{{item.source}}<span class="myText">{{item.time}}</span></p>
                         </div>
                     </div>
                     <div class="row travel-time time-price text-center">
                         <div class="col col-33">
-                            <p>بدون توقف</p>
+                            <p class="myText">بدون توقف</p>
                         </div>
                         <div class="col col-33">
-                            <h4 class="yellow">{{item.cost}} تومان</h4>
+                            <h4 class="yellow myText">{{item.cost}} تومان</h4>
                         </div>
                     </div>
                 </div>
@@ -45,11 +45,11 @@
      <ion-footer-bar class="footer dark-blue">
         <div class="row" ng-show="totalCost>0">
             <div class="col col-50 total text-left">
-                <h4 class="yellow">مجموع: {{totalCost}} <sup>تومان</sup></h4>
-                <span>برای تمامی افراد</span>
+                <h4 class="yellow myText">مجموع: {{totalCost}} <sup>تومان</sup></h4>
+                <span class="myText">برای تمامی افراد</span>
             </div>
             <div class="col col-50 text-right">
-                <p ng-click="goto('/app/details')">ادامه <i class="ion-ios-arrow-back"></i></p>
+                <p class="myText" ng-click="goto('/app/details')">ادامه <i class="ion-ios-arrow-back"></i></p>
             </div>
         </div>
     </ion-footer-bar>

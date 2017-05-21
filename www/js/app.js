@@ -30,20 +30,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     };
 
     /*************** increment-decrement function ****************/
-    $rootScope.valueKids = 1;
     $rootScope.valueAdults = 1;
-    $rootScope.valueBabies = 1;
     $rootScope.increment_val = function (type) {
-      if (type == 'Kids' && $rootScope.valueKids >= 0) $rootScope.valueKids++;
-      if (type == 'Adults' && $rootScope.valueAdults >= 0) $rootScope.valueAdults++;
-      if (type == 'Babies' && $rootScope.valueBabies >= 0) $rootScope.valueBabies++;
+      if (type == 'Adults' && $rootScope.valueAdults >= 0 && $rootScope.valueAdults < 90) $rootScope.valueAdults++;
     };
     $rootScope.decrement_val = function (type) {
-      //if ($rootScope.value > 0)  $rootScope.value--;
-      if (type == 'Kids' && $rootScope.valueKids > 0) $rootScope.valueKids--;
       if (type == 'Adults' && $rootScope.valueAdults > 0) $rootScope.valueAdults--;
-      if (type == 'Babies' && $rootScope.valueBabies > 0) $rootScope.valueBabies--;
-
     };
 
     $rootScope.confirmMsg = function (index) {
@@ -53,39 +45,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     $rootScope.scrollTop = function () {
       $ionicScrollDelegate.scrollTop();
     };
-    /*************** group function ****************/
-    $rootScope.groups = [
-      {id: 1, items: [{subName: 'SubBubbles1'}]},
-
-      {id: 2, items: [{subName: 'SubBubbles1'}]},
-
-      {id: 3, items: [{subName: 'SubBubbles1'}]},
-
-      {id: 4, items: [{subName: 'SubBubbles1'}]},
-
-      {id: 5, items: [{subName: 'SubBubbles1'}]},
-
-      {id: 6, items: [{subName: 'SubBubbles1'}]},
-
-      {id: 7, items: [{subName: 'SubBubbles1'}]}
-    ];
-
-
-    /*
-     * if given group is the selected group, deselect it
-     * else, select the given group
-     */
-    $rootScope.toggleGroup = function (group) {
-      if ($rootScope.isGroupShown(group)) {
-        $rootScope.shownGroup = null;
-      } else {
-        $rootScope.shownGroup = group;
-      }
-    };
-    $rootScope.isGroupShown = function (group) {
-      return $rootScope.shownGroup === group;
-    };
-
     /*************** location function ****************/
     $rootScope.goto = function (url) {
       $location.path(url)
@@ -104,8 +63,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       $rootScope.$on('$cordovaNetwork:offline', function (event, networkState) {
         set_net('offline');
       });
-      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-      // for form inputs)
       if (window.cordova && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       }
@@ -184,7 +141,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         };
       }
       function createDriver(){
-        client = new WebSocket("ws://192.168.1.12:8080/driverHandler");
+        client = new WebSocket("ws://uniroo.cfapps.io/driverHandler");
         client.onopen = function () {
           client.send("start,1");
         };
@@ -205,7 +162,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         };
       }
       function createPassenger(){
-        client = new WebSocket("ws://192.168.1.12:8080/userHandler");
+        client = new WebSocket("ws://uniroo.cfapps.io/userHandler");
         client.onopen = function () {
           client.send("join,2");
         };
@@ -272,6 +229,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           'menuContent': {
             templateUrl: "templates/search.html",
             controller: "SearchCtrl"
+          }
+        }
+      })
+
+      .state('app.forget-pass', {
+        url: '/forget-pass',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/forget-pass.html',
+            controller: 'ForgetPassCtrl'
           }
         }
       })

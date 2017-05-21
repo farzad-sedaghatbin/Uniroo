@@ -1,75 +1,75 @@
-<ion-view view-title="<img src='img/ulogo.png' class='about-views' />ثبت نام">
+<ion-view view-title="<img src='img/ulogo.png' class='about-views myText' />ثبت نام">
   <ion-content class="register_content padding">
     <div class="bg-color app_form  animated fadeInUp">
-      <p class="head-tab sec-main-bg-color">اطلاعات شخصی</p>
+      <p class="head-tab sec-main-bg-color myText">اطلاعات شخصی</p>
       <div class="gander row">
         <div class="col col-50" ng-click="isPassenger(true)">
           <input type="radio" name="check" id="passenger" checked>
-          <label for="passenger"> <span></span>مسافر
+          <label for="passenger" class="myText">مسافر
           </label>
         </div>
 
         <div class="col col-50" ng-click="isPassenger(false)">
           <input type="radio" name="check" id="driver">
-          <label for="driver"> <span></span>راننده
+          <label for="driver" class="myText">راننده
           </label>
         </div>
       </div>
       <div class="tab-details bg-color">
-        <h4>جنسیت</h4>
+        <h4 class="myText">جنسیت</h4>
         <label class="item item-input item-select sel-item">
           <select id="gender" style="direction: rtl">
-            <option value="1">مرد</option>
-            <option value="2">زن</option>
+            <option class="myText" value="1" style="direction: rtl;text-align: right">مرد</option>
+            <option class="myText" value="2" style="direction: rtl;text-align: right">زن</option>
           </select>
         </label>
       </div>
       <div class="row">
         <div class="col col-50">
-          <span>نام</span>
+          <span class="myText">نام</span>
           <label class="item item-input">
-            <input id="name" type="text">
+            <input class="myText" id="name" type="text">
           </label>
         </div>
         <div class="col col-50">
-          <span>نام خانوادگی</span>
+          <span class="myText">نام خانوادگی</span>
           <label class="item item-input">
-            <input id="family" type="text">
+            <input class="myText" id="family" type="text">
           </label>
         </div>
 
       </div>
       <div class="row">
         <div class="col col-50">
-          <span>شماره موبایل</span>
+          <span class="myText">شماره موبایل</span>
           <label class="item item-input">
-            <input id="tel" type="tel">
+            <input class="myText" id="tel" type="tel">
           </label>
         </div>
         <div class="col col-50" ng-show="!isPassengerParam">
-          <span>پلاک ماشین</span>
+          <span class="myText">پلاک ماشین</span>
           <label class="item item-input">
-            <input id="number" type="text">
+            <input class="myText" id="number" type="text" style="direction: rtl">
           </label>
         </div>
       </div>
     </div>
 
     <div class="bg-color app_form info animated fadeInUp">
-      <p class="head-tab sec-main-bg-color">اطلاعات حساب</p>
+      <p class="head-tab sec-main-bg-color myText">اطلاعات حساب</p>
       <div class="padding">
         <div class="list  list-inset">
           <div class="row">
             <div class="col col-50 padding">
-              <span>نام کاربری</span>
+              <span class="myText">نام کاربری</span>
               <label class="item item-input">
-                <input id="username" type="text">
+                <input class="myText" id="username" type="text">
               </label>
             </div>
             <div class="col col-50">
-              <span>رمز عبور</span>
+              <span class="myText">رمز عبور</span>
               <label class="item item-input">
-                <input id="pass" type="password">
+                <input class="myText" id="pass" type="password">
               </label>
             </div>
           </div>

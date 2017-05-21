@@ -5,22 +5,22 @@
                 <div class="from-to">
                     <div class="row">
                        <div class="col col-50">
-                           <h4>از</h4>
+                           <h4 class="myText">از</h4>
                            <label class="item item-input item-select sel-item">
                                 <select id="from">
-                                <option value="1">تهران</option>
-                                <option value="2">کرج</option>
-                                <option value="3">قزوین</option>
+                                <option style="direction: rtl;text-align: right" class="myText" value="1">تهران</option>
+                                <option style="direction: rtl;text-align: right" class="myText" value="2">کرج</option>
+                                <option style="direction: rtl;text-align: right" class="myText" value="3">قزوین</option>
                                 </select>
                             </label>
                        </div>
                        <div class="col col-50">
-                            <h4>به</h4>
+                            <h4 class="myText">به</h4>
                             <label class="item item-input item-select sel-item">
                               <select id="to">
-                                <option value="1">تهران</option>
-                                <option value="2">کرج</option>
-                                <option value="3">قزوین</option>
+                                <option style="direction: rtl;text-align: right" class="myText" value="1">تهران</option>
+                                <option style="direction: rtl;text-align: right" class="myText" value="2">کرج</option>
+                                <option style="direction: rtl;text-align: right" class="myText" value="3">قزوین</option>
                                 </select>
                             </label>
                        </div>
@@ -31,10 +31,10 @@
                 <div class="date-trip bg-color" >
 
                     <div class="row">
-                            <span><i class="ion-calendar sec-main-text-color"></i>تاریخ حرکت</span>
+                            <span class="myText"><i class="ion-calendar sec-main-text-color"></i>تاریخ حرکت</span>
                       </div>
                       <div class="row">
-                      <input type="number" placeholder="YYYY" id="year" onkeydown="limitSize(event,'year',4)" style="width: 100px;text-align: center;border-radius: 5px">&nbsp;&nbsp;&nbsp;<input type="number" placeholder="MM" id="month" onkeydown="limitSize(event,'month',2)" style="width: 50px;text-align: center;border-radius: 5px">&nbsp;&nbsp;&nbsp;<input type="number" placeholder="DD" id="day" onkeydown="limitSize(event,'day',2)" style="width: 50px;text-align: center;border-radius: 5px">
+                      <input class="myText" type="number" placeholder="YYYY" id="year" onkeydown="limitSize(event,'year',4)" style="width: 100px;text-align: center;border-radius: 5px">&nbsp;&nbsp;&nbsp;<input class="myText" type="number" placeholder="MM" id="month" onkeydown="limitSize(event,'month',2)" style="width: 50px;text-align: center;border-radius: 5px">&nbsp;&nbsp;&nbsp;<input class="myText" type="number" placeholder="DD" id="day" onkeydown="limitSize(event,'day',2)" style="width: 50px;text-align: center;border-radius: 5px">
                     </div>
 
                 </div>
@@ -43,7 +43,7 @@
       </div>
   </ion-content>
     <ion-footer-bar class="footer sec-main-bg-color">
-        <a ng-click="search()" class="button button-block" style="min-width: 100%">
+        <a ng-click="search()" class="button button-block myText" style="min-width: 100%">
         جست و جو
         </a>
     </ion-footer-bar>
