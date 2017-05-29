@@ -581,7 +581,7 @@ angular.module('starter.controllers', [])
               title: '<span class="myText">پیام</span>',
               template: '<div class="myText" style="text-align: right;direction: rtl">کلمه عبور با موفقیت تغییر کرد</div>'
             });
-            $ionicNativeTransitions.stateGo('menuless.login', {}, {
+            $state.go('menuless.login', {}, {
               "type": "slide",
               "direction": "right",
               "duration": 500
@@ -591,7 +591,7 @@ angular.module('starter.controllers', [])
               title: '<span class="myText">پیام</span>',
               template: '<div class="myText" style="text-align: right;direction: rtl">خطا در عملیات. لطفا مجددا تلاش کنید</div>'
             });
-            $ionicNativeTransitions.stateGo('menuless.login', {}, {
+            $state.go('menuless.login', {}, {
               "type": "slide",
               "direction": "right",
               "duration": 500
@@ -632,6 +632,18 @@ angular.module('starter.controllers', [])
       } catch (e) {
       }
       $state.go("login")
+    }
+  })
+
+  .controller('PaymentCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $state,$http) {
+    $scope.goToSaman = function (){
+      var f = document.getElementById('TheForm');
+      f.Amount.value = 1000;
+      f.MID.value = "10822833";
+      f.ResNum.value = 1;
+      f.RedirectURL.value = "http://google.com";
+      f.CellNumber.value = "09124484014";
+      f.submit();
     }
   })
 

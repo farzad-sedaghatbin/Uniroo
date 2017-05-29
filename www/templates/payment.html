@@ -65,6 +65,13 @@
     </div>
   </ion-content>
     <ion-footer-bar class="footer dark-blue"  ng-show="show_msg!=1">
-        <p   ng-click="confirmMsg(1);scrollTop()">ادامه <i class="ion-ios-arrow-back"></i></p>
+        <p   ng-click="goToSaman();scrollTop()">ادامه <i class="ion-ios-arrow-back"></i></p>
     </ion-footer-bar>
 </ion-view>
+<form id="TheForm" method="post" action="https://sep.shaparak.ir/payment.aspx" target="_BLANK">
+  <input type="hidden" name="Amount" />
+  <input type="hidden" name="MID"/>
+  <input type="hidden" name="ResNum"/>
+  <input type="hidden" name="RedirectURL" />
+  <input type="hidden" name="CellNumber" />
+</form>
