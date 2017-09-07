@@ -207,14 +207,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           $rootScope.menu = [{id: "1", img: "img/1.png", title: "مسافران من", link: "#/app/passengers"},
             {id: "1", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
             {id: "2", img: "img/3.png", title: "گردش مالی", link: "#/app/offers"},
-            {id: "3", img: "img/4.png", title: "وضعیت سفر", link: "#/app/tripState"},
+            // {id: "3", img: "img/4.png", title: "وضعیت سفر", link: "#/app/tripState"},
             {id: "4", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
             {id: "5", img: "img/6.png", title: "درباره ما", link: "#/login"}]
         } else {
           $rootScope.menu = [{id: "1", img: "img/1.png", title: "ثبت سفر", link: "#/app/newTrip"},
             {id: "1", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
             {id: "2", img: "img/3.png", title: "گردش مالی", link: "#/app/offers"},
-            {id: "3", img: "img/4.png", title: "وضعیت سفر", link: "javascript:void(0)"},
+            // {id: "3", img: "img/4.png", title: "وضعیت سفر", link: "javascript:void(0)"},
             {id: "4", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
             {id: "5", img: "img/6.png", title: "درباره ما", link: "#/login"}]
         }

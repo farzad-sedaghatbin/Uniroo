@@ -606,6 +606,7 @@ angular.module('starter.controllers', [])
       $http.post(url, data).success(function (data, status, headers, config) {
         $rootScope.uid = data;
         $rootScope.hasTrip = true;
+        $("#tripstate").css("background","#4ec1f8");
         var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
         db.transaction(function (tx) {
           tx.executeSql('DELETE FROM ANIJUU WHERE name="uid"');
@@ -725,6 +726,42 @@ angular.module('starter.controllers', [])
   })
 
   .controller('HomeCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $state,$http,$ionicSlideBoxDelegate) {
+    var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
+    $scope.start = function () {
+      if (!$rootScope.hasTrip)
+        return;
+      WebService.startLoading();
+      if (!$rootScope.isStarted) {
+        var url = "https://uniroo.cfapps.io/api/1/startTrip";
+        $http.post(url, $rootScope.uid).success(function (data, status, headers, config) {
+          db.transaction(function (tx) {
+            tx.executeSql('UPDATE ANIJUU SET log="false" WHERE d.name="isStarted"');
+          });
+          $("#tripstate").html('پایان سفر');
+          $rootScope.isStarted = false;
+          WebService.stopLoading();
+        }).catch(function (err) {
+          WebService.stopLoading();
+          WebService.myErrorHandler(err);
+        });
+      } else {
+        var url = "https://uniroo.cfapps.io/api/1/endOfTrip";
+        $http.post(url,$rootScope.uid).success(function (data, status, headers, config) {
+          db.transaction(function (tx) {
+            tx.executeSql('UPDATE ANIJUU SET log=false WHERE d.name="hasTrip"');
+          });
+          $rootScope.hasTrip = false;
+          $("#tripstate").html('آغاز سفر');
+          $("#tripstate").css("background","lightgray");
+          $rootScope.prepareMenu();
+          $state.go("home");
+          WebService.stopLoading();
+        }).catch(function (err) {
+          WebService.stopLoading();
+          WebService.myErrorHandler(err);
+        });
+      }
+    };
     $scope.slide = function(index) {
       $ionicSlideBoxDelegate.slide(index);
     };
@@ -732,15 +769,19 @@ angular.module('starter.controllers', [])
       $ionicSlideBoxDelegate.enableSlide(true);
     };
     $timeout(function () {
+      if (!$rootScope.isStarted){
+        $("#tripstate").html('آغاز سفر');
+      } else {
+        $("#tripstate").html('پایان سفر');
+      }
+      if (!$rootScope.hasTrip){
+        $("#tripstate").css("background","lightgray");
+      }
+    }, 0);
+    $timeout(function () {
       document.getElementById('fab-rate').classList.toggle('on');
     }, 600);
-    $timeout(function () {
-      if (!$rootScope.hasTrip){
-        $("#3id").css("background-color","lightgray");
-      }
-    }, 900);
     $scope.logout = function(){
-      var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
       db.transaction(function (tx) {
         tx.executeSql('DELETE FROM ANIJUU');
       });
@@ -792,37 +833,7 @@ angular.module('starter.controllers', [])
   })
 
   .controller('tripStateCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $state,$http) {
-    var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
-    $scope.start = function () {
-      WebService.startLoading();
-      var url = "https://uniroo.cfapps.io/api/1/startTrip";
-      $http.post(url,$rootScope.uid).success(function (data, status, headers, config) {
-        db.transaction(function (tx) {
-          tx.executeSql('UPDATE ANIJUU SET log="false" WHERE d.name="isStarted"');
-        });
-        $rootScope.isStarted = false;
-        WebService.stopLoading();
-      }).catch(function (err) {
-        WebService.stopLoading();
-        WebService.myErrorHandler(err);
-      });
-    };
-    $scope.end = function () {
-      WebService.startLoading();
-      var url = "https://uniroo.cfapps.io/api/1/endOfTrip";
-      $http.post(url,$rootScope.uid).success(function (data, status, headers, config) {
-        db.transaction(function (tx) {
-          tx.executeSql('UPDATE ANIJUU SET log=false WHERE d.name="hasTrip"');
-        });
-        $rootScope.hasTrip = false;
-        $rootScope.prepareMenu();
-        $state.go("home");
-        WebService.stopLoading();
-      }).catch(function (err) {
-        WebService.stopLoading();
-        WebService.myErrorHandler(err);
-      });
-    }
+
   })
 
   .controller('PlaylistCtrl', function ($scope, $stateParams) {

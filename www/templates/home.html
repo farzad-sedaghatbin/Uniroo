@@ -1,8 +1,9 @@
 <ion-header-bar class="home-header">
   <h1 class="home-title title"><img src="img/logo.png" /></h1>
 </ion-header-bar>
-  <ion-content class="home_content">
+  <ion-content class="home_content" id="homeCtrl">
     <button id="fab-rate" ng-click="logout()" class="button button-fab button-fab-bottom-left expanded button-energized-900 spin" style="background: #4ec1f8"><i class="icon ion-log-out"></i></button>
+    <button id="tripstate" ng-click="start()" class="button button-fab button-fab-bottom-right button-energized-900 myText" style="background: #4ec1f8;font-size: x-small"></button>
     <div class="home_head" style="direction: ltr!important;">
         <ion-slide-box ng-init="enableSwipe()" pager-click="slide(index)" does-continue="true" Auto-play="true" does-continue="true">
             <ion-slide style="background: url(img/01.jpg)no-repeat;
