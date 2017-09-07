@@ -1,0 +1,43 @@
+<ion-view view-title="<img src='img/logo.png' class='about-views' />">
+  <ion-content scroll="false" ng-show="showDetail">
+    <div class="row plane-time animated fadeInUp">
+      <div class="row travel-time">
+        <div class="col col-50">
+          <p class="myText" style="color: black;direction: rtl;text-align: right">حساب جاری شما</p>
+        </div>
+        <div class="col col-50">
+          <p class="myText" style="color: black;direction: rtl;text-align: right">{{wallet}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="date-trip bg-color" >
+      <div class="row">
+        <span class="myText"><i class="ion-cash sec-main-text-color"></i>مبلغ مورد نظر(تومان)</span>
+      </div>
+      <div class="row">
+        <input class="myText" type="number" placeholder="تومان" id="cost" onkeydown="limitSize(event,'cost',9)" style="border-radius: 5px;width: 100%">
+      </div>
+    </div>
+    <div style="text-align: center;padding-top: 20px!important">
+      <button id="start" ng-click="goToSaman()"
+              style="background-color: rgb(17,50,193);width: 115px;height: 115px;color: white;font-size: x-large"
+              ng-disabled="confirmForm.$invalid" type="submit"
+              class="button button-fab expanded button-energized-900 myText">شارژ کن
+      </button>
+    </div>
+    <div style="text-align: center;padding-top: 20px!important">
+      <button id="end" ng-click="update()"
+              style="background-color: rgb(43, 193, 54);width: 115px;height: 115px;color: white;font-size: small"
+              ng-disabled="confirmForm.$invalid" type="submit"
+              class="button button-fab expanded button-energized-900 myText">بروزرسانی حساب
+      </button>
+    </div>
+  </ion-content>
+</ion-view>
+<form id="TheForm" method="post" action="https://sep.shaparak.ir/payment.aspx" target="_BLANK">
+  <input type="hidden" name="Amount" />
+  <input type="hidden" name="MID"/>
+  <input type="hidden" name="ResNum"/>
+  <input type="hidden" name="RedirectURL" />
+  <input type="hidden" name="CellNumber" />
+</form>

@@ -1,9 +1,9 @@
-<ion-view view-title="<img src='img/ulogo.png' class='about-views' />جزییات سفر">
-  <ion-content class="det_content my_booking">
+<ion-view view-title="<img src='img/logo.png' class='about-views myText' />جزییات سفر">
+  <ion-content class="det_content my_booking" ng-show="showDetail">
     <ion-list>
       <ion-item class="main-bg-color animated fadeInUp" style="text-align: right">
-        <p style="height: 40px">عازم {{driverInfo.destination}}</p>
-        <p style="height: 40px"><span class="yellow margin-10">{{driverInfo.carDetail}}</span><span class="margin-10">{{driverInfo.number}}</span></p>
+        <p class="myText" style="height: 40px">عازم {{driverInfo.destination}}</p>
+        <p style="height: 40px"><span class="yellow margin-10 myText">{{driverInfo.carDetail}}</span>&nbsp;&nbsp;&nbsp;<span class="margin-10 myText">{{driverInfo.number}}</span></p>
 
         <div class="row plane-time">
           <div class="col col-20">
@@ -11,11 +11,11 @@
             <img src="img/car2.png" ng-if="$index % 2 ==0"/>
           </div>
           <div class="col col-40 start-trip text-center">
-            <p style="height: 40px"><span class="margin-10">{{driverInfo.source}} </span></p>
+            <p style="height: 40px"><span class="margin-10 myText">{{driverInfo.source}} </span></p>
           </div>
           <i class="ion-arrow-right-a"></i>
           <div class="col col-40 text-center">
-            <p class="arrive margin-10" style="height: 40px">{{driverInfo.time}}<span class="margin-10">{{driverInfo.destination}}</span></p>
+            <p class="arrive margin-10 myText" style="height: 40px">{{driverInfo.time}}<span class="margin-10 myText">{{driverInfo.destination}}</span></p>
           </div>
 
         </div>
@@ -24,24 +24,42 @@
       <ion-item class="main-bg-color animated fadeInUp" style="text-align: right">
         <div class="items-detail">
           <div class="Passenger dark-blue padding">
-            <p>مشخصات راننده</p>
+            <p class="myText">مشخصات راننده</p>
           </div>
         </div>
-        <p style="height: 40px;margin-top: 20px"><span class="yellow margin-10">نام</span><span class="margin-10" style="color: black">{{driverInfo.name}}</span></p>
-        <p style="height: 40px"><span class="yellow margin-10">شماره تماس</span><span class="margin-10" style="color: black">{{driverInfo.mobile}}</span></p>
+        <p style="height: 40px;margin-top: 20px"><span class="yellow margin-10 myText">نام</span>&nbsp;&nbsp;&nbsp;<span class="margin-10 myText" style="color: black">{{driverInfo.name}}</span></p>
+        <p style="height: 40px"><span class="yellow margin-10 myText">شماره تماس</span>&nbsp;&nbsp;&nbsp;<span class="margin-10 myText" style="color: black">{{driverInfo.mobile}}</span></p>
       </ion-item>
+
+      <div>
+        <ionic-ratings ratingsobj='ratingsObject' style="font-size: 10vw;padding-bottom: 5%;text-align: center;direction: ltr"></ionic-ratings>
+      </div>
+      <div style="text-align: center;">
+        <button id="end" ng-click="submitRate()"
+                style="background-color: rgb(43, 193, 54);width: 65px;height: 65px;color: white;font-size: small"
+                ng-disabled="confirmForm.$invalid" type="submit"
+                class="button button-fab expanded button-energized-900 myText">ثبت
+        </button>
+      </div>
 
     </ion-list>
   </ion-content>
   <ion-footer-bar class="footer dark-blue" ng-show="showDetail">
     <div class="row">
       <div class="col col-50 total text-left">
-        <h4 class="yellow">مجموع: {{driverInfo.cost}} <sup>تومان</sup></h4>
-        <span>برای تمامی افراد</span>
+        <h4 class="yellow myText">مجموع: {{driverInfo.cost}} <sup>تومان</sup></h4>
+        <span class="myText">برای تمامی افراد</span>
       </div>
       <div class="col col-50 text-right">
-        <p ng-click="goto('/app/payment')">رزرو <i class="ion-ios-arrow-back"></i></p>
+        <p class="myText" ng-click="goToSaman()">پرداخت </p>
       </div>
     </div>
   </ion-footer-bar>
 </ion-view>
+<form id="TheForm" method="post" action="https://sep.shaparak.ir/payment.aspx" target="_BLANK">
+  <input type="hidden" name="Amount" />
+  <input type="hidden" name="MID"/>
+  <input type="hidden" name="ResNum"/>
+  <input type="hidden" name="RedirectURL" />
+  <input type="hidden" name="CellNumber" />
+</form>

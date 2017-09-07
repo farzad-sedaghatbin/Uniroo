@@ -1,49 +1,91 @@
-<ion-view view-title="<img src='img/ulogo.png' class='about-views' />">
+<ion-view view-title="<img src='img/logo.png' class='about-views' />">
   <ion-content class="search_content main-bg-color" scroll="false">
     <div class="tab-content animated fadeInUp">
       <ion-scroll direction="y" style="height: 100%">
-        <div class="from-to">
+        <div class="bg-color">
           <div class="row">
-            <div class="col col-50">
-              <h4>از</h4>
-              <label class="item item-input item-select sel-item">
-                <select id="from">
-                  <option value="1">تهران</option>
-                  <option value="2">کرج</option>
-                  <option value="3">قزوین</option>
-                </select>
-              </label>
-            </div>
-            <div class="col col-50">
-              <h4>به</h4>
-              <label class="item item-input item-select sel-item">
-                <select id="to">
-                  <option value="1">تهران</option>
-                  <option value="2">کرج</option>
-                  <option value="3">قزوین</option>
-                </select>
-              </label>
-            </div>
+            <input id="pac-input" class="controls myText" type="text" placeholder="مبدا" style="width: 100%;">
+            <img ng-click="clearSearch()" id="clearSearch"
+                 style="position: absolute;left: 10px;z-index: 11;width: 17px;top: 14px" src='img/close-button.png'/>
           </div>
+        </div>
+        <div class="bg-color" style="margin-top: 10px">
+          <div class="row">
+            <input id="pac-input2" class="controls myText" type="text" placeholder="مقصد" style="width: 100%">
+            <img ng-click="clearSearch2()" style="position: absolute;left: 10px;z-index: 11;width: 17px;top: 70px"
+                 src='img/close-button.png'/>
+          </div>
+        </div>
 
+        <div class="tab-details bg-color">
+          <h4 class="myText"><img src="img/ic2.png">جنسیت مسافر</h4>
+          <label class="item item-input item-select sel-item">
+            <select id="gender" style="direction: rtl;background: #edebeb !important">
+              <option class="myText" value="1" style="direction: rtl;text-align: right">فرقی ندارد</option>
+              <option class="myText" value="2" style="direction: rtl;text-align: right">فقط مرد</option>
+              <option class="myText" value="3" style="direction: rtl;text-align: right">فقط زن</option>
+            </select>
+          </label>
         </div>
 
         <div class="date-trip bg-color" >
-
           <div class="row">
-            <span><i class="ion-calendar sec-main-text-color"></i>تاریخ حرکت</span>
+            <span class="myText"><i class="ion-calendar sec-main-text-color"></i>تاریخ سفر</span>
           </div>
           <div class="row">
-            <input type="number" placeholder="YYYY" id="year" onkeydown="limitSize(event,'year',4)" style="width: 100px;text-align: center;border-radius: 5px">&nbsp;&nbsp;&nbsp;<input type="number" placeholder="MM" id="month" onkeydown="limitSize(event,'month',2)" style="width: 50px;text-align: center;border-radius: 5px">&nbsp;&nbsp;&nbsp;<input type="number" placeholder="DD" id="day" onkeydown="limitSize(event,'day',2)" style="width: 50px;text-align: center;border-radius: 5px">
+            <input class="myText" type="number" placeholder="YYYY" id="year" onkeydown="limitSize(event,'year',4)" style="width: 100px;text-align: center;border-radius: 5px">&nbsp;&nbsp;&nbsp;<input class="myText" type="number" placeholder="MM" id="month" onkeydown="limitSize(event,'month',2)" style="width: 50px;text-align: center;border-radius: 5px">&nbsp;&nbsp;&nbsp;<input class="myText" type="number" placeholder="DD" id="day" onkeydown="limitSize(event,'day',2)" style="width: 50px;text-align: center;border-radius: 5px">
           </div>
-
         </div>
 
+        <div class="date-trip bg-color" >
+          <div class="row">
+            <span class="myText"><i class="ion-clock sec-main-text-color"></i>ساعت سفر</span>
+          </div>
+          <div class="row">
+            <input class="myText" type="number" placeholder="MM" id="minute" onkeydown="limitSize(event,'minute',2)" style="width: 50px;text-align: center;border-radius: 5px">&nbsp;&nbsp;&nbsp;<input class="myText" type="number" placeholder="HH" id="hour" onkeydown="limitSize(event,'hour',2)" style="width: 50px;text-align: center;border-radius: 5px">
+          </div>
+        </div>
+
+        <div class="date-trip bg-color" >
+          <div class="row">
+            <span class="myText"><i class="ion-cash sec-main-text-color"></i>کرایه مورد نظر</span>
+          </div>
+          <div class="row">
+            <input class="myText" type="number" placeholder="تومان" id="cost" onkeydown="limitSize(event,'cost',8)" style="border-radius: 5px">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col col-33">
+            <h4 class="myText"><img src="img/ic1.png">ظرفیت</h4>
+
+            <div class="row num-traveller bg-color">
+              <div class="col col-33 sec-main-text-color">
+                                <span ng-click="increment_val('Adults')">
+                                   <i class="ion-plus"></i>
+                                </span>
+              </div>
+
+              <div class="col col-33">
+                <label class="item item-input">
+                  <input class="myText" id="num" onkeydown="limitSize(event,'num',2)" type="number" value="{{valueAdults}}">
+                </label>
+              </div>
+
+              <div class="col col-33 sec-main-text-color">
+                                <span ng-click="decrement_val('Adults')">
+                                   <i class="ion-minus"></i>
+                                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </ion-scroll>
     </div>
   </ion-content>
   <ion-footer-bar class="footer sec-main-bg-color">
-    <a ng-click="search()" class="button button-block" style="min-width: 100%">
+    <a ng-click="submit()" class="button button-block" style="min-width: 100%">
       ثبت
     </a>
   </ion-footer-bar>

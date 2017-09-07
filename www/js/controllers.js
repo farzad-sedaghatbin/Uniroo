@@ -35,25 +35,34 @@ angular.module('starter.controllers', [])
           delete $http.defaults.headers.common.Authorization;
         } catch (e) {
         }
-        var url = "http://192.168.1.12:8080/api/1/user_authenticate";
+        var url = "https://uniroo.cfapps.io/api/1/user_authenticate";
         var data = {
           username: $("#mail").val(),
           password: $("#pwd").val(),
-          rememberMe: false
+          rememberMe: true
         };
         $http.post(url, data).success(function (data, status, headers, config) {
           WebService.stopLoading();
           $rootScope.userid = data.userid;
           $rootScope.isDriver = data.driver;
+          $rootScope.hasTrip = data.hasTrip;
+          $rootScope.isStarted = data.isStarted;
+          $rootScope.wallet = data.wallet;
+          $rootScope.uid = data.UID;
           $http.defaults.headers.common.Authorization = "Bearer " + data.token;
           var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
           db.transaction(function (tx) {
+            tx.executeSql('DELETE FROM ANIJUU');
             tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["userid", data.userid]);
             tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["driver", data.driver]);
+            tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["hasTrip", data.hasTrip]);
+            tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["isStarted", data.isStarted]);
+            tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["wallet", data.wallet]);
+            tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["uid", data.UID]);
             tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["myToken", "Bearer " + data.token]);
           });
           $rootScope.prepareSocketsAndMenu();
-          $state.go('app.search', {}, {reload: true});
+          $state.go('home', {}, {reload: true});
         }).catch(function (err) {
           WebService.stopLoading();
           WebService.myErrorHandler(err, true);
@@ -62,7 +71,6 @@ angular.module('starter.controllers', [])
         form.mail.$setDirty();
         form.pwd.$setDirty();
       }
-
     };
 
     $scope.signUp = {};
@@ -78,23 +86,13 @@ angular.module('starter.controllers', [])
     }).then(function (modal) {
       $scope.modal = modal;
     });
-
-    // Triggered in the login modal to close it
     $scope.closeLogin = function () {
       $scope.modal.hide();
     };
-
-    // Open the login modal
     $scope.login = function () {
       $scope.modal.show();
     };
-
-    // Perform the login action when the user submits the login form
     $scope.doLogin = function () {
-      console.log('Doing login', $scope.loginData);
-
-      // Simulate a login delay. Remove this and replace with your login
-      // code if using a login system
       $timeout(function () {
         $scope.closeLogin();
       }, 1000);
@@ -198,33 +196,13 @@ angular.module('starter.controllers', [])
     $scope.do_signUp = function (form) {
       var data;
       if (!$scope.isPassengerParam) {
-        // if (!$scope.driver) {
-        //   $ionicPopup.alert({
-        //     title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-        //     template: '<p class="text-center color-gery">' + "عکس راننده انتخاب نشده است" + '</p>'
-        //   });
-        // } else if (!$scope.license) {
-        //   $ionicPopup.alert({
-        //     title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-        //     template: '<p class="text-center color-gery">' + "عکس گواهینامه انتخاب نشده است" + '</p>'
-        //   });
-        // } else if (!$scope.car) {
-        //   $ionicPopup.alert({
-        //     title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-        //     template: '<p class="text-center color-gery">' + "عکس کارت ماشین انتخاب نشده است" + '</p>'
-        //   });
-        // } else if (!$scope.insurance) {
-        //   $ionicPopup.alert({
-        //     title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-        //     template: '<p class="text-center color-gery">' + "عکس بیمه نامه انتخاب نشده است" + '</p>'
-        //   });
-        // }
         data = {
           firstName: $("#name").val(),
           lastName: $("#family").val(),
           username: $("#username").val(),
           mobile: $("#tel").val(),
           password: $("#pass").val(),
+          number: $("#number").val(),
           isDriver: !$scope.isPassengerParam,
           gender: $("#gender").val() == "1",
           driver: $scope.driver,
@@ -232,13 +210,74 @@ angular.module('starter.controllers', [])
           car: $scope.car,
           insurance: $scope.insurance
         };
-      } else {
-        if (!$scope.student) {
+        if (!data.firstName){
           $ionicPopup.alert({
             title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
-            template: '<p class="text-center color-gery">' + "عکس کارت دانشجویی انتخاب نشده است" + '</p>'
+            template: '<p class="text-center color-gery">' + "نام اجباریست" + '</p>'
           });
+          return;
         }
+        if (!data.lastName){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "نام خانوادگی اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!data.username){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "نام کاربری اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!data.mobile){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "شماره موبایل اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!data.password){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "رمز عبور اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!data.number){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "پلاک ماشین اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!$scope.driver) {
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "عکس راننده انتخاب نشده است" + '</p>'
+          });
+          return;
+        } else if (!$scope.license) {
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "عکس گواهینامه انتخاب نشده است" + '</p>'
+          });
+          return;
+        } else if (!$scope.car) {
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "عکس کارت ماشین انتخاب نشده است" + '</p>'
+          });
+          return;
+        } else if (!$scope.insurance) {
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "عکس بیمه نامه انتخاب نشده است" + '</p>'
+          });
+          return;
+        }
+      } else {
         data = {
           firstName: $("#name").val(),
           lastName: $("#family").val(),
@@ -249,9 +288,51 @@ angular.module('starter.controllers', [])
           gender: $("#gender").val() == "1",
           license: $scope.student
         };
+        if (!data.firstName){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "نام اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!data.lastName){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "نام خانوادگی اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!data.username){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "نام کاربری اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!data.mobile){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "شماره موبایل اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!data.password){
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "رمز عبور اجباریست" + '</p>'
+          });
+          return;
+        }
+        if (!$scope.student) {
+          $ionicPopup.alert({
+            title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+            template: '<p class="text-center color-gery">' + "عکس کارت دانشجویی انتخاب نشده است" + '</p>'
+          });
+          return;
+        }
       }
       WebService.startLoading();
-      var url = "http://192.168.1.12:8080/api/1/signup";
+      var url = "https://uniroo.cfapps.io/api/1/signup";
       $http.post(url, data)
         .success(function (suc) {
           WebService.stopLoading();
@@ -264,20 +345,33 @@ angular.module('starter.controllers', [])
 
   })
   .controller('SearchCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $state, WebService, $http) {
+    var input = document.getElementById('pac-input');
+    var input2 = document.getElementById('pac-input2');
+    var options = {
+      componentRestrictions: {country: "ir"}
+    };
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    var autocomplete = new google.maps.places.Autocomplete(input2, options);
+    $scope.clearSearch = function () {
+      $("#pac-input").val("");
+    };
+    $scope.clearSearch2 = function () {
+      $("#pac-input2").val("");
+    };
     $scope.search = function () {
       WebService.startLoading();
-      var url = "http://192.168.1.12:8080/api/1/searchForDriver";
+      var url = "https://uniroo.cfapps.io/api/1/searchForDriver";
       var data = {
-        source: $("#from").val(),
-        destination: $("#to").val(),
-        day: $("#year").val() + "/" + $("month").val() + "/" + $("#day").val()
+        source: $("#pac-input").val(),
+        destination: $("#pac-input2").val(),
+        day: $("#year").val() + "/" + $("#month").val() + "/" + $("#day").val()
       };
       $http.post(url, data).success(function (data, status, headers, config) {
         $rootScope.data = data;
         $state.go("app.data");
       }).catch(function (err) {
         WebService.stopLoading();
-        WebService.myErrorHandler(err, true);
+        WebService.myErrorHandler(err, false);
       });
     }
   })
@@ -294,77 +388,357 @@ angular.module('starter.controllers', [])
     };
   })
 
-  .controller('DetailsCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http) {
+  .controller('DetailsCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http,$state) {
     $scope.showFooter = true;
     $timeout(function () {
       WebService.startLoading();
-      var url = "http://192.168.1.12:8080/api/1/detail";
+      var url = "https://uniroo.cfapps.io/api/1/detail";
       $http.post(url, $rootScope.selectedId).success(function (data, status, headers, config) {
         $scope.detail = data;
         $scope.showDetail = true;
         WebService.stopLoading();
       }).catch(function (err) {
         WebService.stopLoading();
-        WebService.myErrorHandler(err, true);
+        WebService.myErrorHandler(err, false);
       });
     }, 700);
     $scope.request = function () {
-      var url = "http://192.168.1.12:8080/api/1/Request";
+      WebService.startLoading();
+      var url = "https://uniroo.cfapps.io/api/1/Request";
       $http.post(url, $rootScope.selectedId).success(function (data, status, headers, config) {
-        $scope.showFooter = false;
+        $.each($rootScope.data, function (index, value) {
+          if (value.uid == $rootScope.selectedId) {
+            $rootScope.data.splice(index, 1);
+          }
+        });
+        $rootScope.uid = $rootScope.selectedId;
+        var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
+        db.transaction(function (tx) {
+          tx.executeSql('DELETE FROM ANIJUU WHERE name="uid"');
+          tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["uid", $rootScope.uid]);
+        });
+        $state.go("app.data");
       }).catch(function (err) {
-        WebService.myErrorHandler(err, true);
+        WebService.stopLoading();
+        WebService.myErrorHandler(err, false);
       });
     }
   })
 
-  .controller('OffersCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $http) {
-    var selectedIds = [];
-    $scope.totalAmount = 0;
-    $scope.$on('$stateChangeStart', function () {
-      $('input[type=checkbox]').each(function () {
-        $(this).prop('checked', false);
-      });
-      selectedIds = [];
-    });
-    $scope.doSelect = function (item) {
-      var index = $.inArray(selectedIds, item.uid);
-      if (index == -1) {
-        selectedIds.push(item.uid);
-        $scope.totalAmount += item.cost;
-      } else {
-        selectedIds.splice(index,1);
-        $scope.totalAmount -= item.cost;
-      }
-      $scope.$apply();
-    };
-    $scope.accept = function(){
-      var url = "http://192.168.1.12:8080/api/1/approvedDriver";
-      $http.post(url, selectedIds.toString()).success(function (data, status, headers, config) {
+  .controller('OffersCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $http,WebService) {
+    $timeout(function () {
+      WebService.startLoading();
+      var url = "https://uniroo.cfapps.io/api/1/turnover";
+      $http.post(url).success(function (data, status, headers, config) {
+        $scope.trips = data;
+        WebService.stopLoading();
       }).catch(function (err) {
-        WebService.myErrorHandler(err, true);
+        WebService.stopLoading();
+        WebService.myErrorHandler(err, false);
       });
-    }
+    }, 700);
+  })
+
+  .controller('passengersCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $http,WebService) {
+    $timeout(function () {
+      WebService.startLoading();
+      var url = "https://uniroo.cfapps.io/api/1/traveler";
+      $http.post(url,$rootScope.uid).success(function (data, status, headers, config) {
+        $scope.data = data;
+        WebService.stopLoading();
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err, false);
+      });
+    }, 700);
   })
 
   .controller('AcceptedTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http) {
-
+    $timeout(function () {
+      if ($rootScope.uid) {
+        WebService.startLoading();
+        var url = "https://uniroo.cfapps.io/api/1/detail";
+        $http.post(url, $rootScope.uid).success(function (data, status, headers, config) {
+          $scope.driverInfo = data;
+          $scope.showDetail = true;
+          WebService.stopLoading();
+        }).catch(function (err) {
+          WebService.stopLoading();
+          WebService.myErrorHandler(err);
+        });
+      }
+    }, 700);
+    var rate;
+    $scope.ratingsObject = {
+      iconOn: 'ion-ios-star',
+      iconOff: 'ion-ios-star-outline',
+      iconOnColor: 'rgb(200, 200, 100)',
+      iconOffColor: 'rgb(200, 100, 100)',
+      rating: 0,
+      minRating: 0,
+      readOnly: false,
+      callback: function (rating) {
+        rate = rating;
+      }
+    };
+    $scope.submitRate = function () {
+      var url = "https://uniroo.cfapps.io/api/1/detail";
+      $http.post(url, rate).success(function (data, status, headers, config) {
+        window.plugins.toast.showShortBottom("امتیاز شما به راننده با موفقیت ثبت شد");
+        WebService.stopLoading();
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err, false);
+      });
+    };
+    $scope.goToSaman = function (){
+      WebService.startLoading();
+      var url = "https://uniroo.cfapps.io/api/1/factor";
+      var amount = $("#cost").val();
+      $http.post(url,amount).success(function (data, status, headers, config) {
+        WebService.stopLoading();
+        var f = document.getElementById('TheForm');
+        f.Amount.value = amount;
+        f.MID.value = "10822833";
+        f.ResNum.value = data;
+        f.RedirectURL.value = "https://uniroo.cfapps.io/api/1/donePeyment";
+        f.submit();
+        $state.go("home");
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err);
+      });
+    }
   })
 
-  .controller('NewTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http) {
-
+  .controller('NewTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http,$ionicPopup) {
+    var input = document.getElementById('pac-input');
+    var input2 = document.getElementById('pac-input2');
+    var options = {
+      componentRestrictions: {country: "ir"}
+    };
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    var autocomplete = new google.maps.places.Autocomplete(input2, options);
+    var date = new Date();
+    var jalali = toJalaali(date.getFullYear(), date.getMonth(), date.getDay());
+    $("#year").val(jalali.jy);
+    $("#month").val(jalali.jm);
+    $("#day").val(jalali.jd);
+    $scope.clearSearch = function () {
+      $("#pac-input").val("");
+    };
+    $scope.clearSearch2 = function () {
+      $("#pac-input2").val("");
+    };
+    $scope.submit = function(){
+      var url = "https://uniroo.cfapps.io/api/1/submitTrip";
+      var hour = $("#hour").val();
+      var minute = $("#minute").val();
+      var year = $("#year").val();
+      var month = $("#month").val();
+      var day = $("#day").val();
+      var data = {
+        source : $("#pac-input").val(),
+        destination : $("#pac-input2").val(),
+        date : year + "/" + month + "/" + day,
+        time : hour + ":" + minute,
+        cost : $("#cost").val(),
+        capacity : $("#num").val(),
+        type : $("#gender").val()
+      };
+      if (!data.source){
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+          template: '<p class="text-center color-gery">' + "مبدا سفر اجباریست" + '</p>'
+        });
+        return;
+      }
+      if (!data.destination){
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+          template: '<p class="text-center color-gery">' + "مقصد سفر اجباریست" + '</p>'
+        });
+        return;
+      }
+      if (!year || !month || !day){
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+          template: '<p class="text-center color-gery">' + "تاریخ سفر اجباریست" + '</p>'
+        });
+        return;
+      }
+      if (!hour || !minute){
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+          template: '<p class="text-center color-gery">' + "ساعت سفر اجباریست" + '</p>'
+        });
+        return;
+      }
+      if (!data.cost){
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+          template: '<p class="text-center color-gery">' + "هزینه سفر اجباریست" + '</p>'
+        });
+        return;
+      }
+      if (data.cost<3000){
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+          template: '<p class="text-center color-gery">' + "حداقل هزینه سفر 3000 تومان می باشد" + '</p>'
+        });
+        return;
+      }
+      if (!data.capacity){
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+          template: '<p class="text-center color-gery">' + "ظرفیت اجباریست" + '</p>'
+        });
+        return;
+      }
+      if (!data.type){
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+          template: '<p class="text-center color-gery">' + "جنسیت مسافر اجباریست" + '</p>'
+        });
+        return;
+      }
+      WebService.startLoading();
+      $http.post(url, data).success(function (data, status, headers, config) {
+        $rootScope.uid = data;
+        $rootScope.hasTrip = true;
+        var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
+        db.transaction(function (tx) {
+          tx.executeSql('DELETE FROM ANIJUU WHERE name="uid"');
+          tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["uid", data.uid]);
+          tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["hasTrip", true]);
+        });
+        window.plugins.toast.showShortBottom('سفر شما با موفقیت ثبت شد');
+        WebService.stopLoading();
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err, false);
+      });
+    }
   })
 
   .controller('ReservationsCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http) {
     $timeout(function () {
-      alert("SDfsf")
-    }, 100)
+      WebService.startLoading();
+      var url = "https://uniroo.cfapps.io/api/1/trips";
+      $http.post(url).success(function (data, status, headers, config) {
+        $scope.trips = data;
+        WebService.stopLoading();
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err, false);
+      });
+    }, 700);
+    $scope.toggleGroup = function (group) {
+      if ($scope.isGroupShown(group)) {
+        $scope.shownGroup = null;
+      } else {
+        $scope.shownGroup = group;
+      }
+    };
+    $scope.isGroupShown = function (group) {
+      return $scope.shownGroup === group;
+    };
   })
 
-  .controller('HomeCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $state,$http) {
+  .controller('ForgetPassCtrl', function ($scope, $ionicPopup, $http, $rootScope, $state,WebService) {
+    delete $http.defaults.headers.common.Authorization;
+    $scope.$on('$ionicView.beforeEnter', function (e, viewData) {
+      $scope.$root.showMenuIcon = false;
+      viewData.enableBack = true;
+    });
+    $scope.username = "";
+    $scope.password = "";
+    $scope.confirmPass = "";
+    $scope.submit = function (username) {
+      WebService.startLoading();
+      var signUpUrl = "http://app.anijuu.ir/api/1/forget";
+      $http.post(signUpUrl, username)
+        .success(function (suc) {
+          if (suc == "201") {
+            $ionicPopup.alert({
+              title: '<span class="myText">خطا</span>',
+              template: '<div class="myText" style="text-align: right">نام کاربری اشتباه می باشد</div>'
+            });
+          } else {
+            $ionicPopup.alert({
+              title: '<span class="myText">پیام</span>',
+              template: '<div class="myText" style="text-align: right;direction: rtl">کد مورد نیاز برای تغییر کلمه عبور پیامک شد</div>'
+            });
+            $(".popup").css("width", "90%");
+            $scope.forgetPassCodeForm = true;
+          }
+          WebService.stopLoading();
+        })
+        .error(function (err) {
+          WebService.myHandleError(err);
+          WebService.stopLoading();
+        });
+    };
+    $scope.confirm = function (code, password) {
+      var signUpUrl = "http://app.anijuu.ir/api/1/confirmReset";
+      $http.post(signUpUrl, JSON.stringify({code: code, password: password}))
+        .success(function (suc) {
+          WebService.stopLoading();
+          if (suc == "200") {
+            $ionicPopup.alert({
+              title: '<span class="myText">پیام</span>',
+              template: '<div class="myText" style="text-align: right;direction: rtl">کلمه عبور با موفقیت تغییر کرد</div>'
+            });
+            $state.go('menuless.login', {}, {
+              "type": "slide",
+              "direction": "right",
+              "duration": 500
+            });
+          } else if (suc == "301") {
+            $ionicPopup.alert({
+              title: '<span class="myText">پیام</span>',
+              template: '<div class="myText" style="text-align: right;direction: rtl">خطا در عملیات. لطفا مجددا تلاش کنید</div>'
+            });
+            $state.go('menuless.login', {}, {
+              "type": "slide",
+              "direction": "right",
+              "duration": 500
+            });
+          } else {
+            $ionicPopup.alert({
+              title: '<span class="myText">پیام</span>',
+              template: '<div class="myText" style="text-align: right;direction: rtl">کد اشتباه می باشد</div>'
+            });
+          }
+          $(".popup").css("width", "90%");
+        })
+        .error(function (err) {
+          WebService.myHandleError(err);
+          WebService.stopLoading();
+        });
+    };
+    $scope.checkPassword = function (form, password, confirmPass) {
+      var result = password !== confirmPass;
+      $scope.result = result;
+      form.confirmPass.$setValidity("validity", !result);
+    };
+  })
+
+  .controller('HomeCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $state,$http,$ionicSlideBoxDelegate) {
+    $scope.slide = function(index) {
+      $ionicSlideBoxDelegate.slide(index);
+    };
+    $scope.enableSwipe = function() {
+      $ionicSlideBoxDelegate.enableSlide(true);
+    };
     $timeout(function () {
       document.getElementById('fab-rate').classList.toggle('on');
     }, 600);
+    $timeout(function () {
+      if (!$rootScope.hasTrip){
+        $("#3id").css("background-color","lightgray");
+      }
+    }, 900);
     $scope.logout = function(){
       var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
       db.transaction(function (tx) {
@@ -377,6 +751,77 @@ angular.module('starter.controllers', [])
       } catch (e) {
       }
       $state.go("login")
+    }
+  })
+
+  .controller('walletCtrl', function ($scope,$http,WebService,$state,$timeout,$rootScope) {
+    var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
+    $timeout(function () {
+      WebService.startLoading();
+      var url = "https://uniroo.cfapps.io/api/1/wallet";
+      $http.post(url).success(function (data, status, headers, config) {
+        $rootScope.wallet = data;
+        db.transaction(function (tx) {
+          tx.executeSql('UPDATE ANIJUU SET log=? WHERE d.name="wallet"',[data]);
+        });
+        $scope.showDetail = true;
+        WebService.stopLoading();
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err);
+      });
+    }, 700);
+    $scope.goToSaman = function (){
+      WebService.startLoading();
+      var url = "https://uniroo.cfapps.io/api/1/factor";
+      var amount = $("#cost").val();
+      $http.post(url,amount).success(function (data, status, headers, config) {
+        WebService.stopLoading();
+        var f = document.getElementById('TheForm');
+        f.Amount.value = amount;
+        f.MID.value = "10822833";
+        f.ResNum.value = data;
+        f.RedirectURL.value = "https://uniroo.cfapps.io/api/1/donePeyment";
+        f.submit();
+        $state.go("home");
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err);
+      });
+    }
+  })
+
+  .controller('tripStateCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $state,$http) {
+    var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
+    $scope.start = function () {
+      WebService.startLoading();
+      var url = "https://uniroo.cfapps.io/api/1/startTrip";
+      $http.post(url,$rootScope.uid).success(function (data, status, headers, config) {
+        db.transaction(function (tx) {
+          tx.executeSql('UPDATE ANIJUU SET log="false" WHERE d.name="isStarted"');
+        });
+        $rootScope.isStarted = false;
+        WebService.stopLoading();
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err);
+      });
+    };
+    $scope.end = function () {
+      WebService.startLoading();
+      var url = "https://uniroo.cfapps.io/api/1/endOfTrip";
+      $http.post(url,$rootScope.uid).success(function (data, status, headers, config) {
+        db.transaction(function (tx) {
+          tx.executeSql('UPDATE ANIJUU SET log=false WHERE d.name="hasTrip"');
+        });
+        $rootScope.hasTrip = false;
+        $rootScope.prepareMenu();
+        $state.go("home");
+        WebService.stopLoading();
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err);
+      });
     }
   })
 

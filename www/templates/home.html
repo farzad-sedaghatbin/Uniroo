@@ -1,10 +1,10 @@
 <ion-header-bar class="home-header">
-  <h1 class="home-title title"><img src="img/ulogo.png" /></h1>
+  <h1 class="home-title title"><img src="img/logo.png" /></h1>
 </ion-header-bar>
   <ion-content class="home_content">
-    <button id="fab-rate" ng-click="logout()" class="button button-fab button-fab-bottom-left expanded button-energized-900 spin"><i class="icon ion-ios-star" style="color: #F06A21;"></i></button>
+    <button id="fab-rate" ng-click="logout()" class="button button-fab button-fab-bottom-left expanded button-energized-900 spin" style="background: #4ec1f8"><i class="icon ion-log-out"></i></button>
     <div class="home_head" style="direction: ltr!important;">
-        <ion-slide-box Auto-play="true" does-continue="true">
+        <ion-slide-box ng-init="enableSwipe()" pager-click="slide(index)" does-continue="true" Auto-play="true" does-continue="true">
             <ion-slide style="background: url(img/01.jpg)no-repeat;
             background-size: cover"></ion-slide>
             <ion-slide style="background: url(img/02.jpg)no-repeat;
@@ -13,13 +13,13 @@
             background-size: cover"></ion-slide>
         </ion-slide-box>
     </div>
-    <a href="{{item.link}}" collection-repeat="item in menu"
+    <a href="{{item.link}}" ng-click="{{item.click}}" collection-repeat="item in menu"
     collection-item-width="33.33333333333%"
     collection-item-height="132" >
 
-        <div class="menu-items text-center animated bounceIn">
+        <div id="{{item.id}}id" class="menu-items text-center animated bounceIn">
             <img src="{{item.img}}" />
-            <h4 class="main-text-color">{{item.title}}</h4>
+            <h4 class="main-text-color myText">{{item.title}}</h4>
         </div>
 
     </a>

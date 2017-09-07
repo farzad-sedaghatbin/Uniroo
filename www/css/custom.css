@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'myFont';
+  src:
+    url('../font/Tawasul-Regular.otf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+.myText {
+  font-family: myFont;
+  font-size: medium;
+}

@@ -1,45 +1,40 @@
-<ion-view view-title="<img src='img/ulogo.png' class='about-views' />رزرو های من">
+<ion-view view-title="<img src='img/logo.png' class='about-views myText' />رزرو های من">
   <ion-content class="my_booking padding">
-    <p class="text-center">تمام سفر های شما به ترتیب جدید به قدیم</p>
-
     <ion-list>
-        <div ng-repeat="group in groups">
+        <div ng-repeat="trip in trips">
           <ion-item class="item-stable item-icon-left bg-color animated slideInUp"
-                    ng-click="toggleGroup(group)"
-                    ng-class="{active: isGroupShown(group)}">
+                    ng-click="toggleGroup(trip.uid)"
+                    ng-class="{active: isGroupShown(trip.uid)}">
 
-             <h4>کد سفر : <span class="yellow">QWx4k</span> <i class="icon" ng-class="isGroupShown(group) ? 'ion-chevron-up' : 'ion-chevron-down'"></i></h4>
+             <h4 class="myText" style="text-align: right;direction: rtl">کد سفر : <span class="yellow myText">{{trip.uid}}</span> <i class="icon" ng-class="isGroupShown(trip.uid) ? 'ion-chevron-up' : 'ion-chevron-down'"></i></h4>
           </ion-item>
 
-          <ion-item class="item-accordion main-bg-color"
-                    ng-repeat="item in group.items"
-                    ng-show="isGroupShown(group)">
+          <ion-item class="item-accordion main-bg-color" style="direction: rtl;text-align: right"
+                    ng-show="isGroupShown(trip.uid)">
               <div class="items-detail">
                   <div class="Passenger dark-blue padding">
-                      <p>همراهان<span>01</span>ویژه</p>
+                      <p class="myText">هزینه<span class="myText">{{trip.cost}}</span></p>
                   </div>
                   <div class="Passenger dark-blue padding">
-                      <p>تاریخ<span>۱۸ اردیبهشت</span>1396</p>
+                      <p class="myText">تاریخ<span class="myText">{{trip.day}} {{trip.month}}</span>{{item.year}}</p>
                   </div>
               </div>
-              <p>اطلاعات</p>
-              <p><span class="yellow">سانتافه</span>۷۴ ی ۷۸۸ ایران ۱۰</p>
-
-
               <div class="row plane-time" style="direction: ltr">
                   <div class="col col-20">
                       <img src="img/car2r.png" />
                   </div>
                   <div class="col col-40 start-trip text-center">
-                      <p>10.00<span>تهران</span></p>
+                      <p class="myText"><span>{{trip.time}}</span><span class="myText">{{trip.source}}</span></p>
                       <i class="ion-arrow-right-a"></i>
                   </div>
                   <div class="col col-40 text-center">
-                      <p class="arrive">11.00<span>قزوین</span></p>
+                      <p class="arrive"><span class="myText">{{trip.destination}}</span></p>
                   </div>
 
               </div>
-              <p><span class="yellow">مدت زمان</span>2 ساعت</p>
+              <p ng-show="!isDriver"><span class="yellow myText">راننده</span>&nbsp;&nbsp;&nbsp;<span style="color: black" class="myText">{{trip.name}} {{trip.family}}</span></p>
+              <p ng-show="!isDriver"><span class="yellow myText">شماره تماس</span>&nbsp;&nbsp;&nbsp;<span class="myText" style="color: black">{{trip.mobile}}</span></p>
+              <p ng-show="!trip.approved"><span style="color: #0e1948 !important" class="myText">رزرو شده</span></p>
           </ion-item>
         </div>
     </ion-list>
