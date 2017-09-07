@@ -148,7 +148,7 @@ a{
     height: 100%
 }
 .search_content.has-header{
-    top: 104px
+    /*top: 104px*/
 }
 .search-subheader.bar-subheader{
     top: 69px;

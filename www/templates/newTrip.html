@@ -1,7 +1,7 @@
 <ion-view view-title="<img src='img/logo.png' class='about-views' />">
   <ion-content class="search_content main-bg-color" scroll="false">
     <div class="tab-content animated fadeInUp">
-      <ion-scroll direction="y" style="height: 100%">
+      <ion-scroll direction="y" style="height: 100%;background: #edebeb !important">
         <div class="bg-color">
           <div class="row">
             <input id="pac-input" class="controls myText" type="text" placeholder="مبدا" style="width: 100%;">
@@ -20,7 +20,7 @@
         <div class="tab-details bg-color">
           <h4 class="myText"><img src="img/ic2.png">جنسیت مسافر</h4>
           <label class="item item-input item-select sel-item">
-            <select id="gender" style="direction: rtl;background: #edebeb !important">
+            <select id="gender" style="direction: rtl">
               <option class="myText" value="1" style="direction: rtl;text-align: right">فرقی ندارد</option>
               <option class="myText" value="2" style="direction: rtl;text-align: right">فقط مرد</option>
               <option class="myText" value="3" style="direction: rtl;text-align: right">فقط زن</option>
@@ -51,10 +51,11 @@
             <span class="myText"><i class="ion-cash sec-main-text-color"></i>کرایه مورد نظر</span>
           </div>
           <div class="row">
-            <input class="myText" type="number" placeholder="تومان" id="cost" onkeydown="limitSize(event,'cost',8)" style="border-radius: 5px">
+            <input class="myText" type="number" placeholder="تومان" id="cost" onkeydown="limitSize(event,'cost',12)" style="border-radius: 5px;width: 80%">
           </div>
         </div>
 
+        <div class="date-trip bg-color" >
         <div class="row">
           <div class="col col-33">
             <h4 class="myText"><img src="img/ic1.png">ظرفیت</h4>
@@ -80,6 +81,7 @@
             </div>
 
           </div>
+        </div>
         </div>
       </ion-scroll>
     </div>
