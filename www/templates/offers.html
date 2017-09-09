@@ -1,7 +1,7 @@
 <ion-view view-title="<img src='img/logo.png' class='about-views myText' />گردش مالی">
   <ion-content class="my_booking padding">
     <ion-list>
-      <div ng-repeat="trip in trips">
+      <div ng-repeat="trip in trips.amountList">
         <ion-item class="item-stable item-icon-left bg-color animated slideInUp"
                   ng-click="toggleGroup(trip.uid)"
                   ng-class="{active: isGroupShown(trip.uid)}">
@@ -36,4 +36,11 @@
       </div>
     </ion-list>
   </ion-content>
+  <ion-footer-bar class="footer dark-blue" ng-show="showDetail">
+    <div class="row" ng-show="showFooter">
+      <div class="col col-50 total text-left">
+        <h4 class="yellow myText">مجموع: {{trips.total}} <sup>تومان</sup></h4>
+      </div>
+    </div>
+  </ion-footer-bar>
 </ion-view>
