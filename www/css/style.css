@@ -150,6 +150,10 @@ a{
 .search_content.has-header{
     /*top: 104px*/
 }
+.ellipsis{
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 .search-subheader.bar-subheader{
     top: 69px;
     padding: 0 10px;

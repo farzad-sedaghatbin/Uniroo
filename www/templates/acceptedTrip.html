@@ -10,12 +10,12 @@
             <img src="img/car2r.png" ng-if="$index % 2 !=0"/>
             <img src="img/car2.png" ng-if="$index % 2 ==0"/>
           </div>
-          <div class="col col-40 start-trip text-center">
-            <p style="height: 40px"><span class="margin-10 myText">{{driverInfo.source}} </span></p>
+          <div class="col col-40 start-trip text-center ellipsis">
+            <span class="margin-10 myText">{{driverInfo.source}} </span>
           </div>
           <i class="ion-arrow-right-a"></i>
-          <div class="col col-40 text-center">
-            <p class="arrive margin-10 myText" style="height: 40px">{{driverInfo.time}}<span class="margin-10 myText">{{driverInfo.destination}}</span></p>
+          <div class="col col-40 text-center ellipsis myText">
+            {{driverInfo.time}}<span class="margin-10 myText">{{driverInfo.destination}}</span>
           </div>
 
         </div>
@@ -27,8 +27,8 @@
             <p class="myText">مشخصات راننده</p>
           </div>
         </div>
-        <p style="height: 40px;margin-top: 20px"><span class="yellow margin-10 myText">نام</span>&nbsp;&nbsp;&nbsp;<span class="margin-10 myText" style="color: black">{{driverInfo.name}}</span></p>
-        <p style="height: 40px"><span class="yellow margin-10 myText">شماره تماس</span>&nbsp;&nbsp;&nbsp;<span class="margin-10 myText" style="color: black">{{driverInfo.mobile}}</span></p>
+        <p style="height: 40px;margin-top: 20px"><span class="yellow margin-10 myText">نام</span>&nbsp;&nbsp;&nbsp;<span class="margin-10 myText" style="color: black">{{driverInfo.driver}}</span></p>
+        <p style="height: 40px"><span class="yellow margin-10 myText">شماره تماس</span>&nbsp;&nbsp;&nbsp;<span class="margin-10 myText" style="color: black">{{driverInfo.tel}}</span></p>
       </ion-item>
 
       <div>
@@ -51,7 +51,7 @@
         <span class="myText">برای تمامی افراد</span>
       </div>
       <div class="col col-50 text-right">
-        <p class="myText" ng-click="goToSaman()">پرداخت </p>
+        <p class="myText" ng-click="payment()">پرداخت </p>
       </div>
     </div>
   </ion-footer-bar>

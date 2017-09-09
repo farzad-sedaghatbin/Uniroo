@@ -1,7 +1,7 @@
 <ion-view view-title="<img src='img/logo.png' class='about-views' />">
   <ion-content class="search_content main-bg-color" scroll="false">
     <div class="tab-content animated fadeInUp">
-      <ion-scroll direction="y" style="height: 100%">
+      <ion-scroll direction="y" style="height: 100%;background: #edebeb !important">
         <div class="bg-color">
           <div class="row">
             <input id="pac-input" class="controls myText" type="text" placeholder="مبدا" style="width: 100%;">
@@ -17,8 +17,18 @@
           </div>
         </div>
 
-        <div class="date-trip bg-color">
+        <div class="tab-details bg-color">
+          <h4 class="myText"><img src="img/ic2.png">جنسیت مسافر</h4>
+          <label class="item item-input item-select sel-item">
+            <select id="gender" style="direction: rtl">
+              <option class="myText" value="1" style="direction: rtl;text-align: right">فرقی ندارد</option>
+              <option class="myText" value="2" style="direction: rtl;text-align: right">فقط مرد</option>
+              <option class="myText" value="3" style="direction: rtl;text-align: right">فقط زن</option>
+            </select>
+          </label>
+        </div>
 
+        <div class="date-trip bg-color">
           <div class="row">
             <span class="myText"><i class="ion-calendar sec-main-text-color"></i>تاریخ حرکت</span>
           </div>
@@ -33,7 +43,6 @@
             class="myText" type="number" placeholder="DD" id="day" onkeydown="limitSize(event,'day',2)"
             style="width: 50px;text-align: center;border-radius: 5px">
           </div>
-
         </div>
 
       </ion-scroll>

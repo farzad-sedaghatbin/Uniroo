@@ -119,7 +119,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }, null);
     });
     var setIsDriver = function (result) {
-      $rootScope.isDriver = result;
+      $rootScope.isDriver = (result == true || result == "true");
     };
     db.transaction(function (tx) {
       tx.executeSql('SELECT d.log FROM ANIJUU d WHERE d.name="wallet"', [], function (tx, results) {
@@ -147,7 +147,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }, null);
     });
     var setHasTrip = function (result) {
-      $rootScope.hasTrip = result;
+      $rootScope.hasTrip = (result == true || result == "true");
     };
     db.transaction(function (tx) {
       tx.executeSql('SELECT d.log FROM ANIJUU d WHERE d.name="isStarted"', [], function (tx, results) {
@@ -161,7 +161,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }, null);
     });
     var setIsStarted = function (result) {
-      $rootScope.isStarted = result;
+      $rootScope.isStarted = (result == true || result == "true");
     };
     db.transaction(function (tx) {
       tx.executeSql('SELECT d.log FROM ANIJUU d WHERE d.name="uid"', [], function (tx, results) {
@@ -206,14 +206,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         if ($rootScope.hasTrip) {
           $rootScope.menu = [{id: "1", img: "img/1.png", title: "مسافران من", link: "#/app/passengers"},
             {id: "1", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
-            {id: "2", img: "img/3.png", title: "گردش مالی", link: "#/app/offers"},
+            {id: "2", img: "img/money.jpg", title: "گردش مالی", link: "#/app/offers"},
             // {id: "3", img: "img/4.png", title: "وضعیت سفر", link: "#/app/tripState"},
             {id: "4", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
             {id: "5", img: "img/6.png", title: "درباره ما", link: "#/login"}]
         } else {
           $rootScope.menu = [{id: "1", img: "img/1.png", title: "ثبت سفر", link: "#/app/newTrip"},
             {id: "1", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
-            {id: "2", img: "img/3.png", title: "گردش مالی", link: "#/app/offers"},
+            {id: "2", img: "img/money.jpg", title: "گردش مالی", link: "#/app/offers"},
             // {id: "3", img: "img/4.png", title: "وضعیت سفر", link: "javascript:void(0)"},
             {id: "4", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
             {id: "5", img: "img/6.png", title: "درباره ما", link: "#/login"}]
@@ -247,15 +247,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         client.onmessage = function (msg) {
           var data = JSON.parse(msg.data);
           switch (data.command) {
-            case "request":
-              if (!$rootScope.trips)
-                $rootScope.trips = [];
-              $rootScope.trips.push(data.tripInfo);
-              $rootScope.$apply();
-              break;
-            case "requests":
-              $rootScope.trips = data.tripInfos;
-              $rootScope.$apply();
+            case "join":
+
               break;
           }
         };
