@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.uniroo658917" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="ir.uniroo" version="1.0.0" xmlns="http://www.w3.org/ns/widgets"
+        xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Uniroo</name>
   <description>
-        An Ionic Framework and Cordova project.
-    </description>
-  <author email="you@example.com" href="http://example.com/">
-      Your Name Here
-    </author>
+    Uniroo
+  </description>
+  <author email="info@uniroo.ir" href="http://example.com/">
+    Red mind
+  </author>
   <content src="index.html"/>
+  <access origin="*"/>
+  <allow-intent href="http://*/*"/>
+  <allow-intent href="https://*/*"/>
+  <allow-intent href="tel:*"/>
+  <allow-intent href="sms:*"/>
+  <allow-intent href="mailto:*"/>
+  <allow-intent href="geo:*"/>
   <access origin="*"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
@@ -27,6 +35,7 @@
   <plugin name="cordova-plugin-statusbar" spec="~2.2.2"/>
   <plugin name="ionic-plugin-keyboard" spec="~2.2.1"/>
   <platform name="android">
+    <allow-intent href="market:*"/>
     <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi"/>
     <icon src="resources/android/icon/drawable-mdpi-icon.png" density="mdpi"/>
     <icon src="resources/android/icon/drawable-hdpi-icon.png" density="hdpi"/>
