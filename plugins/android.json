@@ -24,7 +24,23 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.uniroo658917"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.ionicframework.uniroo658917"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "ir.uniroo"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "ir.uniroo"
+        },
+        "pushe-cordova-plugin": {
+            "PACKAGE_NAME": "ir.uniroo"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "ir.uniroo"
+        }
+    }
 }

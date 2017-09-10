@@ -7,7 +7,7 @@
   </description>
   <author email="info@uniroo.ir" href="http://example.com/">
     Red mind
-  </author>
+  </author>in
   <content src="index.html"/>
   <access origin="*"/>
   <allow-intent href="http://*/*"/>
