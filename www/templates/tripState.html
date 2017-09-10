@@ -1,0 +1,18 @@
+<ion-view view-title="<img src='img/logo.png' class='about-views' />">
+  <ion-content scroll="false">
+      <div style="text-align: center;padding-top: 156px!important">
+        <button id="start" ng-if="hasTrip" ng-click="start()"
+                style="background-color: rgb(17,50,193);width: 115px;height: 115px;color: white;font-size: x-large"
+                ng-disabled="confirmForm.$invalid" type="submit"
+                class="button button-fab expanded button-energized-900 myText">آغاز سفر
+        </button>
+      </div>
+      <div style="text-align: center;padding-top: 156px!important">
+        <button id="end" ng-if="!hasTrip" ng-click="end()"
+                style="background-color: rgb(17,50,193);width: 115px;height: 115px;color: white;font-size: x-large"
+                ng-disabled="confirmForm.$invalid" type="submit"
+                class="button button-fab expanded button-energized-900 myText">پایان سفر
+        </button>
+      </div>
+  </ion-content>
+</ion-view>

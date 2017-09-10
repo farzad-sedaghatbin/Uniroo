@@ -1,4 +1,4 @@
-<ion-view view-title="<img src='img/ulogo.png' class='about-views myText' />ثبت نام">
+<ion-view view-title="<img src='img/logo.png' class='about-views myText' />ثبت نام">
   <ion-content class="register_content padding">
     <div class="bg-color app_form  animated fadeInUp">
       <p class="head-tab sec-main-bg-color myText">اطلاعات شخصی</p>
@@ -57,10 +57,8 @@
 
     <div class="bg-color app_form info animated fadeInUp">
       <p class="head-tab sec-main-bg-color myText">اطلاعات حساب</p>
-      <div class="padding">
-        <div class="list  list-inset">
-          <div class="row">
-            <div class="col col-50 padding">
+      <div class="row">
+        <div class="col col-50">
               <span class="myText">نام کاربری</span>
               <label class="item item-input">
                 <input class="myText" id="username" type="text">
@@ -75,8 +73,6 @@
           </div>
 
         </div>
-      </div>
-    </div>
     <div class="m-top-20">
       <div ng-show="!isPassengerParam">
         <button ng-click="chose('DRIVER')" style="margin: 0 auto;width: 80%;font-size: large"

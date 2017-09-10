@@ -1,0 +1,27 @@
+<ion-view view-title="<img src='img/logo.png' class='about-views' />">
+  <ion-content ng-show="showDetail">
+    <ion-list>
+      <ion-item class="main-bg-color"
+                ng-repeat="item in data">
+        <div class="row plane-time animated fadeInUp">
+          <div class="row travel-time">
+            <div class="col col-33">
+              <p class="myText" style="color: black;direction: rtl;text-align: right">{{item.name}}</p>
+            </div>
+            <div class="col col-33">
+              <p class="myText" style="color: black;direction: rtl;text-align: right">{{item.tel}}</p>
+            </div>
+            <div ng-if="item.paid" class="col col-33">
+              <p class="myText" style="color: green;direction: rtl;text-align: right">پرداخت شد</p>
+            </div>
+            <div ng-if="!item.paid" class="col col-33">
+              <p class="myText" style="color: red;direction: rtl;text-align: right">پرداخت نشده</p>
+            </div>
+          </div>
+        </div>
+
+      </ion-item>
+
+    </ion-list>
+  </ion-content>
+</ion-view>

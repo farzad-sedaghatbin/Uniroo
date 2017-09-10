@@ -1,5 +1,5 @@
-<ion-view view-title="<img src='img/ulogo.png' class='about-views myText' />جزییات سفر">
-  <ion-content class="det_content my_booking">
+<ion-view view-title="<img src='img/logo.png' class='about-views myText' />جزییات سفر">
+  <ion-content class="det_content my_booking" ng-show="showDetail">
     <ion-list>
       <ion-item class="main-bg-color animated fadeInUp" style="text-align: right">
         <p class="myText" style="height: 40px">عازم {{driverInfo.destination}}</p>
@@ -10,12 +10,12 @@
             <img src="img/car2r.png" ng-if="$index % 2 !=0"/>
             <img src="img/car2.png" ng-if="$index % 2 ==0"/>
           </div>
-          <div class="col col-40 start-trip text-center">
-            <p style="height: 40px"><span class="margin-10 myText">{{driverInfo.source}} </span></p>
+          <div class="col col-40 start-trip text-center ellipsis">
+            <span class="margin-10 myText">{{driverInfo.source}} </span>
           </div>
           <i class="ion-arrow-right-a"></i>
-          <div class="col col-40 text-center">
-            <p class="arrive margin-10 myText" style="height: 40px">{{driverInfo.time}}<span class="margin-10 myText">{{driverInfo.destination}}</span></p>
+          <div class="col col-40 text-center ellipsis myText">
+            {{driverInfo.time}}<span class="margin-10 myText">{{driverInfo.destination}}</span>
           </div>
 
         </div>
@@ -27,9 +27,20 @@
             <p class="myText">مشخصات راننده</p>
           </div>
         </div>
-        <p style="height: 40px;margin-top: 20px"><span class="yellow margin-10 myText">نام</span>&nbsp;&nbsp;&nbsp;<span class="margin-10 myText" style="color: black">{{driverInfo.name}}</span></p>
-        <p style="height: 40px"><span class="yellow margin-10 myText">شماره تماس</span>&nbsp;&nbsp;&nbsp;<span class="margin-10 myText" style="color: black">{{driverInfo.mobile}}</span></p>
+        <p style="height: 40px;margin-top: 20px"><span class="yellow margin-10 myText">نام</span>&nbsp;&nbsp;&nbsp;<span class="margin-10 myText" style="color: black">{{driverInfo.driver}}</span></p>
+        <p style="height: 40px"><span class="yellow margin-10 myText">شماره تماس</span>&nbsp;&nbsp;&nbsp;<span class="margin-10 myText" style="color: black">{{driverInfo.tel}}</span></p>
       </ion-item>
+
+      <div>
+        <ionic-ratings ratingsobj='ratingsObject' style="font-size: 10vw;padding-bottom: 5%;text-align: center;direction: ltr"></ionic-ratings>
+      </div>
+      <div style="text-align: center;">
+        <button id="end" ng-click="submitRate()"
+                style="background-color: rgb(43, 193, 54);width: 65px;height: 65px;color: white;font-size: small"
+                ng-disabled="confirmForm.$invalid" type="submit"
+                class="button button-fab expanded button-energized-900 myText">ثبت
+        </button>
+      </div>
 
     </ion-list>
   </ion-content>
@@ -40,8 +51,15 @@
         <span class="myText">برای تمامی افراد</span>
       </div>
       <div class="col col-50 text-right">
-        <p class="myText" ng-click="goto('/app/payment')">رزرو <i class="ion-ios-arrow-back"></i></p>
+        <p class="myText" ng-click="payment()">پرداخت </p>
       </div>
     </div>
   </ion-footer-bar>
 </ion-view>
+<form id="TheForm" method="post" action="https://sep.shaparak.ir/payment.aspx" target="_BLANK">
+  <input type="hidden" name="Amount" />
+  <input type="hidden" name="MID"/>
+  <input type="hidden" name="ResNum"/>
+  <input type="hidden" name="RedirectURL" />
+  <input type="hidden" name="CellNumber" />
+</form>

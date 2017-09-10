@@ -1,6 +1,6 @@
 <ion-view view-title="landing">
   <ion-content scroll="false" >
-    <div  class="bg-yellow full-height" full-height>
+    <div  style="background:linear-gradient(to bottom,  rgba(17,50,193,1) 0%,rgba(46,78,217,1) 40%,rgba(57,88,225,1) 79%,rgba(64,96,231,1) 100%)" class="full-height" full-height>
       <div class='main-container'>
         <div id='logo-box'>
           <img class='logo vertical-middle' src='img/logo.png'/>
@@ -14,22 +14,22 @@
               </div>
 
               <div class='input-box' style="direction: rtl">
-                <input id="mail" name='mail' required placeholder="نام کاربری یا ایمیل یا شماره همراه" class='bg-grey myText' type='text' />
-                <img class='input-icon icon-20' src='img/icons/mobile.png'/>
+                <input id="mail" name='mail' required placeholder="نام کاربری" class='bg-grey myText' type='text' style="color: white"/>
+                <img class='input-icon icon-20' src='img/icons/user.png'/>
               </div>
               <div class='input-box' style="direction: rtl">
-                <input id="pwd" name='pwd' required placeholder="رمز عبور" class='bg-grey myText' type='password' />
+                <input id="pwd" name='pwd' required placeholder="رمز عبور" class='bg-grey myText' type='password' style="color: white"/>
                 <img class='input-icon icon-20' src='img/icons/lock.png'/>
               </div>
-              <button class='btn bg-yellow color-white m-top-20 big-font myText' type='submit'>ورود</button>
+              <button class='btn bg-yellow color-white m-top-20 big-font myText border-white' type='submit'>ورود</button>
             </div>
           </div>
         </form>
         <div id='sign-in-box'>
           <div class='vertical-middle'>
             <!-- <a href='#/signin'><input id='signup-redirect-btn'  class='btn bg-yellow border-white' type='button' value='New user ? Sign Up now !' /></a> </br> -->
-            <input ng-click='sign_up()' id='signup-redirect-btn'  class='btn bg-yellow border-white myText' type='button' value="ثبت نام" /></br>
-            <a class='a m-top-10 myText' href='#/app/forget-pass'>فراموشی رمز عبور</a>
+            <input ng-click='sign_up()' id='signup-redirect-btn'  class='btn bg-yellow border-white myText color-white' type='button' value="ثبت نام" /></br>
+            <a class='a m-top-10 myText color-white' href='#/app/forget-pass'>فراموشی رمز عبور</a>
           </div>
         </div>
         <div id='sign-in-with' class='text-center'>

@@ -1,7 +1,26 @@
 /* BG COLOR
 =================*/
-
-.bg-yellow{ background-color: #F84E0E ; }
+#mail:-ms-input-placeholder,
+#pwd:-ms-input-placeholder{
+  text-align: right;
+  color: white;
+}
+#mail:-moz-placeholder,
+#pwd:-moz-placeholder{
+  text-align: right;
+  color: white;
+}
+#mail::-moz-placeholder,
+#pwd::-moz-placeholder{
+  text-align: right;
+  color: white;
+}
+#mail::-webkit-input-placeholder,
+#pwd::-webkit-input-placeholder{
+  text-align: right;
+  color: white;
+}
+.bg-yellow{ background-color: #4ec1f8; }
 .bg-black{ background-color: #000;}
 .bg-white{background-color: #fff;}
 
@@ -48,7 +67,7 @@
 =====================*/
 .btn{ border-radius: 20px; display: block; height: 35px; width: 100%}
 .border-white{ border: 1px solid #fff; }
-.a{ font-weight: normal !important; color: #000 !important;display: block}
+.a{ font-weight: normal !important; color: white !important;display: block}
 
 .m-top-10{ margin-top: 10px;}
 .m-top-20{ margin-top: 20px;}

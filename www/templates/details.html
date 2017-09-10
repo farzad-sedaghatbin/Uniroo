@@ -1,4 +1,4 @@
-<ion-view view-title="<img src='img/ulogo.png' class='about-views myText' />جزییات سفر">
+<ion-view view-title="<img src='img/logo.png' class='about-views myText' />جزییات سفر">
   <ion-content class="det_content my_booking" ng-show="showDetail">
     <ion-list>
         <ion-item class="main-bg-color animated fadeInUp" style="text-align: right">
@@ -16,12 +16,12 @@
                       <img src="img/car2r.png" ng-if="$index % 2 !=0"/>
                       <img src="img/car2.png" ng-if="$index % 2 ==0"/>
                   </div>
-                  <div class="col col-40 start-trip text-center">
-                      <p class="margin-10"><span class="myText">{{detail.source}} </span></p>
+                  <div class="col col-40 start-trip text-center ellipsis myText">
+                      {{detail.source}}
                   </div>
                 <i class="ion-arrow-right-a"></i>
-                <div class="col col-40 text-center">
-                      <p class="arrive margin-10 myText">{{detail.time}}<span class="myText">{{detail.destination}}</span></p>
+                <div class="col col-40 text-center ellipsis myText">
+                      <span class="arrive margin-10 myText">{{detail.time}}<span class="myText">{{detail.destination}}</span></span>
                   </div>
 
               </div>
@@ -35,10 +35,6 @@
               </div>
               <p class="margin-10"><span class="yellow myText">شماره تماس</span>&nbsp;&nbsp;&nbsp;<span class="myText" style="color: black">{{detail.tel}}</span></p>
               <div class="row plane-time">
-                  <div class="col col-20">
-                      <img src="img/car2r.png" ng-if="$index % 2 !=0"/>
-                      <img src="img/car2.png" ng-if="$index % 2 ==0"/>
-                  </div>
               </div>
           </ion-item>
 

@@ -1,4 +1,4 @@
-<ion-view view-title="<img src='img/ulogo.png' class='about-views myText' />نتایج جست و جو">
+<ion-view view-title="<img src='img/logo.png' class='about-views myText' />نتایج جست و جو">
 
   <ion-content class="det_content my_booking search-result">
     <ion-list>
@@ -10,16 +10,16 @@
                     <img src="img/car2.png" ng-if="$index % 2 ==0"/>
                 </div>
                 <div class="col col-67 travel-det">
-                    <p class="myText">عازم به {{item.destination}}<span class="myText"><i class="ion-calendar"></i>{{item.year}} {{item.month}} {{item.day}}</span></p>
+                    <p class="myText ellipsis">عازم به {{item.destination}}<span class="myText"><i class="ion-calendar"></i>{{item.year}} {{item.month}} {{item.day}}</span></p>
                     <div class="row travel-time">
-                        <div class="col col-33">
-                            <p class="myText">{{item.destination}}</p>
+                        <div class="col col-33 myText ellipsis">
+                            {{item.destination}}
                         </div>
                         <div class="col col-33 text-center">
                             <img src="img/arrow2.png" />
                         </div>
-                        <div class="col col-33">
-                            <p class="myText">{{item.source}}<span class="myText">{{item.time}}</span></p>
+                        <div class="col col-33 myText ellipsis">
+                            {{item.source}}<span class="myText">{{item.time}}</span>
                         </div>
                     </div>
                     <div class="row travel-time time-price text-center">

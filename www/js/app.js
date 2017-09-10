@@ -5,10 +5,10 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
-  /* //if use wakanda platform
-   angular.module('starter', ['ionic', 'starter.controllers','wakanda'])
-   */
-  .run(function ($ionicPlatform, $rootScope, $location, $ionicScrollDelegate, $ionicPopup, $http,$state) {
+/* //if use wakanda platform
+ angular.module('starter', ['ionic', 'starter.controllers','wakanda'])
+ */
+  .run(function ($ionicPlatform, $rootScope, $location, $ionicScrollDelegate, $ionicPopup, $http, $state, $ionicHistory, $timeout) {
     /*************** forget password ****************/
 
     $rootScope.forget_password = function () {
@@ -57,6 +57,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
     /*************** repeat array ****************/
     $ionicPlatform.ready(function () {
+      var backbutton = 0;
+      $ionicPlatform.registerBackButtonAction(function (e) {
+        e.preventDefault();
+        if ($ionicHistory.currentStateName() == "home") {
+          if (backbutton == 0) {
+            backbutton++;
+            window.plugins.toast.showShortBottom('برای خروج دوباره لمس کنید');
+            $timeout(function () {
+              backbutton = 0;
+            }, 2000);
+          } else {
+            navigator.app.exitApp();
+          }
+        } else {
+          $ionicHistory.goBack();
+        }
+      }, 501);//registerBackButton
       $rootScope.$on('$cordovaNetwork:online', function (event, networkState) {
         set_net('online');
       });
@@ -84,7 +101,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }, null);
     });
     var setUserId = function (result) {
-      if (!result){
+      if (!result) {
         $state.go("login")
       } else {
         $rootScope.userid = result;
@@ -102,7 +119,63 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }, null);
     });
     var setIsDriver = function (result) {
-      $rootScope.isDriver = result;
+      $rootScope.isDriver = (result == true || result == "true");
+    };
+    db.transaction(function (tx) {
+      tx.executeSql('SELECT d.log FROM ANIJUU d WHERE d.name="wallet"', [], function (tx, results) {
+        var len = results.rows.length, i, result = '';
+        if (!results.rows || results.rows.length == 0) {
+          result = null;
+        } else {
+          result = results.rows.item(0).log;
+        }
+        setWallet(result)
+      }, null);
+    });
+    var setWallet = function (result) {
+      $rootScope.wallet = result;
+    };
+    db.transaction(function (tx) {
+      tx.executeSql('SELECT d.log FROM ANIJUU d WHERE d.name="hasTrip"', [], function (tx, results) {
+        var len = results.rows.length, i, result = '';
+        if (!results.rows || results.rows.length == 0) {
+          result = null;
+        } else {
+          result = results.rows.item(0).log;
+        }
+        setHasTrip(result)
+      }, null);
+    });
+    var setHasTrip = function (result) {
+      $rootScope.hasTrip = (result == true || result == "true");
+    };
+    db.transaction(function (tx) {
+      tx.executeSql('SELECT d.log FROM ANIJUU d WHERE d.name="isStarted"', [], function (tx, results) {
+        var len = results.rows.length, i, result = '';
+        if (!results.rows || results.rows.length == 0) {
+          result = null;
+        } else {
+          result = results.rows.item(0).log;
+        }
+        setIsStarted(result)
+      }, null);
+    });
+    var setIsStarted = function (result) {
+      $rootScope.isStarted = (result == true || result == "true");
+    };
+    db.transaction(function (tx) {
+      tx.executeSql('SELECT d.log FROM ANIJUU d WHERE d.name="uid"', [], function (tx, results) {
+        var len = results.rows.length, i, result = '';
+        if (!results.rows || results.rows.length == 0) {
+          result = null;
+        } else {
+          result = results.rows.item(0).log;
+        }
+        setSelectedId(result)
+      }, null);
+    });
+    var setSelectedId = function (result) {
+      $rootScope.uid = result;
     };
     db.transaction(function (tx) {
       tx.executeSql('SELECT d.log FROM ANIJUU d WHERE d.name="myToken"', [], function (tx, results) {
@@ -128,6 +201,32 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         $rootScope.prepareSocketsAndMenu();
     };
     var client;
+    $rootScope.prepareMenu = function () {
+      if ($rootScope.isDriver) {
+        if ($rootScope.hasTrip) {
+          $rootScope.menu = [{id: "1", img: "img/1.png", title: "مسافران من", link: "#/app/passengers"},
+            {id: "1", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
+            {id: "2", img: "img/money.jpg", title: "گردش مالی", link: "#/app/offers"},
+            // {id: "3", img: "img/4.png", title: "وضعیت سفر", link: "#/app/tripState"},
+            {id: "4", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
+            {id: "5", img: "img/6.png", title: "درباره ما", link: "#/login"}]
+        } else {
+          $rootScope.menu = [{id: "1", img: "img/1.png", title: "ثبت سفر", link: "#/app/newTrip"},
+            {id: "1", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
+            {id: "2", img: "img/money.jpg", title: "گردش مالی", link: "#/app/offers"},
+            // {id: "3", img: "img/4.png", title: "وضعیت سفر", link: "javascript:void(0)"},
+            {id: "4", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
+            {id: "5", img: "img/6.png", title: "درباره ما", link: "#/login"}]
+        }
+      } else {
+        $rootScope.menu = [{id: "1", img: "img/1.png", title: "جست و جو", link: "#/app/search"},
+          {id: "11", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
+          {id: "12", img: "img/4.png", title: "سفر جاری", link: "#/app/acceptedTrip"},
+          {id: "13", img: "img/money.jpg", title: "کیف پول", link: "#/app/wallet"},
+          {id: "14", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
+          {id: "15", img: "img/6.png", title: "درباره ما", link: "#/login"}]
+      }
+    }
     $rootScope.prepareSocketsAndMenu = function () {
       if ($rootScope.isDriver) {
         createDriver();
@@ -140,29 +239,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           createPassenger();
         };
       }
-      function createDriver(){
-        client = new WebSocket("ws://uniroo.cfapps.io/driverHandler");
+      function createDriver() {
+        client = new WebSocket("ws://192.168.160.172:8080/driverHandler");
         client.onopen = function () {
           client.send("start,1");
         };
         client.onmessage = function (msg) {
           var data = JSON.parse(msg.data);
           switch (data.command) {
-            case "request":
-              if (!$rootScope.trips)
-                $rootScope.trips = [];
-              $rootScope.trips.push(data.tripInfo);
-              $rootScope.$apply();
-              break;
-            case "requests":
-              $rootScope.trips = data.tripInfos;
-              $rootScope.$apply();
+            case "join":
+
               break;
           }
         };
       }
-      function createPassenger(){
-        client = new WebSocket("ws://uniroo.cfapps.io/userHandler");
+
+      function createPassenger() {
+        client = new WebSocket("ws://192.168.160.172:8080/userHandler");
         client.onopen = function () {
           client.send("join,2");
         };
@@ -180,20 +273,73 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           }
         };
       }
-      if ($rootScope.isDriver) {
-        $rootScope.menu = [{id: "1", img: "img/1.png", title: "ثبت سفر", link: "#/app/newTrip"},
-          {id: "2", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
-          {id: "3", img: "img/3.png", title: "پیشنهاد ها", link: "#/app/offers"},
-          {id: "4", img: "img/4.png", title: "ثبت نام", link: "#/app/register"},
-          {id: "5", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
-          {id: "6", img: "img/6.png", title: "درباره ما", link: "#/login"}]
-      } else {
-        $rootScope.menu = [{id: "1", img: "img/1.png", title: "جست و جو", link: "#/app/search"},
-          {id: "2", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
-          {id: "3", img: "img/3.png", title: "سفر جاری", link: "#/app/acceptedTrip"},
-          {id: "4", img: "img/4.png", title: "ثبت نام", link: "#/app/register"},
-          {id: "5", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
-          {id: "6", img: "img/6.png", title: "درباره ما", link: "#/login"}]
+
+      $rootScope.prepareMenu();
+    }
+  })
+
+  .directive('ionicRatings', function ($compile) {
+    return {
+      restrict: 'AE',
+      replace: true,
+      template: '<div class="text-right ionic_ratings">' +
+      '<span class="icon {{iconOff}} ionic_rating_icon_off" ng-style="iconOffColor" ng-click="ratingsClicked(1)" ng-show="rating < 1" ng-class="{\'read_only\':(readOnly)}"></span>' +
+      '<span class="icon {{iconOn}} ionic_rating_icon_on" ng-style="iconOnColor" ng-click="ratingsUnClicked(1)" ng-show="rating > 0" ng-class="{\'read_only\':(readOnly)}"></span>' +
+      '<span class="icon {{iconOff}} ionic_rating_icon_off" ng-style="iconOffColor" ng-click="ratingsClicked(2)" ng-show="rating < 2" ng-class="{\'read_only\':(readOnly)}"></span>' +
+      '<span class="icon {{iconOn}} ionic_rating_icon_on" ng-style="iconOnColor" ng-click="ratingsUnClicked(2)" ng-show="rating > 1" ng-class="{\'read_only\':(readOnly)}"></span>' +
+      '<span class="icon {{iconOff}} ionic_rating_icon_off" ng-style="iconOffColor" ng-click="ratingsClicked(3)" ng-show="rating < 3" ng-class="{\'read_only\':(readOnly)}"></span>' +
+      '<span class="icon {{iconOn}} ionic_rating_icon_on" ng-style="iconOnColor" ng-click="ratingsUnClicked(3)" ng-show="rating > 2" ng-class="{\'read_only\':(readOnly)}"></span>' +
+      '<span class="icon {{iconOff}} ionic_rating_icon_off" ng-style="iconOffColor" ng-click="ratingsClicked(4)" ng-show="rating < 4" ng-class="{\'read_only\':(readOnly)}"></span>' +
+      '<span class="icon {{iconOn}} ionic_rating_icon_on" ng-style="iconOnColor" ng-click="ratingsUnClicked(4)" ng-show="rating > 3" ng-class="{\'read_only\':(readOnly)}"></span>' +
+      '<span class="icon {{iconOff}} ionic_rating_icon_off" ng-style="iconOffColor" ng-click="ratingsClicked(5)" ng-show="rating < 5" ng-class="{\'read_only\':(readOnly)}"></span>' +
+      '<span class="icon {{iconOn}} ionic_rating_icon_on" ng-style="iconOnColor" ng-click="ratingsUnClicked(5)" ng-show="rating > 4" ng-class="{\'read_only\':(readOnly)}"></span>' +
+      '</div>',
+      scope: {
+        ratingsObj: '=ratingsobj'
+      },
+      link: function (scope, element, attrs) {
+
+        //Setting the default values, if they are not passed
+        scope.iconOn = scope.ratingsObj.iconOn || 'ion-ios-star';
+        scope.iconOff = scope.ratingsObj.iconOff || 'ion-ios-star-outline';
+        scope.iconOnColor = scope.ratingsObj.iconOnColor || 'rgb(200, 200, 100)';
+        scope.iconOffColor = scope.ratingsObj.iconOffColor || 'rgb(200, 100, 100)';
+        scope.rating = scope.ratingsObj.rating || attrs.rating || 0;
+        scope.minRating = scope.ratingsObj.minRating || 0;
+        scope.readOnly = scope.ratingsObj.readOnly || false;
+        scope.iconOnColor = {
+          color: scope.iconOnColor
+        };
+        scope.iconOffColor = {
+          color: scope.iconOffColor
+        };
+        scope.rating = (scope.rating > scope.minRating) ? scope.rating : scope.minRating;
+        scope.prevRating = 0;
+        scope.ratingsClicked = function (val) {
+          if (scope.minRating !== 0 && val < scope.minRating) {
+            scope.rating = scope.minRating;
+          } else {
+            scope.rating = val;
+          }
+          scope.prevRating = val;
+          scope.ratingsObj.callback(scope.rating);
+        };
+        scope.ratingsUnClicked = function (val) {
+          if (scope.minRating !== 0 && val < scope.minRating) {
+            scope.rating = scope.minRating;
+          } else {
+            scope.rating = val;
+          }
+          if (scope.prevRating == val) {
+            if (scope.minRating !== 0) {
+              scope.rating = scope.minRating;
+            } else {
+              scope.rating = 0;
+            }
+          }
+          scope.prevRating = val;
+          scope.ratingsObj.callback(scope.rating);
+        }
       }
     }
   })
@@ -209,7 +355,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       .state('home', {
         url: "/home",
         templateUrl: "templates/home.html",
-        controller : "HomeCtrl"
+        controller: "HomeCtrl"
       })
       .state('login', {
         url: '/login',
@@ -229,6 +375,36 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           'menuContent': {
             templateUrl: "templates/search.html",
             controller: "SearchCtrl"
+          }
+        }
+      })
+
+      .state('app.tripState', {
+        url: "/tripState",
+        views: {
+          'menuContent': {
+            templateUrl: "templates/tripState.html",
+            controller: "tripStateCtrl"
+          }
+        }
+      })
+
+      .state('app.passengers', {
+        url: "/passengers",
+        views: {
+          'menuContent': {
+            templateUrl: "templates/passengers.html",
+            controller: "passengersCtrl"
+          }
+        }
+      })
+
+      .state('app.wallet', {
+        url: "/wallet",
+        views: {
+          'menuContent': {
+            templateUrl: "templates/wallet.html",
+            controller: "walletCtrl"
           }
         }
       })
@@ -276,7 +452,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         views: {
           'menuContent': {
             templateUrl: "templates/reservations.html",
-            controller : "ReservationsCtrl"
+            controller: "ReservationsCtrl"
           }
         }
       })
@@ -316,7 +492,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         views: {
           'menuContent': {
             templateUrl: "templates/offers.html",
-            controller : "OffersCtrl"
+            controller: "OffersCtrl"
           }
         }
       })

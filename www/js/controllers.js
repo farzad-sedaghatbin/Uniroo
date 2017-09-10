@@ -35,25 +35,34 @@ angular.module('starter.controllers', [])
           delete $http.defaults.headers.common.Authorization;
         } catch (e) {
         }
-        var url = "http://192.168.160.172:8080/api/1/user_authenticate";
+        var url = "https://uniroo.cfapps.io/api/1/user_authenticate";
         var data = {
           username: $("#mail").val(),
           password: $("#pwd").val(),
-          rememberMe: false
+          rememberMe: true
         };
         $http.post(url, data).success(function (data, status, headers, config) {
           WebService.stopLoading();
           $rootScope.userid = data.userid;
           $rootScope.isDriver = data.driver;
+          $rootScope.hasTrip = data.hasTrip;
+          $rootScope.isStarted = data.isStarted;
+          $rootScope.wallet = data.wallet;
+          $rootScope.uid = data.UID;
           $http.defaults.headers.common.Authorization = "Bearer " + data.token;
           var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
           db.transaction(function (tx) {
+            tx.executeSql('DELETE FROM ANIJUU');
             tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["userid", data.userid]);
             tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["driver", data.driver]);
+            tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["hasTrip", data.hasTrip]);
+            tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["isStarted", data.isStarted]);
+            tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["wallet", data.wallet]);
+            tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["uid", data.UID]);
             tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["myToken", "Bearer " + data.token]);
           });
           $rootScope.prepareSocketsAndMenu();
-          $state.go('app.search', {}, {reload: true});
+          $state.go('home', {}, {reload: true});
         }).catch(function (err) {
           WebService.stopLoading();
           WebService.myErrorHandler(err, true);
@@ -62,7 +71,6 @@ angular.module('starter.controllers', [])
         form.mail.$setDirty();
         form.pwd.$setDirty();
       }
-
     };
 
     $scope.signUp = {};
@@ -202,42 +210,42 @@ angular.module('starter.controllers', [])
           car: $scope.car,
           insurance: $scope.insurance
         };
-        if (!data.firstName){
+        if (!data.firstName) {
           $ionicPopup.alert({
             title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
             template: '<p class="text-center color-gery">' + "نام اجباریست" + '</p>'
           });
           return;
         }
-        if (!data.lastName){
+        if (!data.lastName) {
           $ionicPopup.alert({
             title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
             template: '<p class="text-center color-gery">' + "نام خانوادگی اجباریست" + '</p>'
           });
           return;
         }
-        if (!data.username){
+        if (!data.username) {
           $ionicPopup.alert({
             title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
             template: '<p class="text-center color-gery">' + "نام کاربری اجباریست" + '</p>'
           });
           return;
         }
-        if (!data.mobile){
+        if (!data.mobile) {
           $ionicPopup.alert({
             title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
             template: '<p class="text-center color-gery">' + "شماره موبایل اجباریست" + '</p>'
           });
           return;
         }
-        if (!data.password){
+        if (!data.password) {
           $ionicPopup.alert({
             title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
             template: '<p class="text-center color-gery">' + "رمز عبور اجباریست" + '</p>'
           });
           return;
         }
-        if (!data.number){
+        if (!data.number) {
           $ionicPopup.alert({
             title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
             template: '<p class="text-center color-gery">' + "پلاک ماشین اجباریست" + '</p>'
@@ -280,35 +288,35 @@ angular.module('starter.controllers', [])
           gender: $("#gender").val() == "1",
           license: $scope.student
         };
-        if (!data.firstName){
+        if (!data.firstName) {
           $ionicPopup.alert({
             title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
             template: '<p class="text-center color-gery">' + "نام اجباریست" + '</p>'
           });
           return;
         }
-        if (!data.lastName){
+        if (!data.lastName) {
           $ionicPopup.alert({
             title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
             template: '<p class="text-center color-gery">' + "نام خانوادگی اجباریست" + '</p>'
           });
           return;
         }
-        if (!data.username){
+        if (!data.username) {
           $ionicPopup.alert({
             title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
             template: '<p class="text-center color-gery">' + "نام کاربری اجباریست" + '</p>'
           });
           return;
         }
-        if (!data.mobile){
+        if (!data.mobile) {
           $ionicPopup.alert({
             title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
             template: '<p class="text-center color-gery">' + "شماره موبایل اجباریست" + '</p>'
           });
           return;
         }
-        if (!data.password){
+        if (!data.password) {
           $ionicPopup.alert({
             title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
             template: '<p class="text-center color-gery">' + "رمز عبور اجباریست" + '</p>'
@@ -324,7 +332,7 @@ angular.module('starter.controllers', [])
         }
       }
       WebService.startLoading();
-      var url = "http://192.168.160.172:8080/api/1/signup";
+      var url = "https://uniroo.cfapps.io/api/1/signup";
       $http.post(url, data)
         .success(function (suc) {
           WebService.stopLoading();
@@ -337,20 +345,49 @@ angular.module('starter.controllers', [])
 
   })
   .controller('SearchCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $state, WebService, $http) {
+    var input = document.getElementById('pac-input');
+    var input2 = document.getElementById('pac-input2');
+    var options = {
+      componentRestrictions: {country: "ir"}
+    };
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
+    $scope.clearSearch = function () {
+      $("#pac-input").val("");
+    };
+    $scope.clearSearch2 = function () {
+      $("#pac-input2").val("");
+    };
     $scope.search = function () {
       WebService.startLoading();
-      var url = "http://192.168.160.172:8080/api/1/searchForDriver";
+      var url = "https://uniroo.cfapps.io/api/1/searchForDriver";
+      var year = $("#year").val();
+      var month = $("#month").val();
+      var day = $("#day").val();
       var data = {
-        source: $("#from").val(),
-        destination: $("#to").val(),
-        day: $("#year").val() + "/" + $("#month").val() + "/" + $("#day").val()
+        sourceProvince: null,
+        destinationProvince: null,
+        day: (!year || !month || !day) ? null : year + "/" + month + "/" + day,
+        type: $("#gender").val()
       };
+      if (autocomplete.getPlace())
+        autocomplete.getPlace().address_components.forEach(function (value, key) {
+          if (value.long_name.indexOf("Province") >= 0) {
+            data.sourceProvince = value.long_name.substring(0, value.long_name.lastIndexOf(" "))
+          }
+        });
+      if (autocomplete2.getPlace())
+        autocomplete2.getPlace().address_components.forEach(function (value, key) {
+          if (value.long_name.indexOf("Province") >= 0) {
+            data.destinationProvince = value.long_name.substring(0, value.long_name.lastIndexOf(" "))
+          }
+        });
       $http.post(url, data).success(function (data, status, headers, config) {
         $rootScope.data = data;
         $state.go("app.data");
       }).catch(function (err) {
         WebService.stopLoading();
-        WebService.myErrorHandler(err, true);
+        WebService.myErrorHandler(err, false);
       });
     }
   })
@@ -367,130 +404,223 @@ angular.module('starter.controllers', [])
     };
   })
 
-  .controller('DetailsCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http,$state) {
+  .controller('DetailsCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http, $state) {
     $scope.showFooter = true;
     $timeout(function () {
       WebService.startLoading();
-      var url = "http://192.168.160.172:8080/api/1/detail";
+      var url = "https://uniroo.cfapps.io/api/1/detail";
       $http.post(url, $rootScope.selectedId).success(function (data, status, headers, config) {
         $scope.detail = data;
         $scope.showDetail = true;
         WebService.stopLoading();
       }).catch(function (err) {
         WebService.stopLoading();
-        WebService.myErrorHandler(err, true);
+        WebService.myErrorHandler(err, false);
       });
     }, 700);
     $scope.request = function () {
       WebService.startLoading();
-      var url = "http://192.168.160.172:8080/api/1/Request";
+      var url = "https://uniroo.cfapps.io/api/1/Request";
       $http.post(url, $rootScope.selectedId).success(function (data, status, headers, config) {
         $.each($rootScope.data, function (index, value) {
           if (value.uid == $rootScope.selectedId) {
             $rootScope.data.splice(index, 1);
           }
         });
-        $state.go("app.data");
+        $rootScope.uid = $rootScope.selectedId;
+        var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
+        db.transaction(function (tx) {
+          tx.executeSql('DELETE FROM ANIJUU WHERE name="uid"');
+          tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["uid", $rootScope.uid]);
+        });
+        $state.go("home");
       }).catch(function (err) {
         WebService.stopLoading();
-        WebService.myErrorHandler(err, true);
+        WebService.myErrorHandler(err, false);
       });
     }
   })
 
-  .controller('OffersCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $http) {
-    var selectedIds = [];
-    $scope.totalAmount = 0;
-    $scope.$on('$stateChangeStart', function () {
-      $('input[type=checkbox]').each(function () {
-        $(this).prop('checked', false);
-      });
-      selectedIds = [];
-    });
-    $scope.doSelect = function (item) {
-      var index = $.inArray(selectedIds, item.uid);
-      if (index == -1) {
-        selectedIds.push(item.uid);
-        $scope.totalAmount += item.cost;
-      } else {
-        selectedIds.splice(index,1);
-        $scope.totalAmount -= item.cost;
-      }
-      $scope.$apply();
-    };
-    $scope.accept = function(){
-      var url = "http://192.168.160.172:8080/api/1/approvedDriver";
-      $http.post(url, selectedIds.toString()).success(function (data, status, headers, config) {
+  .controller('OffersCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $http, WebService) {
+    $timeout(function () {
+      WebService.startLoading();
+      var url = "https://uniroo.cfapps.io/api/1/turnover";
+      $http.post(url).success(function (data, status, headers, config) {
+        $scope.trips = data;
+        WebService.stopLoading();
       }).catch(function (err) {
-        WebService.myErrorHandler(err, true);
+        WebService.stopLoading();
+        WebService.myErrorHandler(err, false);
+      });
+    }, 700);
+  })
+
+  .controller('passengersCtrl', function ($scope, $ionicModal, $timeout, $rootScope, $http, WebService) {
+    $timeout(function () {
+      WebService.startLoading();
+      var url = "https://uniroo.cfapps.io/api/1/traveler";
+      $http.post(url, $rootScope.uid).success(function (data, status, headers, config) {
+        $scope.data = data;
+        WebService.stopLoading();
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err, false);
+      });
+    }, 700);
+  })
+
+  .controller('AcceptedTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http,$state,$ionicPopup) {
+    $timeout(function () {
+      if ($rootScope.uid) {
+        WebService.startLoading();
+        var url = "https://uniroo.cfapps.io/api/1/detail";
+        $http.post(url, $rootScope.uid).success(function (data, status, headers, config) {
+          $scope.driverInfo = data;
+          $rootScope.wallet = data.wallet;
+          $scope.showDetail = true;
+          WebService.stopLoading();
+        }).catch(function (err) {
+          WebService.stopLoading();
+          WebService.myErrorHandler(err);
+        });
+      }
+    }, 700);
+    var rate;
+    $scope.ratingsObject = {
+      iconOn: 'ion-ios-star',
+      iconOff: 'ion-ios-star-outline',
+      iconOnColor: 'rgb(200, 200, 100)',
+      iconOffColor: 'rgb(200, 100, 100)',
+      rating: 0,
+      minRating: 0,
+      readOnly: false,
+      callback: function (rating) {
+        rate = rating;
+      }
+    };
+    $scope.submitRate = function () {
+      if (!rate){
+        return;
+      }
+      var url = "https://uniroo.cfapps.io/api/1/rating";
+      $http.post(url,$rootScope.uid + "," + rate).success(function (data, status, headers, config) {
+        window.plugins.toast.showShortBottom("امتیاز شما به راننده با موفقیت ثبت شد");
+        WebService.stopLoading();
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err, false);
+      });
+    };
+    $scope.payment = function () {
+      if (parseInt($rootScope.wallet) < $scope.driverInfo.cost){
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "خطا" + '</p>',
+          template: '<p class="text-center color-gery">' + "لطفا کیف پول خود را شارژ کنید، مقدار آن کمتر از هزینه سفر است" + '</p>'
+        });
+        return;
+      }
+      WebService.startLoading();
+      var url = "https://uniroo.cfapps.io/api/1/tripPayment";
+      $http.post(url, $rootScope.uid).success(function (data, status, headers, config) {
+        WebService.stopLoading();
+        window.plugins.toast.showShortBottom("پرداخت با موفقیت انجام شد");
+        $state.go("home");
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err);
       });
     }
   })
 
-  .controller('AcceptedTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http) {
-
-  })
-
-  .controller('NewTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http,$ionicPopup,$cordovaToast) {
-    $scope.submit = function(){
-      var url = "http://192.168.160.172:8080/api/1/submitTrip";
+  .controller('NewTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http, $ionicPopup,$state) {
+    var input = document.getElementById('pac-input');
+    var input2 = document.getElementById('pac-input2');
+    var options = {
+      componentRestrictions: {country: "ir"}
+    };
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
+    var date = new Date();
+    var jalali = toJalaali(date.getFullYear(), date.getMonth(), date.getDay());
+    $("#year").val(jalali.jy);
+    $("#month").val(jalali.jm);
+    $("#day").val(jalali.jd);
+    $scope.clearSearch = function () {
+      $("#pac-input").val("");
+    };
+    $scope.clearSearch2 = function () {
+      $("#pac-input2").val("");
+    };
+    $scope.submit = function () {
+      var url = "https://uniroo.cfapps.io/api/1/submitTrip";
       var hour = $("#hour").val();
       var minute = $("#minute").val();
       var year = $("#year").val();
       var month = $("#month").val();
       var day = $("#day").val();
+      var sourceProvince;
+      var destinationProvince;
       var data = {
-        source : $("#from").val(),
-        destination : $("#to").val(),
-        date : year + "/" + month + "/" + day,
-        time : hour + ":" + minute,
-        price : $("#cost").val(),
-        capacity : $("#num").val(),
-        type : $("#gender").val()
+        source: $("#pac-input").val(),
+        destination: $("#pac-input2").val(),
+        date: year + "/" + month + "/" + day,
+        time: hour + ":" + minute,
+        cost: $("#cost").val(),
+        capacity: $("#num").val(),
+        type: $("#gender").val(),
+        sourceProvince: null,
+        destinationProvince: null
       };
-      if (!data.source){
+      if (!data.source) {
         $ionicPopup.alert({
           title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
           template: '<p class="text-center color-gery">' + "مبدا سفر اجباریست" + '</p>'
         });
         return;
       }
-      if (!data.destination){
+      if (!data.destination) {
         $ionicPopup.alert({
           title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
           template: '<p class="text-center color-gery">' + "مقصد سفر اجباریست" + '</p>'
         });
         return;
       }
-      if (!year || !month || !day){
+      if (!year || !month || !day) {
         $ionicPopup.alert({
           title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
           template: '<p class="text-center color-gery">' + "تاریخ سفر اجباریست" + '</p>'
         });
         return;
       }
-      if (!hour || !minute){
+      if (!hour || !minute) {
         $ionicPopup.alert({
           title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
           template: '<p class="text-center color-gery">' + "ساعت سفر اجباریست" + '</p>'
         });
         return;
       }
-      if (!data.price){
+      if (!data.cost) {
         $ionicPopup.alert({
           title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
           template: '<p class="text-center color-gery">' + "هزینه سفر اجباریست" + '</p>'
         });
         return;
       }
-      if (!data.capacity){
+      if (data.cost < 3000) {
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
+          template: '<p class="text-center color-gery">' + "حداقل هزینه سفر 3000 تومان می باشد" + '</p>'
+        });
+        return;
+      }
+      if (!data.capacity) {
         $ionicPopup.alert({
           title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
           template: '<p class="text-center color-gery">' + "ظرفیت اجباریست" + '</p>'
         });
         return;
       }
-      if (!data.type){
+      if (!data.type) {
         $ionicPopup.alert({
           title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
           template: '<p class="text-center color-gery">' + "جنسیت مسافر اجباریست" + '</p>'
@@ -498,12 +628,39 @@ angular.module('starter.controllers', [])
         return;
       }
       WebService.startLoading();
+      if (autocomplete.getPlace())
+        autocomplete.getPlace().address_components.forEach(function (value, key) {
+          if (value.long_name.indexOf("Province") >= 0) {
+            data.sourceProvince = value.long_name.substring(0, value.long_name.lastIndexOf(" "))
+          }
+        });
+      if (autocomplete2.getPlace())
+        autocomplete2.getPlace().address_components.forEach(function (value, key) {
+          if (value.long_name.indexOf("Province") >= 0) {
+            data.destinationProvince = value.long_name.substring(0, value.long_name.lastIndexOf(" "))
+          }
+        });
       $http.post(url, data).success(function (data, status, headers, config) {
-        $cordovaToast.showShortBottom('سفر شما با موفقیت ثبت شد');
+        $rootScope.uid = data;
+        $rootScope.hasTrip = true;
+        $rootScope.isStarted = false;
+        $("#tripstate").css("background", "#4ec1f8");
+        var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
+        db.transaction(function (tx) {
+          tx.executeSql('DELETE FROM ANIJUU WHERE name="uid"');
+          tx.executeSql('DELETE FROM ANIJUU WHERE name="hasTrip"');
+          tx.executeSql('DELETE FROM ANIJUU WHERE name="isStarted"');
+          tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["uid", data]);
+          tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["hasTrip", true]);
+          tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["isStarted", false]);
+        });
+        window.plugins.toast.showShortBottom('سفر شما با موفقیت ثبت شد');
+        $rootScope.prepareMenu();
+        $state.go("home");
         WebService.stopLoading();
       }).catch(function (err) {
         WebService.stopLoading();
-        WebService.myErrorHandler(err, true);
+        WebService.myErrorHandler(err, false);
       });
     }
   })
@@ -511,18 +668,13 @@ angular.module('starter.controllers', [])
   .controller('ReservationsCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http) {
     $timeout(function () {
       WebService.startLoading();
-      var url;
-      if ($rootScope.isDriver) {
-        url = "http://192.168.160.172:8080/api/1/driverTrips";
-      } else {
-        url = "http://192.168.160.172:8080/api/1/clientTrips";
-      }
+      var url = "https://uniroo.cfapps.io/api/1/trips";
       $http.post(url).success(function (data, status, headers, config) {
         $scope.trips = data;
         WebService.stopLoading();
       }).catch(function (err) {
         WebService.stopLoading();
-        WebService.myErrorHandler(err, true);
+        WebService.myErrorHandler(err, false);
       });
     }, 700);
     $scope.toggleGroup = function (group) {
@@ -537,7 +689,7 @@ angular.module('starter.controllers', [])
     };
   })
 
-  .controller('ForgetPassCtrl', function ($scope, $ionicPopup, $http, $rootScope, $state,WebService) {
+  .controller('ForgetPassCtrl', function ($scope, $ionicPopup, $http, $rootScope, $state, WebService) {
     delete $http.defaults.headers.common.Authorization;
     $scope.$on('$ionicView.beforeEnter', function (e, viewData) {
       $scope.$root.showMenuIcon = false;
@@ -616,12 +768,67 @@ angular.module('starter.controllers', [])
     };
   })
 
-  .controller('HomeCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $state,$http) {
+  .controller('HomeCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $state, $http, $ionicSlideBoxDelegate) {
+    var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
+    $scope.start = function () {
+      if (!$rootScope.hasTrip)
+        return;
+      WebService.startLoading();
+      if (!$rootScope.isStarted) {
+        var url = "https://uniroo.cfapps.io/api/1/startTrip";
+        $http.post(url, $rootScope.uid).success(function (data, status, headers, config) {
+          db.transaction(function (tx) {
+            tx.executeSql('UPDATE ANIJUU SET log="false" WHERE d.name="isStarted"');
+          });
+          $("#tripstate").html('پایان سفر');
+          $rootScope.isStarted = true;
+          WebService.stopLoading();
+        }).catch(function (err) {
+          WebService.stopLoading();
+          WebService.myErrorHandler(err);
+        });
+      } else {
+        var url = "https://uniroo.cfapps.io/api/1/endOfTrip";
+        $http.post(url, $rootScope.uid).success(function (data, status, headers, config) {
+          db.transaction(function (tx) {
+            tx.executeSql('UPDATE ANIJUU SET log=FALSE WHERE d.name="hasTrip"');
+            tx.executeSql('UPDATE ANIJUU SET log=FALSE WHERE d.name="isStarted"');
+          });
+          $rootScope.hasTrip = false;
+          $rootScope.isStarted = false;
+          $("#tripstate").html('آغاز سفر');
+          $("#tripstate").css("background", "lightgray");
+          $rootScope.prepareMenu();
+          $state.go("home");
+          WebService.stopLoading();
+        }).catch(function (err) {
+          WebService.stopLoading();
+          WebService.myErrorHandler(err);
+        });
+      }
+    };
+    $scope.slide = function (index) {
+      $ionicSlideBoxDelegate.slide(index);
+    };
+    $scope.enableSwipe = function () {
+      $ionicSlideBoxDelegate.enableSlide(true);
+    };
+    $timeout(function () {
+      if (!$rootScope.isStarted) {
+        $("#tripstate").html('آغاز سفر');
+      } else {
+        $("#tripstate").html('پایان سفر');
+      }
+      if (!$rootScope.hasTrip) {
+        $("#tripstate").css("background", "lightgray");
+      } else {
+        $("#tripstate").css("background", "#4ec1f8");
+      }
+    }, 1000);
     $timeout(function () {
       document.getElementById('fab-rate').classList.toggle('on');
     }, 600);
-    $scope.logout = function(){
-      var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
+    $scope.logout = function () {
       db.transaction(function (tx) {
         tx.executeSql('DELETE FROM ANIJUU');
       });
@@ -635,16 +842,45 @@ angular.module('starter.controllers', [])
     }
   })
 
-  .controller('PaymentCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $state,$http) {
-    $scope.goToSaman = function (){
-      var f = document.getElementById('TheForm');
-      f.Amount.value = 1000;
-      f.MID.value = "10822833";
-      f.ResNum.value = 1;
-      f.RedirectURL.value = "http://google.com";
-      f.CellNumber.value = "09124484014";
-      f.submit();
+  .controller('walletCtrl', function ($scope, $http, WebService, $state, $timeout, $rootScope) {
+    var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
+    $timeout(function () {
+      WebService.startLoading();
+      var url = "https://uniroo.cfapps.io/api/1/wallet";
+      $http.post(url).success(function (data, status, headers, config) {
+        $rootScope.wallet = data;
+        db.transaction(function (tx) {
+          tx.executeSql('UPDATE ANIJUU SET log=? WHERE d.name="wallet"', [data]);
+        });
+        $scope.showDetail = true;
+        WebService.stopLoading();
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err);
+      });
+    }, 700);
+    $scope.goToSaman = function () {
+      WebService.startLoading();
+      var url = "https://uniroo.cfapps.io/api/1/factor";
+      var amount = $("#cost").val();
+      $http.post(url, amount).success(function (data, status, headers, config) {
+        WebService.stopLoading();
+        var f = document.getElementById('TheForm');
+        f.Amount.value = amount;
+        f.MID.value = "10822833";
+        f.ResNum.value = data;
+        f.RedirectURL.value = "https://uniroo.cfapps.io/api/1/donePeyment";
+        f.submit();
+        $state.go("home");
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err);
+      });
     }
+  })
+
+  .controller('tripStateCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $state, $http) {
+
   })
 
   .controller('PlaylistCtrl', function ($scope, $stateParams) {
