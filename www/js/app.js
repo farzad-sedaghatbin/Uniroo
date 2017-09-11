@@ -261,8 +261,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           cordova.plugins.notification.local.schedule({
             id: 1,
             title: 'uniroo',
-            text:  " مسافر شما شد " + msg.data,
-            icon: location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '') + '/img/icon.png'
+            text:msg.data + " مسافر شما شد ",
+            icon: "http://uniroo.ir/icon.png",
+            led:"36C108"
           });
         };
       }
