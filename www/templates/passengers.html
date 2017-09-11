@@ -1,27 +1,27 @@
 <ion-view view-title="<img src='img/logo.png' class='about-views' />">
   <ion-content ng-show="showDetail">
     <ion-list>
-      <ion-item class="main-bg-color"
-                ng-repeat="item in data">
-        <div class="row plane-time animated fadeInUp">
-          <div class="row travel-time">
-            <div class="col col-33">
-              <p class="myText" style="color: black;direction: rtl;text-align: right">{{item.name}}</p>
+      <div ng-repeat="item in data">
+        <ion-item class="item-stable item-icon-left bg-color animated slideInUp"
+                  ng-click="toggleGroup(trip.uid)"
+                  ng-class="{active: isGroupShown(trip.uid)}">
+
+          <h4 class="myText" style="text-align: right;direction: rtl">نام : <span class="yellow myText">{{item.name}}</span> <i class="icon" ng-class="isGroupShown(trip.uid) ? 'ion-chevron-up' : 'ion-chevron-down'"></i></h4>
+        </ion-item>
+
+        <ion-item class="item-accordion main-bg-color" style="direction: rtl;text-align: right"
+                  ng-show="isGroupShown(trip.uid)">
+          <div class="items-detail">
+            <div class="Passenger dark-blue padding">
+              <p class="myText">شماره<span class="myText"><a ng-href="tel:{{item.tel}}" class="myText" style="color: white;direction: rtl;text-align: right">{{item.tel}}</a></span></p>
             </div>
-            <div class="col col-33">
-              <p class="myText" style="color: black;direction: rtl;text-align: right">{{item.tel}}</p>
-            </div>
-            <div ng-if="item.paid" class="col col-33">
-              <p class="myText" style="color: green;direction: rtl;text-align: right">پرداخت شد</p>
-            </div>
-            <div ng-if="!item.paid" class="col col-33">
-              <p class="myText" style="color: red;direction: rtl;text-align: right">پرداخت نشده</p>
+            <div class="Passenger dark-blue padding">
+              <p class="myText">وضعیت<span ng-if="item.paid" style="color: green" class="myText">پرداخت شده</span><span ng-if="!item.paid" style="color: red" class="myText">پرداخت نشده</span></p>
             </div>
           </div>
-        </div>
-
-      </ion-item>
-
+        </ion-item>
+      </div>
+      <div ng-if="data.length == 0" class="myText yellow">نتیجه ای یافت نشد</div>
     </ion-list>
   </ion-content>
 </ion-view>

@@ -87,6 +87,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
+      $(document).on({
+        'DOMNodeInserted': function () {
+          var container = $('.pac-container');
+          container.attr('data-tap-disabled', 'true');
+          container.click(function() {
+            $('#pac-input').blur();
+            $('#pac-input2').blur();
+            $('#pac-input3').blur();
+            $('#pac-input4').blur();
+          });
+        }
+      }, '.pac-container')
     });
     var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
     db.transaction(function (tx) {
@@ -197,8 +209,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         } catch (e) {
         }
       }
-      if ($rootScope.userid)
-        $rootScope.prepareSocketsAndMenu();
+      if ($rootScope.userid) {
+        $rootScope.prepareMenu();
+        $rootScope.prepareSockets();
+      }
     };
     var client;
     $rootScope.prepareMenu = function () {
@@ -209,14 +223,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             {id: "2", img: "img/money.jpg", title: "گردش مالی", link: "#/app/offers"},
             // {id: "3", img: "img/4.png", title: "وضعیت سفر", link: "#/app/tripState"},
             {id: "4", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
-            {id: "5", img: "img/6.png", title: "درباره ما", link: "#/login"}]
+            {id: "5", img: "img/6.png", title: "درباره ما", link: "#/app/about"}]
         } else {
           $rootScope.menu = [{id: "1", img: "img/1.png", title: "ثبت سفر", link: "#/app/newTrip"},
             {id: "1", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
             {id: "2", img: "img/money.jpg", title: "گردش مالی", link: "#/app/offers"},
             // {id: "3", img: "img/4.png", title: "وضعیت سفر", link: "javascript:void(0)"},
             {id: "4", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
-            {id: "5", img: "img/6.png", title: "درباره ما", link: "#/login"}]
+            {id: "5", img: "img/6.png", title: "درباره ما", link: "#/app/about"}]
         }
       } else {
         $rootScope.menu = [{id: "1", img: "img/1.png", title: "جست و جو", link: "#/app/search"},
@@ -224,10 +238,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           {id: "12", img: "img/4.png", title: "سفر جاری", link: "#/app/acceptedTrip"},
           {id: "13", img: "img/money.jpg", title: "کیف پول", link: "#/app/wallet"},
           {id: "14", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
-          {id: "15", img: "img/6.png", title: "درباره ما", link: "#/login"}]
+          {id: "15", img: "img/6.png", title: "درباره ما", link: "#/app/about"}]
       }
     }
-    $rootScope.prepareSocketsAndMenu = function () {
+    $rootScope.prepareSockets = function () {
       if ($rootScope.isDriver) {
         createDriver();
         client.onerror = function (event) {
@@ -240,22 +254,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         };
       }
       function createDriver() {
-        client = new WebSocket("ws://192.168.160.172:8080/driverHandler");
+        client = new WebSocket("wss://uniroo.cfapps.io:4443/driverHandler");
         client.onopen = function () {
           client.send("start,1");
         };
         client.onmessage = function (msg) {
-          var data = JSON.parse(msg.data);
-          switch (data.command) {
-            case "join":
-
-              break;
-          }
+          navigator.vibrate(2000);
+          cordova.plugins.notification.local.schedule({
+            id: 1,
+            title: 'uniroo',
+            text: msg + " مسافر شما شد ",
+            icon: '/img/icon.png'
+          });
         };
       }
 
       function createPassenger() {
-        client = new WebSocket("ws://192.168.160.172:8080/userHandler");
+        client = new WebSocket("wss://uniroo.cfapps.io:4443/userHandler");
         client.onopen = function () {
           client.send("join,2");
         };

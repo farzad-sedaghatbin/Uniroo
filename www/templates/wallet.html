@@ -6,23 +6,39 @@
           <p class="myText" style="color: black;direction: rtl;text-align: right">حساب جاری شما</p>
         </div>
         <div class="col col-50">
-          <p class="myText" style="color: black;direction: rtl;text-align: right">{{wallet}}</p>
+          <p class="myText" style="color: black;direction: rtl;text-align: right">{{wallet}} ریال</p>
         </div>
       </div>
     </div>
     <div class="date-trip bg-color" >
       <div class="row">
-        <span class="myText"><i class="ion-cash sec-main-text-color"></i>مبلغ مورد نظر(ریال)</span>
+        <span class="myText"><i class="ion-cash sec-main-text-color"></i>اتصال به درگاه بانک</span>
       </div>
       <div class="row">
-        <input class="myText" type="number" placeholder="تومان" id="cost" onkeydown="limitSize(event,'cost',9)" style="border-radius: 5px;width: 100%">
+        <input class="myText" type="number" placeholder="ریال" id="cost" onkeydown="limitSize(event,'cost',12)" style="border-radius: 5px;width: 100%;padding-right: 10px">
       </div>
     </div>
-    <div style="text-align: center;padding-top: 30px!important">
+    <div style="text-align: center;padding-top: 10px!important">
       <button id="start" ng-click="goToSaman()"
               style="background-color: rgb(17,50,193);width: 115px;height: 115px;color: white;font-size: x-large"
               ng-disabled="confirmForm.$invalid" type="submit"
               class="button button-fab expanded button-energized-900 myText">شارژ کن
+      </button>
+    </div>
+
+    <div class="date-trip bg-color" style="margin-top: 20px">
+      <div class="row">
+        <span class="myText"><i class="ion-cash sec-main-text-color"></i>کد بزن هدیه بگیر</span>
+      </div>
+      <div class="row">
+        <input class="myText" type="text" placeholder="کد" id="code" onkeydown="limitSize(event,'code',12)" style="border-radius: 5px;width: 100%;padding-right: 10px">
+      </div>
+    </div>
+    <div style="text-align: center;padding-top: 10px!important">
+      <button ng-click="code()"
+              style="background-color: rgb(17,50,193);width: 115px;height: 115px;color: white;font-size: x-large"
+              ng-disabled="confirmForm.$invalid" type="submit"
+              class="button button-fab expanded button-energized-900 myText">هدیه بگیر
       </button>
     </div>
   </ion-content>

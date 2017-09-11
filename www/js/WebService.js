@@ -118,17 +118,17 @@ app.service('WebService', function( $http, $q, $ionicLoading,$ionicPopup){
 
 	 }
    this.myErrorHandler = function (err, isFromLogin) {
-     if (err == 401) {
+     if (err.status == 401) {
        if (isFromLogin) {
          $ionicPopup.alert({
-           title: '<span class="myText">پیام</span>',
-           template: '<div class="myText" style="font-size: 24px;padding-bottom: 10px;direction: rtl;text-align: right">نام کاربری یا رمز عبور اشتباه می باشد</div>'
+           title: '<span class="myText" style="color: white">پیام</span>',
+           template: '<div class="myText" style="font-size: 24px;padding-bottom: 10px;direction: rtl;text-align: right;color: white">نام کاربری یا رمز عبور اشتباه می باشد</div>'
          });
        } else {
          delete $http.defaults.headers.common.Authorization;
          $ionicPopup.alert({
-           title: '<span class="myText">پیام</span>',
-           template: '<div class="myText" style="font-size: 24px;padding-bottom: 10px;direction: rtl;text-align: right">لطفا مجددا اطلاعات حساب خود را وارد نمایید</div>'
+           title: '<span class="myText" style="color: white">پیام</span>',
+           template: '<div class="myText" style="font-size: 24px;padding-bottom: 10px;direction: rtl;text-align: right;color: white">لطفا مجددا اطلاعات حساب خود را وارد نمایید</div>'
          });
        }
        $(".popup").css("width", "90%");
@@ -140,8 +140,8 @@ app.service('WebService', function( $http, $q, $ionicLoading,$ionicPopup){
        }
      } else if (err && err.status == 418) {
        $ionicPopup.alert({
-         title: '<span class="myText">بروزرسانی</span>',
-         template: '<div class="myText" style="font-size: 24px;padding-bottom: 10px;direction: rtl;text-align: right">لطفا اپلیکیشن خود را بروزرسانی کنید</div>'
+         title: '<span class="myText" style="color: white">بروزرسانی</span>',
+         template: '<div class="myText" style="font-size: 24px;padding-bottom: 10px;direction: rtl;text-align: right;color: white">لطفا اپلیکیشن خود را بروزرسانی کنید</div>'
          //content: 'Hello World!!!'
        }).then(function (res) {
          navigator.app.exitApp();

@@ -1,54 +1,52 @@
 <ion-view view-title="<img src='img/logo.png' class='about-views myText' />جزییات سفر">
   <ion-content class="det_content my_booking" ng-show="showDetail">
     <ion-list>
-        <ion-item class="main-bg-color animated fadeInUp" style="text-align: right">
-              <div class="items-detail">
-                  <div class="Passenger dark-blue padding">
-                      <p class="margin-10 myText">{{detail.date}}</p>
-                  </div>
-              </div>
-              <p class="margin-10 myText">عازم {{detail.destination}}</p>
-              <p class="margin-10 myText"><span class="yellow myText">{{detail.car}}</span>&nbsp;&nbsp;&nbsp;<span class="myText">{{detail.number}}</span></p>
+      <ion-item class="main-bg-color animated fadeInUp" style="text-align: right">
+        <div class="items-detail">
+          <div class="Passenger dark-blue padding">
+            <p class="margin-10 myText">{{detail.date}}</p>
+            <p class="margin-10 myText">{{detail.time}}</p>
+          </div>
+        </div>
+        <div class="row plane-time">
+          <div class="col col-20">
+            <img src="img/car2r.png" ng-if="$index % 2 !=0"/>
+            <img src="img/car2.png" ng-if="$index % 2 ==0"/>
+          </div>
+          <p class="margin-10 myText" style="margin: 0"><span class="yellow myText">{{detail.car}}</span>&nbsp;&nbsp;&nbsp;<span
+            class="myText">{{detail.number}}</span></p>
+        </div>
+        <div class="myText yellow ellipsis" style="text-align: right">مبدا</div>
+        <div class="myText ellipsis" style="text-align: right;direction: rtl">
+          {{detail.source}}
+        </div>
+        <div class="myText yellow ellipsis" style="text-align: right">مقصد</div>
+        <div class="myText ellipsis" style="text-align: right;direction: rtl">{{detail.destination}}</div>
+      </ion-item>
 
-
-              <div class="row plane-time">
-                  <div class="col col-20">
-                      <img src="img/car2r.png" ng-if="$index % 2 !=0"/>
-                      <img src="img/car2.png" ng-if="$index % 2 ==0"/>
-                  </div>
-                  <div class="col col-40 start-trip text-center ellipsis myText">
-                      {{detail.source}}
-                  </div>
-                <i class="ion-arrow-right-a"></i>
-                <div class="col col-40 text-center ellipsis myText">
-                      <span class="arrive margin-10 myText">{{detail.time}}<span class="myText">{{detail.destination}}</span></span>
-                  </div>
-
-              </div>
-          </ion-item>
-
-        <ion-item class="main-bg-color animated fadeInUp" style="text-align: right">
-              <div class="items-detail">
-                  <div class="Passenger dark-blue padding">
-                      <p class="margin-10 myText">{{detail.driver}}</p>
-                  </div>
-              </div>
-              <p class="margin-10"><span class="yellow myText">شماره تماس</span>&nbsp;&nbsp;&nbsp;<span class="myText" style="color: black">{{detail.tel}}</span></p>
-              <div class="row plane-time">
-              </div>
-          </ion-item>
+      <ion-item class="main-bg-color animated fadeInUp" style="text-align: right">
+        <div class="items-detail">
+          <div class="Passenger dark-blue padding">
+            <p class="margin-10 myText">{{detail.driver}}</p>
+          </div>
+        </div>
+        <p class="margin-10"><span class="yellow myText">شماره تماس</span>&nbsp;&nbsp;&nbsp;<a ng-href="tel:{{detail.tel}}" class="myText"
+                                                                                                  style="color: black">{{detail.tel}}</a>
+        </p>
+        <div class="row plane-time">
+        </div>
+      </ion-item>
 
     </ion-list>
   </ion-content>
-    <ion-footer-bar class="footer dark-blue" ng-show="showDetail">
-        <div class="row" ng-show="showFooter">
-          <div class="col col-50 total text-left">
-            <h4 class="yellow myText">مجموع: {{detail.cost}} <sup>تومان</sup></h4>
-            <span class="myText">برای تمامی افراد</span>
-          </div>
-            <div class="col col-50 text-right">
-                <p class="myText" ng-click="request()">درخواست </p>
-            </div>
-        </div>
-    </ion-footer-bar>
+  <ion-footer-bar class="footer dark-blue" ng-show="showDetail">
+    <div class="row" ng-show="showFooter">
+      <div class="col col-50 total text-left">
+        <h4 class="yellow myText" style="margin-top: 10px">مجموع: {{detail.cost}} <sup>ریال</sup></h4>
+      </div>
+      <div class="col col-50 text-right">
+        <p class="myText" ng-click="request()">درخواست </p>
+      </div>
+    </div>
+  </ion-footer-bar>
 </ion-view>

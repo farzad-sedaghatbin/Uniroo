@@ -2,23 +2,20 @@
   <ion-content class="det_content my_booking" ng-show="showDetail">
     <ion-list>
       <ion-item class="main-bg-color animated fadeInUp" style="text-align: right">
-        <p class="myText" style="height: 40px">عازم {{driverInfo.destination}}</p>
-        <p style="height: 40px"><span class="yellow margin-10 myText">{{driverInfo.carDetail}}</span>&nbsp;&nbsp;&nbsp;<span class="margin-10 myText">{{driverInfo.number}}</span></p>
-
         <div class="row plane-time">
           <div class="col col-20">
             <img src="img/car2r.png" ng-if="$index % 2 !=0"/>
             <img src="img/car2.png" ng-if="$index % 2 ==0"/>
           </div>
-          <div class="col col-40 start-trip text-center ellipsis">
-            <span class="margin-10 myText">{{driverInfo.source}} </span>
-          </div>
-          <i class="ion-arrow-right-a"></i>
-          <div class="col col-40 text-center ellipsis myText">
-            {{driverInfo.time}}<span class="margin-10 myText">{{driverInfo.destination}}</span>
-          </div>
-
+          <p class="margin-10 myText" style="margin: 0"><span class="yellow myText">{{driverInfo.carDetail}}</span>&nbsp;&nbsp;&nbsp;<span
+            class="myText">{{driverInfo.number}}</span></p>
         </div>
+        <div class="myText yellow ellipsis" style="text-align: right">مبدا</div>
+        <div class="myText ellipsis" style="text-align: right;direction: rtl">
+          {{driverInfo.source}}
+        </div>
+        <div class="myText yellow ellipsis" style="text-align: right">مقصد</div>
+        <div class="myText ellipsis" style="text-align: right;direction: rtl">{{driverInfo.destination}}</div>
       </ion-item>
 
       <ion-item class="main-bg-color animated fadeInUp" style="text-align: right">
@@ -43,12 +40,12 @@
       </div>
 
     </ion-list>
+    <div ng-if="!driverInfo" class="myText yellow">نتیجه ای یافت نشد</div>
   </ion-content>
   <ion-footer-bar class="footer dark-blue" ng-show="showDetail">
     <div class="row">
       <div class="col col-50 total text-left">
-        <h4 class="yellow myText">مجموع: {{driverInfo.cost}} <sup>تومان</sup></h4>
-        <span class="myText">برای تمامی افراد</span>
+        <h4 class="yellow myText" style="margin-top: 10px">مجموع: {{driverInfo.cost}} <sup>ریال</sup></h4>
       </div>
       <div class="col col-50 text-right">
         <p class="myText" ng-click="payment()">پرداخت </p>

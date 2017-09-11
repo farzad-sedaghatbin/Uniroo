@@ -13,33 +13,21 @@
                   ng-show="isGroupShown(trip.uid)">
           <div class="items-detail">
             <div class="Passenger dark-blue padding">
-              <p class="myText">هزینه<span class="myText">{{trip.cost}}</span></p>
+              <p class="myText">مبلغ<span class="myText">{{trip.cost}}</span></p>
             </div>
             <div class="Passenger dark-blue padding">
-              <p class="myText">تاریخ<span class="myText">{{trip.day}} {{trip.month}}</span>{{item.year}}</p>
+              <p class="myText">تاریخ سفر<span class="myText">{{trip.time}}</span></p>
             </div>
-          </div>
-          <div class="row plane-time" style="direction: ltr">
-            <div class="col col-20">
-              <img src="img/car2r.png" />
-            </div>
-            <div class="col col-40 start-trip text-center">
-              <p class="myText"><span>{{trip.time}}</span><span class="myText">{{trip.source}}</span></p>
-              <i class="ion-arrow-right-a"></i>
-            </div>
-            <div class="col col-40 text-center">
-              <p class="arrive"><span class="myText">{{trip.destination}}</span></p>
-            </div>
-
           </div>
         </ion-item>
       </div>
     </ion-list>
+    <div ng-if="trips.amountList.length == 0" class="myText yellow">نتیجه ای یافت نشد</div>
   </ion-content>
-  <ion-footer-bar class="footer dark-blue" ng-show="showDetail">
-    <div class="row" ng-show="showFooter">
+  <ion-footer-bar class="footer dark-blue">
+    <div class="row" ng-show="showFooter && trips.amountList.length > 0">
       <div class="col col-50 total text-left">
-        <h4 class="yellow myText">مجموع: {{trips.total}} <sup>تومان</sup></h4>
+        <h4 class="yellow myText" style="margin-top: 10px">مجموع: {{trips.total}} <sup>ریال</sup></h4>
       </div>
     </div>
   </ion-footer-bar>

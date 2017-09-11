@@ -8,11 +8,9 @@
       <ion-list>
         <div class="list" style="text-align: center">
           <div>
-            <md-input-container style="margin: 1% 0;width: 80%" md-no-float>
               <input type="text" id="username" name="username" ng-model="username" ng-maxlength="60" class="myText" placeholder="نام کاربری"
-                     required style="text-align: center;padding-right: 30px;background: transparent;border-color: rgb(255,215,198)">
+                     required style="text-align: center;padding-right: 10px;border: 1px solid;width: 100%;">
               <p class="error-message myText" ng-show="forgetForm.username.$error.maxlength && forgetForm.username.$touched">برای فیلد نام کاربری حداکثر 60 کاراکتر وارد کنید</p>
-            </md-input-container>
           </div>
         </div>
         <div style="text-align: center" class="padding-bottom">
@@ -27,29 +25,23 @@
       <ion-list>
         <div class="list" style="text-align: center">
           <div>
-            <md-input-container style="margin: 1% 0;width: 80%" md-no-float>
               <input type="text" id="code" name="code" ng-model="code" ng-maxlength="20" class="myText" placeholder="کد"
-                     required style="text-align: center;padding-right: 30px;background: transparent;border-color: rgb(255,215,198)">
+                     required style="text-align: center;border: 1px solid;width: 100%;">
               <!--<p class="error-message myText" ng-show="confirmForm.code.$invalid && confirmForm.code.$touched">فیلد کد الزامی است</p>-->
               <p class="error-message myText" ng-show="confirmForm.code.$error.maxlength && confirmForm.code.$touched">برای فیلد کد حداکثر 20 کاراکتر وارد کنید</p>
-            </md-input-container>
           </div>
           <div>
-            <md-input-container style="margin: 1% 0;width: 80%" md-no-float>
               <input type="password" id="password" name="password" ng-model="password" class="myText" ng-minlength="6" ng-maxlength="50" placeholder="کلمه عبور جدید"
-                     required style="text-align: center;padding-right: 30px;background: transparent;border-color: rgb(255,215,198)" ng-change="checkPassword(confirmForm,password,confirmPass)">
+                     required style="text-align: center;border: 1px solid;width: 100%;" ng-change="checkPassword(confirmForm,password,confirmPass)">
               <!--<p class="error-message myText" ng-show="signUpForm.password.$error.required && signUpForm.password.$touched">&#1601;&#1740;&#1604;&#1583;&#32;&#1705;&#1604;&#1605;&#1607;&#32;&#1593;&#1576;&#1608;&#1585;&#32;&#1575;&#1580;&#1576;&#1575;&#1585;&#1740;&#32;&#1575;&#1587;&#1578;</p>-->
               <p class="error-message myText" ng-show="confirmForm.password.$error.minlength && confirmForm.password.$touched">&#1576;&#1585;&#1575;&#1740;&#32;&#1601;&#1740;&#1604;&#1583;&#32;&#1705;&#1604;&#1605;&#1607;&#32;&#1593;&#1576;&#1608;&#1585;&#32;&#1581;&#1583;&#1575;&#1602;&#1604;&#32;&#54;&#32;&#1705;&#1575;&#1585;&#1575;&#1705;&#1578;&#1585;&#32;&#1608;&#1575;&#1585;&#1583;&#32;&#1705;&#1606;&#1740;&#1583;</p>
               <p class="error-message myText" ng-show="confirmForm.password.$error.maxlength && confirmForm.password.$touched">برای فیلد کلمه عبور حداکثر 50 کاراکتر وارد کنید</p>
-            </md-input-container>
           </div>
 
           <div>
-            <md-input-container style="margin: 1% 0;width: 80%" md-no-float>
-              <input type="password" id="confirmPass"  name="confirmPass" ng-model="confirmPass" class="myText" style="text-align: center;padding-right: 30px;background: transparent;border-color: rgb(255,215,198)" placeholder="تکرار کلمه عبور جدید"
+              <input type="password" id="confirmPass"  name="confirmPass" ng-model="confirmPass" class="myText" style="text-align: center;border: 1px solid;width: 100%;" placeholder="تکرار کلمه عبور جدید"
                      ng-change="checkPassword(confirmForm,password,confirmPass)" required>
               <p class="error-message myText" ng-show="confirmForm.confirmPass.$error.validity && confirmForm.confirmPass.$touched">&#1601;&#1740;&#1604;&#1583;&#32;&#1578;&#1705;&#1585;&#1575;&#1585;&#32;&#1705;&#1604;&#1605;&#1607;&#32;&#1593;&#1576;&#1608;&#1585;&#32;&#1576;&#1575;&#32;&#1705;&#1604;&#1605;&#1607;&#32;&#1593;&#1576;&#1608;&#1585;&#32;&#1576;&#1575;&#1740;&#1583;&#32;&#1576;&#1585;&#1575;&#1576;&#1585;&#32;&#1576;&#1575;&#1588;&#1583;</p>
-            </md-input-container>
           </div>
         </div>
 

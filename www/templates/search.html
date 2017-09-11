@@ -4,21 +4,21 @@
       <ion-scroll direction="y" style="height: 100%;background: #edebeb !important">
         <div class="bg-color">
           <div class="row">
-            <input id="pac-input" class="controls myText" type="text" placeholder="مبدا" style="width: 100%;">
+            <input id="pac-input" class="controls myText" type="text" placeholder="مبدا" style="width: 100%;padding-right: 10px">
             <img ng-click="clearSearch()" id="clearSearch"
                  style="position: absolute;left: 10px;z-index: 11;width: 17px;top: 14px" src='img/close-button.png'/>
           </div>
         </div>
         <div class="bg-color" style="margin-top: 10px">
           <div class="row">
-            <input id="pac-input2" class="controls myText" type="text" placeholder="مقصد" style="width: 100%">
+            <input id="pac-input2" class="controls myText" type="text" placeholder="مقصد" style="width: 100%;padding-right: 10px">
             <img ng-click="clearSearch2()" style="position: absolute;left: 10px;z-index: 11;width: 17px;top: 70px"
                  src='img/close-button.png'/>
           </div>
         </div>
 
-        <div class="tab-details bg-color">
-          <h4 class="myText"><img src="img/ic2.png">جنسیت مسافر</h4>
+        <div class="tab-details bg-color" style="margin-top: 20px">
+          <h4 class="myText" style="padding: 0;margin: 0 5px 0 0;"><img src="img/ic2.png">جنسیت مسافر</h4>
           <label class="item item-input item-select sel-item">
             <select id="gender" style="direction: rtl">
               <option class="myText" value="1" style="direction: rtl;text-align: right">فرقی ندارد</option>
@@ -28,9 +28,9 @@
           </label>
         </div>
 
-        <div class="date-trip bg-color">
+        <div class="date-trip bg-color" style="margin-top: 20px">
           <div class="row">
-            <span class="myText"><i class="ion-calendar sec-main-text-color"></i>تاریخ حرکت</span>
+            <h4 class="myText" style="padding: 0;margin: 0 5px 0 0;"><i class="ion-calendar sec-main-text-color"></i>تاریخ سفر</h4>
           </div>
           <div class="row">
             <input class="myText" type="number" placeholder="YYYY" id="year" onkeydown="limitSize(event,'year',4)"
