@@ -91,7 +91,9 @@
   background: #4ec1f8;
 }
 
-.popup-title {}
+.popup-title {
+  color: white;
+}
 
 .popup-sub-title {}
 
