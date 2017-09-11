@@ -97,7 +97,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             $('#pac-input3').blur();
             $('#pac-input4').blur();
           });
-          container.click('touchend', function(e) {
+          container.bind('touchend', function(e) {
             e.stopImmediatePropagation();
           });
         }
