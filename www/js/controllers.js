@@ -357,6 +357,12 @@ angular.module('starter.controllers', [])
       $('.pac-container').remove();
       input = document.getElementById('pac-input');
       input2 = document.getElementById('pac-input2');
+      var container = $('.pac-container');
+      container.attr('data-tap-disabled', 'true');
+      container.click(function() {
+        $('#pac-input').blur();
+        $('#pac-input2').blur();
+      });
       var options = {
         componentRestrictions: {country: "ir"}
       };
@@ -623,6 +629,12 @@ angular.module('starter.controllers', [])
       var input4 = document.getElementById('pac-input4');
       autocomplete3 = new google.maps.places.Autocomplete(input3, options);
       autocomplete4 = new google.maps.places.Autocomplete(input4, options);
+      var container = $('.pac-container');
+      container.attr('data-tap-disabled', 'true');
+      container.click(function() {
+        $('#pac-input3').blur();
+        $('#pac-input4').blur();
+      });
       date = new Date();
       jalali = toJalaali(date.getFullYear(), date.getMonth() + 1, date.getDate());
       $("#year").val(jalali.jy);
