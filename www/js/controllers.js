@@ -209,7 +209,8 @@ angular.module('starter.controllers', [])
           driver: $scope.driver,
           license: $scope.license,
           car: $scope.car,
-          insurance: $scope.insurance
+          insurance: $scope.insurance,
+          code : $("#code").val()
         };
         if (!data.firstName) {
           $ionicPopup.alert({
