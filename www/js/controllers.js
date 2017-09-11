@@ -49,6 +49,7 @@ angular.module('starter.controllers', [])
           $rootScope.isStarted = data.isStarted;
           $rootScope.wallet = data.wallet;
           $rootScope.uid = data.UID;
+          $rootScope.tel = data.tel;
           $http.defaults.headers.common.Authorization = "Bearer " + data.token;
           var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
           db.transaction(function (tx) {
@@ -59,6 +60,7 @@ angular.module('starter.controllers', [])
             tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["isStarted", data.isStarted]);
             tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["wallet", data.wallet]);
             tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["uid", data.UID]);
+            tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["tel", data.tel]);
             tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["myToken", "Bearer " + data.token]);
           });
           $rootScope.prepareMenu();
@@ -1053,6 +1055,9 @@ angular.module('starter.controllers', [])
   })
 
   .controller('AboutCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $state, $http,$ionicPopup) {
+    $scope.$on("$ionicView.enter", function (scopes, states) {
+      $("#tel").val($rootScope.tel);
+    });
     $scope.submit = function () {
       var tel = $("#tel").val();
       if (!tel)
@@ -1068,6 +1073,12 @@ angular.module('starter.controllers', [])
       var url = "https://uniroo.cfapps.io/api/1/editMobile";
       $http.post(url, tel).success(function (data, status, headers, config) {
         WebService.stopLoading();
+        $rootScope.tel = tel;
+        var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
+        db.transaction(function (tx) {
+          tx.executeSql('DELETE FROM ANIJUU WHERE name="tel"');
+          tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["tel", tel]);
+        });
         $ionicPopup.alert({
           title: '<p class="text-center color-yellow">' + "پیام" + '</p>',
           template: '<p class="text-center color-gery">' + "شماره همراه با موفقیت ثبت شد" + '</p>'
