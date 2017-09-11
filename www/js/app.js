@@ -262,7 +262,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             id: 1,
             title: 'uniroo',
             text:  " مسافر شما شد " + msg.data,
-            icon: window.location.href + '/img/icon.png'
+            icon: location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '') + '/img/icon.png'
           });
         };
       }
