@@ -338,7 +338,7 @@ angular.module('starter.controllers', [])
       $http.post(url, data)
         .success(function (suc) {
           WebService.stopLoading();
-          $state.go("app.search");
+          $state.go("login");
         }).error(function (err) {
         WebService.stopLoading();
         WebService.myErrorHandler(err, false);
