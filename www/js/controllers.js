@@ -1052,11 +1052,31 @@ angular.module('starter.controllers', [])
     }
   })
 
-  .controller('tripStateCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $state, $http) {
-
-  })
-
-  .controller('PlaylistCtrl', function ($scope, $stateParams) {
+  .controller('AboutCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $state, $http,$ionicPopup) {
+    $scope.submit = function () {
+      var tel = $("#tel").val();
+      if (!tel)
+        return;
+      if (tel.length != 11){
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "خطا" + '</p>',
+          template: '<p class="text-center color-gery">' + "شماره همراه باید 11 رقم باشد" + '</p>'
+        });
+        return;
+      }
+      WebService.startLoading();
+      var url = "https://uniroo.cfapps.io/api/1/editMobile";
+      $http.post(url, tel).success(function (data, status, headers, config) {
+        WebService.stopLoading();
+        $ionicPopup.alert({
+          title: '<p class="text-center color-yellow">' + "پیام" + '</p>',
+          template: '<p class="text-center color-gery">' + "شماره همراه با موفقیت ثبت شد" + '</p>'
+        });
+      }).catch(function (err) {
+        WebService.stopLoading();
+        WebService.myErrorHandler(err);
+      });
+    }
   });
 
 function limitSize(e, id, size) {

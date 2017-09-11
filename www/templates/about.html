@@ -1,11 +1,23 @@
-<ion-view view-title="<img src='img/logo.png' class='about-views myText' />درباره ی ما">
-  <ion-content>
-    <div class="about-img"></div>
-    <div class="about-details padding animated fadeInUp">
-        <p class="myText">به هر دلیل که منافع سفر یا بودجه ی شما برایتان مهم هست , شما جای درستی آمده اید سفر خودتان را  با <span class="sec-main-text-color">uniroo</span> رزرو و یا انتخاب کنید
-        و از پولی که ذخیره می کنید و سفر راحتی که دارید لذت ببرید.
-        در سراسر سفر کارشناسان ما  ردیابی و کنترل را بر روی سفر خواهند داشت تا شما سفری امن را تجربه کنید .</p>
-        <p class="myText"><span class="sec-main-text-color">Uniroo</span> اولین انتخاب شما خواهد بود برای رفت آمد به دانشگاه به خاطر ذخیره در وقت و پول و همچنین کسب در آمد </p>
+<ion-view view-title="<img src='img/logo.png' class='about-views' />">
+  <ion-content scroll="false">
+    <form ng-submit="submit()">
+    <div class="row plane-time animated fadeInUp">
+      <div class="date-trip bg-color" style="width: 100%">
+        <div class="row">
+          <span class="myText"><i class="ion-ios-telephone sec-main-text-color"></i>ویرایش شماره همراه</span>
+        </div>
+        <div class="row">
+          <input class="myText" type="tel" placeholder="همراه" id="tel" onkeydown="limitSize(event,'tel',11)" style="border-radius: 5px;width: 100%;padding-right: 10px">
+        </div>
+      </div>
     </div>
+    <div style="text-align: center;padding-top: 30px!important">
+      <button id="start"
+              style="background-color: rgb(17,50,193);width: 115px;height: 115px;color: white;font-size: x-large" type="submit"
+              class="button button-fab expanded button-energized-900 myText">ثبت
+      </button>
+    </div>
+    </form>
   </ion-content>
 </ion-view>
+

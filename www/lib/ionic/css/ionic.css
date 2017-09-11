@@ -4556,6 +4556,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
   overflow: auto; }
 
 .popup-buttons {
+  background: #4ec1f8;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
