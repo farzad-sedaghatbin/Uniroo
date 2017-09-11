@@ -357,17 +357,17 @@ angular.module('starter.controllers', [])
       $('.pac-container').remove();
       input = document.getElementById('pac-input');
       input2 = document.getElementById('pac-input2');
+      var options = {
+        componentRestrictions: {country: "ir"}
+      };
+      autocomplete = new google.maps.places.Autocomplete(input, options);
+      autocomplete2 = new google.maps.places.Autocomplete(input2, options);
       var container = $('.pac-container');
       container.attr('data-tap-disabled', 'true');
       container.click(function() {
         $('#pac-input').blur();
         $('#pac-input2').blur();
       });
-      var options = {
-        componentRestrictions: {country: "ir"}
-      };
-      autocomplete = new google.maps.places.Autocomplete(input, options);
-      autocomplete2 = new google.maps.places.Autocomplete(input2, options);
     }
     $scope.$on("$ionicView.enter", function (scopes, states) {
       WebService.startLoading();
