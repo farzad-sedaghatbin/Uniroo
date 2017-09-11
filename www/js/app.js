@@ -221,24 +221,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           $rootScope.menu = [{id: "1", img: "img/1.png", title: "مسافران من", link: "#/app/passengers"},
             {id: "1", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
             {id: "2", img: "img/money.jpg", title: "گردش مالی", link: "#/app/offers"},
-            // {id: "3", img: "img/4.png", title: "وضعیت سفر", link: "#/app/tripState"},
-            {id: "4", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
-            {id: "5", img: "img/4.png", title: "ویرایش شماره", link: "#/app/about"}]
+            {id: "5", img: "img/4.png", title: "ویرایش شماره", link: "#/app/about"},
+            {id: "4", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"}]
         } else {
           $rootScope.menu = [{id: "1", img: "img/1.png", title: "ثبت سفر", link: "#/app/newTrip"},
             {id: "1", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
             {id: "2", img: "img/money.jpg", title: "گردش مالی", link: "#/app/offers"},
-            // {id: "3", img: "img/4.png", title: "وضعیت سفر", link: "javascript:void(0)"},
-            {id: "4", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
-            {id: "5", img: "img/4.png", title: "ویرایش شماره", link: "#/app/about"}]
+            {id: "5", img: "img/4.png", title: "ویرایش شماره", link: "#/app/about"},
+            {id: "4", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"}]
         }
       } else {
         $rootScope.menu = [{id: "1", img: "img/1.png", title: "جست و جو", link: "#/app/search"},
           {id: "11", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
           {id: "12", img: "img/6.png", title: "سفر جاری", link: "#/app/acceptedTrip"},
           {id: "13", img: "img/money.jpg", title: "کیف پول", link: "#/app/wallet"},
-          {id: "14", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"},
-          {id: "15", img: "img/4.png", title: "ویرایش شماره", link: "#/app/about"}]
+          {id: "15", img: "img/4.png", title: "ویرایش شماره", link: "#/app/about"},
+          {id: "14", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"}]
       }
     }
     $rootScope.prepareSockets = function () {
