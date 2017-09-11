@@ -87,21 +87,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
-      $(document).on({
-        'DOMNodeInserted': function () {
-          var container = $('.pac-container');
-          container.attr('data-tap-disabled', 'true');
-          container.click(function() {
-            $('#pac-input').blur();
-            $('#pac-input2').blur();
-            $('#pac-input3').blur();
-            $('#pac-input4').blur();
-          });
-          container.bind('touchend', function(e) {
-            e.stopImmediatePropagation();
-          });
-        }
-      }, '.pac-container')
     });
     var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
     db.transaction(function (tx) {

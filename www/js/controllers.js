@@ -353,6 +353,20 @@ angular.module('starter.controllers', [])
     var input2;
     var autocomplete;
     var autocomplete2;
+    $scope.x1;
+    $scope.x2;
+    $scope.d = function (x) {
+      var container = $('.pac-container');
+        container.attr('data-tap-disabled', 'true').click(function () {
+            $("#pac-input").blur();
+        });
+    };
+    $scope.d2 = function (x) {
+      var container = $('.pac-container');
+        container.attr('data-tap-disabled', 'true').click(function () {
+            $("#pac-input2").blur();
+        });
+    };
     function init() {
       $('.pac-container').remove();
       input = document.getElementById('pac-input');
@@ -617,8 +631,22 @@ angular.module('starter.controllers', [])
     var autocomplete4;
     var date;
     var jalali;
+    var container;
+    $scope.d3 = function () {
+      var container = $('.pac-container');
+      container.attr('data-tap-disabled', 'true').click(function () {
+        $("#pac-input3").blur();
+      });
+    };
+    $scope.d4 = function () {
+      var container = $('.pac-container');
+      container.attr('data-tap-disabled', 'true').click(function () {
+        $("#pac-input4").blur();
+      });
+    };
     function init() {
-      $('.pac-container').remove();
+      var container = $('.pac-container');
+      container.remove();
       var input3 = document.getElementById('pac-input3');
       var input4 = document.getElementById('pac-input4');
       autocomplete3 = new google.maps.places.Autocomplete(input3, options);
