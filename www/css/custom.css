@@ -8,4 +8,5 @@
 .myText {
   font-family: myFont;
   font-size: medium;
+  direction: rtl;
 }

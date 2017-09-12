@@ -212,7 +212,7 @@ angular.module('starter.controllers', [])
           license: $scope.license,
           car: $scope.car,
           insurance: $scope.insurance,
-          code : $("#code").val()
+          code: $("#code").val()
         };
         if (!data.firstName) {
           $ionicPopup.alert({
@@ -355,17 +355,49 @@ angular.module('starter.controllers', [])
     var autocomplete2;
     $scope.x1;
     $scope.x2;
-    $scope.d = function (x) {
+    $scope.d = function () {
       var container = $('.pac-container');
-        container.attr('data-tap-disabled', 'true').click(function () {
-            $("#pac-input").blur();
-        });
+      container.unbind("tap");
+      container.bind("tap", function (e) {
+        if (e.target.previousSibling) {
+          if (e.target.previousSibling.textContent == ""){
+            $("#pac-input").val(e.target.textContent + " " + e.target.nextSibling.textContent);
+          } else {
+            $("#pac-input").val(e.target.previousSibling.textContent + " " + e.target.textContent);
+          }
+        } else if (e.target.childNodes.length > 1) {
+          $("#pac-input").val(e.target.childNodes[1].textContent + " " + e.target.childNodes[2].textContent);
+        } else {
+          $.each(e.target.offsetParent.childNodes, function (index, value) {
+            if (value.childNodes[1].textContent == e.target.nextSibling.parentNode.textContent) {
+              $("#pac-input").val(value.childNodes[1].textContent + " " + value.childNodes[2].textContent)
+            }
+          });
+        }
+        container.css("display", "none")
+      });
     };
-    $scope.d2 = function (x) {
+    $scope.d2 = function () {
       var container = $('.pac-container');
-        container.attr('data-tap-disabled', 'true').click(function () {
-            $("#pac-input2").blur();
-        });
+      container.unbind("tap");
+      container.bind("tap", function (e) {
+        if (e.target.previousSibling) {
+          if (e.target.previousSibling.textContent == ""){
+            $("#pac-input2").val(e.target.textContent + " " + e.target.nextSibling.textContent);
+          } else {
+            $("#pac-input2").val(e.target.previousSibling.textContent + " " + e.target.textContent);
+          }
+        } else if (e.target.childNodes.length > 1) {
+          $("#pac-input2").val(e.target.childNodes[1].textContent + " " + e.target.childNodes[2].textContent);
+        } else {
+          $.each(e.target.offsetParent.childNodes, function (index, value) {
+            if (value.childNodes[1].textContent == e.target.nextSibling.parentNode.textContent) {
+              $("#pac-input2").val(value.childNodes[1].textContent + " " + value.childNodes[2].textContent)
+            }
+          });
+        }
+        container.css("display", "none")
+      });
     };
     function init() {
       $('.pac-container').remove();
@@ -377,6 +409,7 @@ angular.module('starter.controllers', [])
       autocomplete = new google.maps.places.Autocomplete(input, options);
       autocomplete2 = new google.maps.places.Autocomplete(input2, options);
     }
+
     $scope.$on("$ionicView.enter", function (scopes, states) {
       WebService.startLoading();
       try {
@@ -428,7 +461,7 @@ angular.module('starter.controllers', [])
           }
         });
       $http.post(url, data).success(function (data, status, headers, config) {
-        if (!data || data.length == 0){
+        if (!data || data.length == 0) {
           window.plugins.toast.showShortBottom("نتیجه ای یافت نشد");
           WebService.stopLoading();
         } else {
@@ -449,7 +482,7 @@ angular.module('starter.controllers', [])
     $scope.doSelect = function (item) {
       if (selected) {
         $('#' + $rootScope.selectedId).prop('checked', false);
-        if ($rootScope.selectedId != item.uid){
+        if ($rootScope.selectedId != item.uid) {
           selected = true;
           $rootScope.selectedId = item.uid;
           $scope.totalCost = item.cost;
@@ -558,7 +591,7 @@ angular.module('starter.controllers', [])
     };
   })
 
-  .controller('AcceptedTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http,$state,$ionicPopup) {
+  .controller('AcceptedTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http, $state, $ionicPopup) {
     $scope.$on("$ionicView.enter", function (scopes, states) {
       $timeout(function () {
         if ($rootScope.uid) {
@@ -590,11 +623,11 @@ angular.module('starter.controllers', [])
       }
     };
     $scope.submitRate = function () {
-      if (!rate){
+      if (!rate) {
         return;
       }
       var url = "https://uniroo.cfapps.io/api/1/rating";
-      $http.post(url,$rootScope.uid + "," + rate).success(function (data, status, headers, config) {
+      $http.post(url, $rootScope.uid + "," + rate).success(function (data, status, headers, config) {
         window.plugins.toast.showShortBottom("امتیاز شما به راننده با موفقیت ثبت شد");
         WebService.stopLoading();
       }).catch(function (err) {
@@ -603,7 +636,7 @@ angular.module('starter.controllers', [])
       });
     };
     $scope.payment = function () {
-      if (parseInt($rootScope.wallet) < $scope.driverInfo.cost){
+      if (parseInt($rootScope.wallet) < $scope.driverInfo.cost) {
         $ionicPopup.alert({
           title: '<p class="text-center color-yellow">' + "خطا" + '</p>',
           template: '<p class="text-center color-gery">' + "لطفا کیف پول خود را شارژ کنید، مقدار آن کمتر از هزینه سفر است" + '</p>'
@@ -623,7 +656,7 @@ angular.module('starter.controllers', [])
     }
   })
 
-  .controller('NewTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http, $ionicPopup,$state) {
+  .controller('NewTripCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http, $ionicPopup, $state) {
     var options = {
       componentRestrictions: {country: "ir"}
     };
@@ -634,14 +667,46 @@ angular.module('starter.controllers', [])
     var container;
     $scope.d3 = function () {
       var container = $('.pac-container');
-      container.attr('data-tap-disabled', 'true').click(function () {
-        $("#pac-input3").blur();
+      container.unbind("tap");
+      container.bind("tap", function (e) {
+        if (e.target.previousSibling) {
+          if (e.target.previousSibling.textContent == ""){
+            $("#pac-input3").val(e.target.textContent + " " + e.target.nextSibling.textContent);
+          } else {
+            $("#pac-input3").val(e.target.previousSibling.textContent + " " + e.target.textContent);
+          }
+        } else if (e.target.childNodes.length > 1) {
+          $("#pac-input3").val(e.target.childNodes[1].textContent + " " + e.target.childNodes[2].textContent);
+        } else {
+          $.each(e.target.offsetParent.childNodes, function (index, value) {
+            if (value.childNodes[1].textContent == e.target.nextSibling.parentNode.textContent) {
+              $("#pac-input3").val(value.childNodes[1].textContent + " " + value.childNodes[2].textContent)
+            }
+          });
+        }
+        container.css("display", "none")
       });
     };
     $scope.d4 = function () {
       var container = $('.pac-container');
-      container.attr('data-tap-disabled', 'true').click(function () {
-        $("#pac-input4").blur();
+      container.unbind("tap");
+      container.bind("tap", function (e) {
+        if (e.target.previousSibling) {
+          if (e.target.previousSibling.textContent == ""){
+            $("#pac-input4").val(e.target.textContent + " " + e.target.nextSibling.textContent);
+          } else {
+            $("#pac-input4").val(e.target.previousSibling.textContent + " " + e.target.textContent);
+          }
+        } else if (e.target.childNodes.length > 1) {
+          $("#pac-input4").val(e.target.childNodes[1].textContent + " " + e.target.childNodes[2].textContent);
+        } else {
+          $.each(e.target.offsetParent.childNodes, function (index, value) {
+            if (value.childNodes[1].textContent == e.target.nextSibling.parentNode.textContent) {
+              $("#pac-input4").val(value.childNodes[1].textContent + " " + value.childNodes[2].textContent)
+            }
+          });
+        }
+        container.css("display", "none")
       });
     };
     function init() {
@@ -657,6 +722,7 @@ angular.module('starter.controllers', [])
       $("#month").val(jalali.jm);
       $("#day").val(jalali.jd);
     }
+
     $scope.$on("$ionicView.enter", function (scopes, states) {
       WebService.startLoading();
       try {
@@ -759,14 +825,14 @@ angular.module('starter.controllers', [])
         });
         return;
       }
-      if (!validateHour(hour)){
+      if (!validateHour(hour)) {
         $ionicPopup.alert({
           title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
           template: '<p class="text-center color-gery">' + "ساعت سفر اشتباه می باشد" + '</p>'
         });
         return;
       }
-      if (!validateMin(minute)){
+      if (!validateMin(minute)) {
         $ionicPopup.alert({
           title: '<p class="text-center color-yellow">' + "نقص در اطلاعات" + '</p>',
           template: '<p class="text-center color-gery">' + "دقیقه سفر اشتباه می باشد" + '</p>'
@@ -854,7 +920,7 @@ angular.module('starter.controllers', [])
     $scope.$on('$ionicView.beforeEnter', function (e, viewData) {
       $scope.$root.showMenuIcon = false;
       viewData.enableBack = true;
-      $(".buttons-right").css("display","none");
+      $(".buttons-right").css("display", "none");
     });
     $scope.username = "";
     $scope.password = "";
@@ -1013,7 +1079,7 @@ angular.module('starter.controllers', [])
     }
   })
 
-  .controller('walletCtrl', function ($scope, $http, WebService, $state, $timeout, $rootScope,$ionicPopup) {
+  .controller('walletCtrl', function ($scope, $http, WebService, $state, $timeout, $rootScope, $ionicPopup) {
     var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
     $timeout(function () {
       WebService.startLoading();
@@ -1056,13 +1122,13 @@ angular.module('starter.controllers', [])
         return;
       WebService.startLoading();
       var url = "https://uniroo.cfapps.io/api/1/giftCard";
-      $http.post(url,code).success(function (data, status, headers, config) {
-        if (data == "-1"){
+      $http.post(url, code).success(function (data, status, headers, config) {
+        if (data == "-1") {
           $ionicPopup.alert({
             title: '<p class="text-center color-yellow">' + "خطا" + '</p>',
             template: '<p class="text-center color-gery">' + "کد اشتباه است" + '</p>'
           });
-        } else if (data == "0"){
+        } else if (data == "0") {
           $ionicPopup.alert({
             title: '<p class="text-center color-yellow">' + "خطا" + '</p>',
             template: '<p class="text-center color-gery">' + "کد منقضی شده است" + '</p>'
@@ -1082,7 +1148,7 @@ angular.module('starter.controllers', [])
     }
   })
 
-  .controller('AboutCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $state, $http,$ionicPopup) {
+  .controller('AboutCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $state, $http, $ionicPopup) {
     $scope.$on("$ionicView.enter", function (scopes, states) {
       $("#tel").val($rootScope.tel);
     });
@@ -1090,7 +1156,7 @@ angular.module('starter.controllers', [])
       var tel = $("#tel").val();
       if (!tel)
         return;
-      if (tel.length != 11){
+      if (tel.length != 11) {
         $ionicPopup.alert({
           title: '<p class="text-center color-yellow">' + "خطا" + '</p>',
           template: '<p class="text-center color-gery">' + "شماره همراه باید 11 رقم باشد" + '</p>'
