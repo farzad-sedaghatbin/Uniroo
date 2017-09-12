@@ -369,8 +369,14 @@ angular.module('starter.controllers', [])
           $("#pac-input").val(e.target.childNodes[1].textContent + " " + e.target.childNodes[2].textContent);
         } else {
           $.each(e.target.offsetParent.childNodes, function (index, value) {
-            if (value.childNodes[1].textContent == e.target.nextSibling.parentNode.textContent) {
-              $("#pac-input").val(value.childNodes[1].textContent + " " + value.childNodes[2].textContent)
+            if (e.target.nextSibling) {
+              if (value.childNodes[1].textContent == e.target.nextSibling.parentNode.textContent) {
+                $("#pac-input").val(value.childNodes[1].textContent + " " + value.childNodes[2].textContent)
+              }
+            } else {
+              if (value.childNodes[2].textContent == e.target.parentNode.nextSibling.textContent) {
+                $("#pac-input").val(value.childNodes[1].textContent + " " + value.childNodes[2].textContent)
+              }
             }
           });
         }
@@ -391,8 +397,14 @@ angular.module('starter.controllers', [])
           $("#pac-input2").val(e.target.childNodes[1].textContent + " " + e.target.childNodes[2].textContent);
         } else {
           $.each(e.target.offsetParent.childNodes, function (index, value) {
-            if (value.childNodes[1].textContent == e.target.nextSibling.parentNode.textContent) {
-              $("#pac-input2").val(value.childNodes[1].textContent + " " + value.childNodes[2].textContent)
+            if (e.target.nextSibling) {
+              if (value.childNodes[1].textContent == e.target.nextSibling.parentNode.textContent) {
+                $("#pac-input2").val(value.childNodes[1].textContent + " " + value.childNodes[2].textContent)
+              }
+            } else {
+              if (value.childNodes[2].textContent == e.target.parentNode.nextSibling.textContent) {
+                $("#pac-input2").val(value.childNodes[1].textContent + " " + value.childNodes[2].textContent)
+              }
             }
           });
         }
@@ -679,8 +691,14 @@ angular.module('starter.controllers', [])
           $("#pac-input3").val(e.target.childNodes[1].textContent + " " + e.target.childNodes[2].textContent);
         } else {
           $.each(e.target.offsetParent.childNodes, function (index, value) {
-            if (value.childNodes[1].textContent == e.target.nextSibling.parentNode.textContent) {
-              $("#pac-input3").val(value.childNodes[1].textContent + " " + value.childNodes[2].textContent)
+            if (e.target.nextSibling) {
+              if (value.childNodes[1].textContent == e.target.nextSibling.parentNode.textContent) {
+                $("#pac-input3").val(value.childNodes[1].textContent + " " + value.childNodes[2].textContent)
+              }
+            } else {
+              if (value.childNodes[2].textContent == e.target.parentNode.nextSibling.textContent) {
+                $("#pac-input3").val(value.childNodes[1].textContent + " " + value.childNodes[2].textContent)
+              }
             }
           });
         }
@@ -701,8 +719,14 @@ angular.module('starter.controllers', [])
           $("#pac-input4").val(e.target.childNodes[1].textContent + " " + e.target.childNodes[2].textContent);
         } else {
           $.each(e.target.offsetParent.childNodes, function (index, value) {
-            if (value.childNodes[1].textContent == e.target.nextSibling.parentNode.textContent) {
-              $("#pac-input4").val(value.childNodes[1].textContent + " " + value.childNodes[2].textContent)
+            if (e.target.nextSibling) {
+              if (value.childNodes[1].textContent == e.target.nextSibling.parentNode.textContent) {
+                $("#pac-input4").val(value.childNodes[1].textContent + " " + value.childNodes[2].textContent)
+              }
+            } else {
+              if (value.childNodes[2].textContent == e.target.parentNode.nextSibling.textContent) {
+                $("#pac-input4").val(value.childNodes[1].textContent + " " + value.childNodes[2].textContent)
+              }
             }
           });
         }
