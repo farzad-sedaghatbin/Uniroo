@@ -130,21 +130,6 @@
           <img src="data:image;base64,{{student}}" style="border-radius: 50%;width: 65px;height: 65px">
         </div>
       </div>
-      <ion-list show-delete="true"
-                show-reorder="false"
-                can-swipe="true">
-        <ion-item ng-repeat="item in items"
-                  class="item-thumbnail-left">
-          <img ng-src="{{item.thumbnail}}"/>
-          <ion-option-button class="button-info"
-                             ng-click="preview(item)">
-            مشاهده
-          </ion-option-button>
-          <ion-delete-button class="ion-minus-circled"
-                             ng-click="remove(item)">
-          </ion-delete-button>
-        </ion-item>
-      </ion-list>
     </div>
 
     <input ng-click='do_signUp(sign_up_form)' class='btn bg-yellow color-white big-font m-top-20' type='button'

@@ -109,7 +109,6 @@ angular.module('starter.controllers', [])
     $scope.isPassengerParam = true;
     $scope.isPassenger = function (isPass) {
       $scope.isPassengerParam = isPass;
-      $scope.driverItems = [];
     };
     $scope.chose = function (type) {
       $scope.type = type;
@@ -133,26 +132,6 @@ angular.module('starter.controllers', [])
         $scope.insurance = result;
       }
     }
-
-    $scope.remove = function (item) {
-      if ($scope.type == 'STUDENT') {
-        $scope.student = null;
-      } else if (item.type == 'DRIVER') {
-        $scope.driver = null;
-      } else if (item.type == 'LICENSE') {
-        $scope.license = null;
-      } else if (item.type == 'CAR') {
-        $scope.car = null;
-      } else {
-        $scope.insurance = null;
-      }
-      $.each($scope.driverItems, function (index, value) {
-        if (value.thumbnail == item.thumbnail) {
-          $scope.driverItems.splice(index, 1);
-        }
-      });
-    };
-    $scope.driverItems = [];
     $scope.gallery = function () {
       var options = {sourceType: Camera.PictureSourceType.PHOTOLIBRARY};
       navigator.camera.getPicture(function cameraSuccess(imageUri) {
@@ -162,10 +141,6 @@ angular.module('starter.controllers', [])
             reader.onloadend = function (evt) {
               //todo: farzad breakpoint
               setVariable(evt.target.result);
-              $scope.driverItems.push({
-                thumbnail: imageUri,
-                type: $scope.type
-              });
               $scope.$apply();
             };
             reader.readAsDataURL(file);
@@ -183,10 +158,6 @@ angular.module('starter.controllers', [])
             var reader = new FileReader();
             reader.onloadend = function (evt) {
               setVariable(evt.target.result);
-              $scope.driverItems.push({
-                thumbnail: imageUri,
-                type: $scope.type
-              });
               $scope.$apply();
             };
             reader.readAsDataURL(file);
