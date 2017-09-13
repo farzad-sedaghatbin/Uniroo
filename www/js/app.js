@@ -226,12 +226,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             {id: "1", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
             {id: "2", img: "img/money.jpg", title: "گردش مالی", link: "#/app/offers"},
             {id: "5", img: "img/4.png", title: "ویرایش شماره", link: "#/app/about"},
+            {id: "5", img: "img/card.png", title: "شماره کارت", link: "#/app/card"},
             {id: "4", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"}]
         } else {
           $rootScope.menu = [{id: "1", img: "img/1.png", title: "ثبت سفر", link: "#/app/newTrip"},
             {id: "1", img: "img/2.png", title: "سفرهای من", link: "#/app/reservations"},
             {id: "2", img: "img/money.jpg", title: "گردش مالی", link: "#/app/offers"},
             {id: "5", img: "img/4.png", title: "ویرایش شماره", link: "#/app/about"},
+            {id: "5", img: "img/card.png", title: "شماره کارت", link: "#/app/card"},
             {id: "4", img: "img/5.png", title: "تماس با ما", link: "#/app/contact"}]
         }
       } else {
@@ -521,6 +523,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           'menuContent': {
             templateUrl: "templates/register.html",
             controller: "SignupCtrl"
+          }
+        }
+      })
+
+      .state('app.card', {
+        url: "/card",
+        views: {
+          'menuContent': {
+            templateUrl: "templates/card.html",
+            controller: "CardCtrl"
           }
         }
       })

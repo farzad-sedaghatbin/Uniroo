@@ -27,7 +27,9 @@ a{
     background: #edebeb !important
 }
 .yellow{
-    color: #dfab0c
+    color: #dfab0c;
+  text-align: center;
+  margin-top: 50px;
 }
 .dark-blue{
     background: #0e1948 !important

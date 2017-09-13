@@ -1,0 +1,23 @@
+<ion-view view-title="<img src='img/logo.png' class='about-views' />">
+  <ion-content scroll="false">
+    <form ng-submit="submit()">
+      <div class="row plane-time animated fadeInUp">
+        <div class="date-trip bg-color" style="width: 100%">
+          <div class="row">
+            <span class="myText" style="font-size: small">شماره کارت جهت واریز پول(فقط کارتهای ملی یا سامان قابل قبول است)</span>
+          </div>
+          <div class="row">
+            <input class="myText" type="number" placeholder="شماره کارت" id="card" onkeydown="limitSize(event,'card',16)" style="border-radius: 5px;width: 100%;padding-right: 10px">
+          </div>
+        </div>
+      </div>
+      <div style="text-align: center;padding-top: 30px!important">
+        <button id="start"
+                style="background-color: rgb(17,50,193);width: 115px;height: 115px;color: white;font-size: x-large" type="submit"
+                class="button button-fab expanded button-energized-900 myText">ثبت
+        </button>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>
+
