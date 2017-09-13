@@ -135,8 +135,8 @@ angular.module('starter.controllers', [])
     $scope.gallery = function () {
       var options = {sourceType: Camera.PictureSourceType.PHOTOLIBRARY};
       navigator.camera.getPicture(function cameraSuccess(imageUri) {
-        WebService.startLoading();
         window.resolveLocalFileSystemURL(imageUri, function (fileEntry) {
+          WebService.startLoading();
           fileEntry.file(function (file) {
             var reader = new FileReader();
             reader.onloadend = function (evt) {
@@ -156,8 +156,8 @@ angular.module('starter.controllers', [])
     $scope.camera = function () {
       var options = {sourceType: Camera.PictureSourceType.CAMERA};
       navigator.camera.getPicture(function cameraSuccess(imageUri) {
-        WebService.startLoading();
         window.resolveLocalFileSystemURL(imageUri, function (fileEntry) {
+          WebService.startLoading();
           fileEntry.file(function (file) {
             var reader = new FileReader();
             reader.onloadend = function (evt) {
