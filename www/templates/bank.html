@@ -27,7 +27,7 @@
   <input type="hidden" name="RedirectURL" />
   <input type="hidden" name="CellNumber" />
 
-  <div style="text-align: center;direction: rtl">
+  <div style="text-align: center;direction: rtl;font-size: 50px;margin-top: 200px;">
     <div class='inline'>
       <div>مبلغ مورد نظر(ریال)</div>
     </div>
@@ -35,7 +35,7 @@
       <div id="amountL"></div>
     </div>
   </div>
-  <div style="text-align: center;direction: rtl">
+  <div style="text-align: center;direction: rtl;font-size: 40px">
     <div class='inline'>
       <div>شماره پیگیری</div>
     </div>
@@ -43,8 +43,8 @@
       <div id="resL"></div>
     </div>
   </div>
-  <div style="text-align: center">
-    <a onclick="submit()" class="button">پرداخت</a>
+  <div style="text-align: center;margin-top: 100px">
+    <a style="font-size: 50px" onclick="submit()" class="button">ورود به صفحه بانک</a>
   </div>
 </form>
 </body>
@@ -63,6 +63,8 @@
       }
     }
   };
+  document.getElementById("amountL").innerHTML = getUrlParameter("amount");
+  document.getElementById("resL").innerHTML = getUrlParameter("res");
   function submit() {
     var amount = getUrlParameter("amount");
     var res = getUrlParameter("res");

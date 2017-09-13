@@ -140,7 +140,7 @@ angular.module('starter.controllers', [])
             var reader = new FileReader();
             reader.onloadend = function (evt) {
               //todo: farzad breakpoint
-              setVariable(evt.target.result);
+              setVariable(evt.target.result.replace('data:', ''));
               $scope.$apply();
               $rootScope.mainModal.hide();
             };
@@ -158,7 +158,7 @@ angular.module('starter.controllers', [])
           fileEntry.file(function (file) {
             var reader = new FileReader();
             reader.onloadend = function (evt) {
-              setVariable(evt.target.result);
+              setVariable(evt.target.result.replace('data:', ''));
               $scope.$apply();
               $rootScope.mainModal.hide();
             };
