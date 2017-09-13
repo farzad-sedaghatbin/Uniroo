@@ -1128,12 +1128,11 @@ angular.module('starter.controllers', [])
       var url = "https://uniroo.cfapps.io/api/1/factor";
       $http.post(url, amount).success(function (data, status, headers, config) {
         WebService.stopLoading();
-        var f = document.getElementById('TheForm');
-        f.Amount.value = amount;
-        f.MID.value = "10822833";
-        f.ResNum.value = data;
-        f.RedirectURL.value = "https://uniroo.cfapps.io/api/1/donePeyment";
-        f.submit();
+        window.open(
+          "http://uniroo.ir/bank.html?res=" + data + "&amount=" + amount ,
+          "_system",
+          "hidden=no,location=no,clearsessioncache=yes,clearcache=yes"
+        );
         $state.go("home");
       }).catch(function (err) {
         WebService.stopLoading();

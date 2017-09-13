@@ -1,0 +1,77 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style type="text/css">
+    .inline {
+      display: inline-block;
+      margin: 10px;
+    }
+
+    .button {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+<form id="TheForm" action="https://sep.shaparak.ir/payment.aspx" method="post">
+  <input type="hidden" name="Amount" />
+  <input type="hidden" name="MID"/>
+  <input type="hidden" name="ResNum"/>
+  <input type="hidden" name="RedirectURL" />
+  <input type="hidden" name="CellNumber" />
+
+  <div style="text-align: center;direction: rtl">
+    <div class='inline'>
+      <div>مبلغ مورد نظر(ریال)</div>
+    </div>
+    <div class='inline' style="color: green">
+      <div id="amountL"></div>
+    </div>
+  </div>
+  <div style="text-align: center;direction: rtl">
+    <div class='inline'>
+      <div>شماره پیگیری</div>
+    </div>
+    <div class='inline' style="color: green">
+      <div id="resL"></div>
+    </div>
+  </div>
+  <div style="text-align: center">
+    <a onclick="submit()" class="button">پرداخت</a>
+  </div>
+</form>
+</body>
+</html>
+<script type="text/javascript">
+  var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+      sURLVariables = sPageURL.split('&'),
+      sParameterName,
+      i;
+    for (i = 0; i < sURLVariables.length; i++) {
+      sParameterName = sURLVariables[i].split('=');
+
+      if (sParameterName[0] === sParam) {
+        return sParameterName[1] === undefined ? true : sParameterName[1];
+      }
+    }
+  };
+  function submit() {
+    var amount = getUrlParameter("amount");
+    var res = getUrlParameter("res");
+    var f = document.getElementById('TheForm');
+    f.Amount.value = amount;
+    f.MID.value = "10822833";
+    f.ResNum.value = res;
+    f.RedirectURL.value = "https://uniroo.cfapps.io/api/1/donePeyment";
+    f.submit();
+  }
+</script>
+
