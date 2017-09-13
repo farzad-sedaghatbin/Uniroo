@@ -142,6 +142,7 @@ angular.module('starter.controllers', [])
               //todo: farzad breakpoint
               setVariable(evt.target.result);
               $scope.$apply();
+              $rootScope.mainModal.hide();
             };
             reader.readAsDataURL(file);
           });
@@ -159,6 +160,7 @@ angular.module('starter.controllers', [])
             reader.onloadend = function (evt) {
               setVariable(evt.target.result);
               $scope.$apply();
+              $rootScope.mainModal.hide();
             };
             reader.readAsDataURL(file);
           });
