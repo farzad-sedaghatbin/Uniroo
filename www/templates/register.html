@@ -87,7 +87,7 @@
           </button>
         </div>
         <div ng-if="driver" class="col col-30">
-          <img src="data:image;base64,{{driver}}" style="border-radius: 50%;width: 65px;height: 65px">
+          <img src="{{driver}}" style="border-radius: 50%;width: 65px;height: 65px">
         </div>
       </div>
       <div class="row m-top-10" ng-show="!isPassengerParam">
@@ -97,7 +97,7 @@
           </button>
         </div>
         <div ng-if="license" class="col col-30">
-          <img src="data:image;base64,{{license}}" style="border-radius: 50%;width: 65px;height: 65px">
+          <img src="{{license}}" style="border-radius: 50%;width: 65px;height: 65px">
         </div>
       </div>
       <div class="row m-top-10" ng-show="!isPassengerParam">
@@ -107,7 +107,7 @@
           </button>
         </div>
         <div ng-if="car" class="col col-30">
-          <img src="data:image;base64,{{car}}" style="border-radius: 50%;width: 65px;height: 65px">
+          <img src="{{car}}" style="border-radius: 50%;width: 65px;height: 65px">
         </div>
       </div>
       <div class="row m-top-10" ng-show="!isPassengerParam">
@@ -117,7 +117,7 @@
           </button>
         </div>
         <div ng-if="insurance" class="col col-30">
-          <img src="data:image;base64,{{insurance}}" style="border-radius: 50%;width: 65px;height: 65px">
+          <img src="{{insurance}}" style="border-radius: 50%;width: 65px;height: 65px">
         </div>
       </div>
       <div class="row m-top-10" ng-show="isPassengerParam">
@@ -127,7 +127,7 @@
           </button>
         </div>
         <div ng-if="student" class="col col-30">
-          <img src="data:image;base64,{{student}}" style="border-radius: 50%;width: 65px;height: 65px">
+          <img src="{{student}}" style="border-radius: 50%;width: 65px;height: 65px">
         </div>
       </div>
     </div>

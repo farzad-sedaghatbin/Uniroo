@@ -141,7 +141,7 @@ angular.module('starter.controllers', [])
             var reader = new FileReader();
             reader.onloadend = function (evt) {
               //todo: farzad breakpoint
-              setVariable(evt.target.result.substr(evt.target.result.indexOf(':') + 1));
+              setVariable(evt.target.result);
               $scope.$apply();
               $rootScope.mainModal.hide();
               WebService.stopLoading();
@@ -161,7 +161,7 @@ angular.module('starter.controllers', [])
           fileEntry.file(function (file) {
             var reader = new FileReader();
             reader.onloadend = function (evt) {
-              setVariable(evt.target.result.substr(evt.target.result.indexOf(':') + 1));
+              setVariable(evt.target.result);
               $scope.$apply();
               $rootScope.mainModal.hide();
               WebService.stopLoading();
