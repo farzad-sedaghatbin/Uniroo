@@ -60,7 +60,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       var backbutton = 0;
       $ionicPlatform.registerBackButtonAction(function (e) {
         e.preventDefault();
-        if ($ionicHistory.currentStateName() == "home") {
+        if ($rootScope.mainModal && $rootScope.mainModal.isShown()) {
+          $rootScope.mainModal.hide();
+        } else if ($ionicHistory.currentStateName() == "home") {
           if (backbutton == 0) {
             backbutton++;
             window.plugins.toast.showShortBottom('برای خروج دوباره لمس کنید');
@@ -263,9 +265,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           cordova.plugins.notification.local.schedule({
             id: 1,
             title: 'uniroo',
-            text:msg.data + " مسافر شما شد ",
+            text: msg.data + " مسافر شما شد ",
             icon: "http://uniroo.ir/icon.png",
-            led:"36C108"
+            led: "36C108"
           });
         };
       }

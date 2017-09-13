@@ -136,7 +136,6 @@ angular.module('starter.controllers', [])
       var options = {sourceType: Camera.PictureSourceType.PHOTOLIBRARY};
       navigator.camera.getPicture(function cameraSuccess(imageUri) {
         window.resolveLocalFileSystemURL(imageUri, function (fileEntry) {
-          WebService.startLoading();
           fileEntry.file(function (file) {
             var reader = new FileReader();
             reader.onloadend = function (evt) {
@@ -144,7 +143,6 @@ angular.module('starter.controllers', [])
               setVariable(evt.target.result);
               $scope.$apply();
               $rootScope.mainModal.hide();
-              WebService.stopLoading();
             };
             reader.readAsDataURL(file);
           });
@@ -157,14 +155,12 @@ angular.module('starter.controllers', [])
       var options = {sourceType: Camera.PictureSourceType.CAMERA};
       navigator.camera.getPicture(function cameraSuccess(imageUri) {
         window.resolveLocalFileSystemURL(imageUri, function (fileEntry) {
-          WebService.startLoading();
           fileEntry.file(function (file) {
             var reader = new FileReader();
             reader.onloadend = function (evt) {
               setVariable(evt.target.result);
               $scope.$apply();
               $rootScope.mainModal.hide();
-              WebService.stopLoading();
             };
             reader.readAsDataURL(file);
           });

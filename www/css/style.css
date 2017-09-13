@@ -128,7 +128,6 @@ a{
 }
 .bar-stable .back_btn.button.button-icon{
   position: relative;
-  right: 90%;
   top: 25%;
 }
 .bar-stable .back_btn.button.button-icon >img{
