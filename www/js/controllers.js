@@ -133,9 +133,9 @@ angular.module('starter.controllers', [])
       }
     }
     $scope.gallery = function () {
-      WebService.startLoading();
       var options = {sourceType: Camera.PictureSourceType.PHOTOLIBRARY};
       navigator.camera.getPicture(function cameraSuccess(imageUri) {
+        WebService.startLoading();
         window.resolveLocalFileSystemURL(imageUri, function (fileEntry) {
           fileEntry.file(function (file) {
             var reader = new FileReader();
@@ -154,9 +154,9 @@ angular.module('starter.controllers', [])
       }, options);
     };
     $scope.camera = function () {
-      WebService.startLoading();
       var options = {sourceType: Camera.PictureSourceType.CAMERA};
       navigator.camera.getPicture(function cameraSuccess(imageUri) {
+        WebService.startLoading();
         window.resolveLocalFileSystemURL(imageUri, function (fileEntry) {
           fileEntry.file(function (file) {
             var reader = new FileReader();
