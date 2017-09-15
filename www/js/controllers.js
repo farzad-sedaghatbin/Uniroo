@@ -456,21 +456,21 @@ angular.module('starter.controllers', [])
                           data.destinationProvince = value.long_name.substring(0, value.long_name.lastIndexOf(" "))
                         }
                       });
+                      $http.post(url, data).success(function (data, status, headers, config) {
+                        if (!data || data.length == 0) {
+                          window.plugins.toast.showShortBottom("نتیجه ای یافت نشد");
+                          WebService.stopLoading();
+                        } else {
+                          $rootScope.data = data;
+                          $state.go("app.data");
+                        }
+                      }).catch(function (err) {
+                        WebService.stopLoading();
+                        WebService.myErrorHandler(err, false);
+                      });
                     }
                   });
                 }
-              });
-              $http.post(url, data).success(function (data, status, headers, config) {
-                if (!data || data.length == 0) {
-                  window.plugins.toast.showShortBottom("نتیجه ای یافت نشد");
-                  WebService.stopLoading();
-                } else {
-                  $rootScope.data = data;
-                  $state.go("app.data");
-                }
-              }).catch(function (err) {
-                WebService.stopLoading();
-                WebService.myErrorHandler(err, false);
               });
             } else {
               WebService.stopLoading();
@@ -884,31 +884,31 @@ angular.module('starter.controllers', [])
                           data.destinationProvince = value.long_name.substring(0, value.long_name.lastIndexOf(" "))
                         }
                       });
+                      $http.post(url, data).success(function (data, status, headers, config) {
+                        $rootScope.uid = data;
+                        $rootScope.hasTrip = true;
+                        $rootScope.isStarted = false;
+                        $("#tripstate").css("background", "#4ec1f8");
+                        var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
+                        db.transaction(function (tx) {
+                          tx.executeSql('DELETE FROM ANIJUU WHERE name="uid"');
+                          tx.executeSql('DELETE FROM ANIJUU WHERE name="hasTrip"');
+                          tx.executeSql('DELETE FROM ANIJUU WHERE name="isStarted"');
+                          tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["uid", data]);
+                          tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["hasTrip", true]);
+                          tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["isStarted", false]);
+                        });
+                        window.plugins.toast.showShortBottom('سفر شما با موفقیت ثبت شد');
+                        $rootScope.prepareMenu();
+                        $state.go("home");
+                        WebService.stopLoading();
+                      }).catch(function (err) {
+                        WebService.stopLoading();
+                        WebService.myErrorHandler(err, false);
+                      });
                     }
                   });
                 }
-              });
-              $http.post(url, data).success(function (data, status, headers, config) {
-                $rootScope.uid = data;
-                $rootScope.hasTrip = true;
-                $rootScope.isStarted = false;
-                $("#tripstate").css("background", "#4ec1f8");
-                var db = openDatabase('mydb', '1.0', 'Test DB', 1024 * 1024);
-                db.transaction(function (tx) {
-                  tx.executeSql('DELETE FROM ANIJUU WHERE name="uid"');
-                  tx.executeSql('DELETE FROM ANIJUU WHERE name="hasTrip"');
-                  tx.executeSql('DELETE FROM ANIJUU WHERE name="isStarted"');
-                  tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["uid", data]);
-                  tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["hasTrip", true]);
-                  tx.executeSql('INSERT INTO ANIJUU (name, log) VALUES (?, ?)', ["isStarted", false]);
-                });
-                window.plugins.toast.showShortBottom('سفر شما با موفقیت ثبت شد');
-                $rootScope.prepareMenu();
-                $state.go("home");
-                WebService.stopLoading();
-              }).catch(function (err) {
-                WebService.stopLoading();
-                WebService.myErrorHandler(err, false);
               });
             } else {
               WebService.stopLoading();
