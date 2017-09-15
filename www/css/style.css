@@ -28,6 +28,9 @@ a{
 }
 .yellow{
     color: #dfab0c;
+}
+.emptyyellow{
+    color: #dfab0c;
   text-align: center;
   margin-top: 50px;
 }
