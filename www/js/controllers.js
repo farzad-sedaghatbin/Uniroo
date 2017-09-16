@@ -509,16 +509,23 @@ angular.module('starter.controllers', [])
     };
   })
 
-  .controller('DetailsCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http, $state) {
+  .controller('DetailsCtrl', function ($scope, $ionicModal, $timeout, $rootScope, WebService, $http, $state,$ionicPopup) {
     $scope.showFooter = true;
     $scope.$on("$ionicView.enter", function (scopes, states) {
       $timeout(function () {
         WebService.startLoading();
         var url = "https://uniroo.cfapps.io/api/1/detail";
         $http.post(url, $rootScope.selectedId).success(function (data, status, headers, config) {
+          WebService.stopLoading();
+          if (data.current){
+            $ionicPopup.alert({
+              title: '<p class="text-center color-yellow">' + "پیام" + '</p>',
+              template: '<p class="text-center color-gery">' + "پس از اتمام سفر جاری، امکان انتخاب سفر بعدی وجود دارد" + '</p>'
+            });
+            return;
+          }
           $scope.detail = data;
           $scope.showDetail = true;
-          WebService.stopLoading();
         }).catch(function (err) {
           WebService.stopLoading();
           WebService.myErrorHandler(err, false);
