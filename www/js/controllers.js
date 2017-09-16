@@ -730,11 +730,13 @@ angular.module('starter.controllers', [])
       });
     };
     function init() {
-      date = new Date();
-      jalali = toJalaali(date.getFullYear(), date.getMonth() + 1, date.getDate());
-      $("#year").val(jalali.jy);
-      $("#month").val(jalali.jm);
-      $("#day").val(jalali.jd);
+      $timeout(function () {
+        date = new Date();
+        jalali = toJalaali(date.getFullYear(), date.getMonth() + 1, date.getDate());
+        $("#year").val(jalali.jy);
+        $("#month").val(jalali.jm);
+        $("#day").val(jalali.jd);
+      },1000);
       var container = $('.pac-container');
       container.remove();
       var input3 = document.getElementById('pac-input3');
