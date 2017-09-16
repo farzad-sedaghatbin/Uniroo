@@ -730,17 +730,17 @@ angular.module('starter.controllers', [])
       });
     };
     function init() {
+      date = new Date();
+      jalali = toJalaali(date.getFullYear(), date.getMonth() + 1, date.getDate());
+      $("#year").val(jalali.jy);
+      $("#month").val(jalali.jm);
+      $("#day").val(jalali.jd);
       var container = $('.pac-container');
       container.remove();
       var input3 = document.getElementById('pac-input3');
       var input4 = document.getElementById('pac-input4');
       autocomplete3 = new google.maps.places.Autocomplete(input3, options);
       autocomplete4 = new google.maps.places.Autocomplete(input4, options);
-      date = new Date();
-      jalali = toJalaali(date.getFullYear(), date.getMonth() + 1, date.getDate());
-      $("#year").val(jalali.jy);
-      $("#month").val(jalali.jm);
-      $("#day").val(jalali.jd);
     }
 
     $scope.$on("$ionicView.enter", function (scopes, states) {
