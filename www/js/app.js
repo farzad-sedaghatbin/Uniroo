@@ -268,7 +268,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             id: 1,
             title: 'uniroo',
             text: msg.data + " مسافر شما شد ",
-            icon: "http://uniroo.ir/icon.png",
+            icon: "res://icon",
             led: "36C108"
           });
         };
