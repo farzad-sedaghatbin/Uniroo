@@ -402,7 +402,7 @@ angular.module('starter.controllers', [])
           init();
           WebService.stopLoading();
         } else {
-          $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyAUh1zYu9a6v0k0gRob7Sy6oV_vcsu0SfY&libraries=places&sensor=false&language=en-us", function (data, textStatus, jqxhr) {
+          $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyAUh1zYu9a6v0k0gRob7Sy6oV_vcsu0SfY&libraries=places&sensor=false&language=en-us&region=IR", function (data, textStatus, jqxhr) {
             var s = document.createElement("script");
             s.type = "text/javascript";
             s.data = data;
@@ -759,7 +759,7 @@ angular.module('starter.controllers', [])
           init();
           WebService.stopLoading();
         } else {
-          $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyAUh1zYu9a6v0k0gRob7Sy6oV_vcsu0SfY&libraries=places&sensor=false&language=en-us", function (data, textStatus, jqxhr) {
+          $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyAUh1zYu9a6v0k0gRob7Sy6oV_vcsu0SfY&libraries=places&sensor=false&language=en-us&region=IR", function (data, textStatus, jqxhr) {
             var s = document.createElement("script");
             s.type = "text/javascript";
             s.data = data;
